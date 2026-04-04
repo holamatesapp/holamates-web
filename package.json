@@ -1,0 +1,16 @@
+{
+  "name": "holamates_web",
+  "version": "1.0.0",
+  "main": "deploy-web.js",
+  "type": "module",
+  "scripts": {
+    "deploy": "node deploy-web.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ssh2-sftp-client": "^12.1.1"
+  }
+}

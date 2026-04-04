@@ -1,0 +1,1476 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="canonical" href="https://holamates.com/divisiones.html" />
+<meta name="robots" content="index, follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>Divisiones exactas – Aprende jugando | HolaMates</title>
+
+<meta name="description"
+content="Juego educativo para practicar divisiones exactas de forma divertida. Entrena el cálculo mental jugando con HolaMates.">
+
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SSHD0HME2Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SSHD0HME2Z');
+</script>
+
+
+<style>
+:root{
+  --panel:#111824;
+  --panel2:#0f1622;
+  --text:#e8eef7;
+  --btn:#182235;
+  --btn2:#141c2b;
+  --shadow:0 18px 60px rgba(0,0,0,.45);
+  --radius:18px;
+  --blue:#2563eb;
+  --fail:#dc2626;   
+
+  --card-w: clamp(44px, 11vw, 82px);
+  --card-h: 35px;
+  --gap:12px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+
+html{
+  background:#0b0f14;
+}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:#0b0f14;   /* ← AQUÍ */
+  color:var(--text);
+  display:flex;
+}
+
+.app{
+  width:100%;
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  display:flex;
+  flex-direction:column;
+}
+
+@media (min-width:550px){
+  body{
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+  }
+  .app{
+    width:min(530px,100%);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    border:1px solid rgba(255,255,255,.06);
+    overflow:hidden;
+  }
+}
+
+/* ───────── HEADER ───────── */
+
+header{
+  padding:15px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.stats{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.pill{
+  background:rgba(255,255,255,.08);
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  min-width: 0;
+  overflow: hidden;
+}
+
+
+select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+
+  background:transparent;
+  border:none;
+  outline:none;
+
+  color:var(--text);
+  font-weight:600;
+  cursor:pointer;
+
+  padding:0 2px;
+}
+
+select option{
+  background:#1f2937;
+  color:#ffffff;
+}
+
+/* ───────── CONTENIDO ───────── */
+
+.screen{
+  padding:14px 18px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap: 14px; /* controla distancia calc ↔ ? */
+}
+
+.calc-screen{
+  background:rgba(0,0,0,.35);
+  border-radius:20px;
+  padding:14px;
+  height:120px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  margin-top: clamp(3px, 0.5vh, 10px);
+
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+
+
+
+
+.queue{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.row{
+  display:flex;
+  gap:var(--gap);
+}
+
+.card{
+  width:var(--card-w);
+  height:var(--card-h);
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:clamp(16px,4vw,22px);
+  background:rgba(255,255,255,.10);
+}
+
+.card.empty{
+  background:rgba(255,255,255,.04);
+}
+
+.card.active{
+  background:var(--blue);
+}
+
+.card.fail{
+  background:var(--fail);
+  color:#fff;
+}
+
+
+
+
+.card.revealed{
+  font-size: clamp(14px, 2.3vw, 18px);  /* ⬆ más grande */
+  line-height: 1.05;
+  padding: 4px 5px;
+
+  white-space: nowrap;
+  letter-spacing: -0.4px;   /* menos apretado */
+  transform: scaleX(0.96);  /* casi normal */
+}
+
+/* ───────── TECLADO ───────── */
+
+.kbd{
+  padding:20px;
+  padding-top:6px;
+  margin-top:auto;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.grid .zero{
+  grid-column:2;
+}
+
+button.key{
+  height:50px;
+  font-size:24px;
+  font-weight:800;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,var(--btn),var(--btn2));
+  color:white;
+}
+
+.play{
+  margin-top:12px;
+  width:100%;
+  height:56px;
+  font-size:18px;
+  font-weight:800;
+  border-radius:16px;
+  background:linear-gradient(180deg,#2563eb,#1e40af);
+  border:none;
+  color:white;
+  cursor:pointer;
+}
+
+.play.disabled{
+  opacity: .45;
+  filter: grayscale(1);
+  cursor: default;
+}
+
+ /* ===============================
+     BLOQUEO SELECCIÓN iOS (JUEGO)
+  ================================ */
+  *{
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  button{
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+  }
+/* ───────── MODAL ───────── */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+}
+
+.overlay.show{
+  display:flex;
+}
+
+.modal{
+  background:#0c121c;
+  padding:28px 20px 18px;
+  border-radius:18px;
+  width:min(420px,90%);
+  min-height:55vh;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+}
+
+
+.modal-content{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.modal-hits{
+  font-size:28px;
+  font-weight:800;
+  margin-top:12px;
+  margin-bottom:20px;
+}
+
+.modal-message{
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:22px;
+}
+
+.modal-rank{
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:22px;
+}
+
+.modal-input{
+  margin-top:18px;
+}
+
+.modal-input input{
+  width:100%;
+  font-size:24px;
+  text-align:center;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  margin-bottom:14px;
+}
+
+.modal-input button{
+  width:100%;
+  height:46px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(180deg,#2563eb,#1e40af);
+  color:white;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+
+/* ───────── MENÚ JUEGOS ───────── */
+
+.game-switch{
+  position:relative;
+}
+
+#gameBtn{
+  background:none;
+  border:none;
+  color:var(--text);
+  font-size:18px;
+  letter-spacing:-0.3px;
+  font-weight:800;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+#gameBtn .arrow{
+  font-size:14px;
+  opacity:.6;
+}
+
+.game-menu{
+  position:absolute;
+  top:calc(100% + 8px);
+  left:0;
+  background:#0c121c;
+  border-radius:12px;
+  padding:6px;
+  display:none;
+  box-shadow:0 12px 40px rgba(0,0,0,.5);
+  z-index:20;
+  min-width:140px;
+}
+
+.game-menu a{
+  display:block;
+  padding:8px 12px;
+  text-decoration:none;
+  color:var(--text);
+  font-size:14px;
+  border-radius:8px;
+  white-space:nowrap;
+}
+
+.game-menu a:hover{
+  background:rgba(255,255,255,.08);
+}
+
+.game-menu .current{
+  display:block;
+  padding:8px 12px;
+  font-size:14px;
+  border-radius:8px;
+  white-space:nowrap;
+  opacity:.45;
+  cursor:default;
+}
+
+.game-menu.show{
+  display:block;
+}
+
+
+  /* ───────── LÍNEA DE TIEMPO ───────── */
+
+.timeline{
+  position: relative;
+  margin-bottom: -4px;
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.timeline-bar{
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4ade80, #22c55e);
+  transition: width .1s linear, background .2s;
+}
+
+.timeline-bar.fail{
+  background: linear-gradient(90deg, #dc2626, #991b1b);
+}
+
+/* ───────── SOLO MÓVIL ───────── */
+
+@media (max-width:549px){
+
+  /* ───── HEADER EN DOS FILAS ───── */
+
+  header{
+    display:grid;
+    grid-template-columns:auto 1fr 1fr;
+    grid-template-rows:auto auto;
+    gap:8px;
+    align-items:center;
+
+    padding-left:7px;   /* 👈 antes 18px */
+    padding-right:18px;  /* mantenemos derecha */
+  }
+
+  .game-switch{
+    grid-column:1;
+    grid-row:1;
+  }
+
+  .stats{
+    display:contents;
+  }
+
+  .stats .pill:first-child{
+    grid-column:2;
+    grid-row:1;
+    justify-content:center;
+  }
+
+  .stats .pill:nth-child(2){
+    grid-column:3;
+    grid-row:1;
+    justify-content:center;
+  }
+
+  .stats .pill:nth-child(3){
+    grid-column:3;
+    grid-row:2;
+    justify-content:center;
+  }
+
+  .stats .pill:nth-child(2),
+  .stats .pill:nth-child(3){
+    min-width: 112px;
+  }
+
+
+
+
+
+  /* ───── PANTALLA DE CÁLCULOS (CLAVE) ───── */
+
+  .calc-screen{
+    padding:14px;              /* sin aire lateral excesivo */
+    justify-content:center;
+    align-items:center;
+  }
+
+  .queue{
+    width:100%;                /* ocupa todo el ancho útil */
+  }
+
+  .row{
+    width:100%;
+    display:flex;
+    justify-content:space-between; /* reparte todo el ancho */
+    gap:6px;
+  }
+
+  .card{
+    flex:1;                    /* 🔑 igual que Suma10 */
+    width:auto;                /* elimina ancho fijo */
+    min-width:0;
+  }
+
+
+
+  /* ───── VARIABLES AJUSTADAS A MÓVIL ───── */
+
+  :root{
+    --gap:6px;
+  }
+
+  html, body {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}
+
+button,
+.key,
+.play {
+  touch-action: manipulation;
+}
+
+
+}
+
+
+/* 🔥 ESCALADO EXTRA */
+
+.scale-90  .app{ transform: scale(0.90); transform-origin:center; }
+.scale-100 .app{ transform: scale(1.00); transform-origin:center; }
+.scale-120 .app{ transform: scale(1.20); transform-origin:center; }
+.scale-140 .app{ transform: scale(1.40); transform-origin:center; }
+.scale-150 .app{ transform: scale(1.50); transform-origin:center; }
+.scale-160 .app{ transform: scale(1.60); transform-origin:center; }
+.scale-200 .app{ transform: scale(2.00); transform-origin:center; }
+
+.scale-90  .modal{ transform: scale(0.90); }
+.scale-100 .modal{ transform: scale(1.00); }
+.scale-120 .modal{ transform: scale(1.20); }
+.scale-140 .modal{ transform: scale(1.40); }
+.scale-150 .modal{ transform: scale(1.50); }
+.scale-160 .modal{ transform: scale(1.60); }
+.scale-200 .modal{ transform: scale(2.00); }
+
+.modal{
+  transform-origin:center;
+}
+
+/* BOTONES ZOOM */
+
+#zoomControls{
+  position:fixed;
+  top:16px;
+  right:16px;
+  display:flex;
+  gap:10px;
+  z-index:99999;
+}
+
+#zoomControls button{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:20px;
+  font-weight:900;
+  color:white;
+
+  background:rgba(20,28,43,.85);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 6px 18px rgba(0,0,0,.4);
+  transition:.15s;
+}
+
+#zoomControls button:hover{
+  transform:scale(1.08);
+  background:#2563eb;
+}
+
+/* LOGO */
+
+#logoFloating{
+  position:fixed;
+  top:16px;
+  left:25px;
+  transform:none;
+  z-index:99998;
+  pointer-events:none;
+}
+
+#logoFloating img{
+  height:34px;
+  opacity:.9;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.4));
+}
+
+/* 🚫 OCULTAR EN MÓVIL */
+@media (max-width: 999px){
+  #zoomControls,
+  #logoFloating{
+    display:none !important;
+  }
+}
+
+
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+  <div id="zoomControls">
+  <button onclick="changeScale(-1)">−</button>
+  <button onclick="resetScale()">•</button>
+  <button onclick="changeScale(1)">+</button>
+  <button onclick="toggleFullscreen()">⛶</button>
+</div>
+
+<div id="logoFloating">
+  <img src="/holamates_punto.svg" alt="HolaMates">
+</div>
+
+
+
+<main class="app">
+<header>
+  <div class="game-switch">
+<button id="gameBtn">Divisiones <span class="arrow">▾</span></button>
+<div class="game-menu" id="gameMenu">
+  <a href="/index.html">Inicio</a>
+
+  <a href="/suma10.html" onclick="goSuma10(event)">Suma10</a>
+  <a href="/sumas.html" onclick="goSumas(event)">Sumas</a>
+  <a href="/restas.html" onclick="goRestas(event)">Restas</a>
+<a href="/multiplicaciones.html" onclick="goMultiplicaciones(event)">Multiplicaciones</a>
+  <span class="current">Divisiones</span>
+
+  <a href="/ranking.html" onclick="goRanking(event)">Ranking</a>
+</div>
+
+  </div>
+
+  <div class="stats">
+    <div class="pill">Aciertos: <span id="hits">0</span></div>
+
+    <div class="pill">
+      Divisor:
+      <select id="tableSelect">
+        <option value="all" selected>Todos</option>
+        <option value="1">1</option><option value="2">2</option>
+        <option value="3">3</option><option value="4">4</option>
+        <option value="5">5</option><option value="6">6</option>
+        <option value="7">7</option><option value="8">8</option>
+        <option value="9">9</option>
+      </select>
+    </div>
+
+    <div class="pill">
+      Nivel:
+      <select id="levelSelect">
+        <option value="training">Entrenamiento</option>
+        <option value="init">Iniciación</option>
+        <option value="easy">Fácil</option>
+        <option value="normal" selected>Medio</option>
+        <option value="hard">Difícil</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<section class="screen">
+
+  <!-- 🔴 TIMELINE: VA AQUÍ -->
+  <div class="timeline" aria-label="Barra de tiempo">
+    <div class="timeline-bar" id="timelineBar"></div>
+  </div>
+
+  <div class="calc-screen">
+    <div class="queue">
+      <div class="row" id="rowTop"></div>
+      <div class="row" id="rowBottom"></div>
+    </div>
+  </div>
+
+</section>
+
+
+<section class="kbd">
+  <div class="grid" id="grid"></div>
+  <button class="play" id="playBtn">▶ Play</button>
+</section>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+
+    <div class="modal-content">
+
+      <div id="popupHits" class="modal-hits"></div>
+
+      <div id="popupMessage" class="modal-message"></div>
+
+      <div class="modal-rank">
+        <span id="top5Text" style="display:none;">🏆 ¡Nuevo Top 5!</span>
+      </div>
+
+      <div id="initialsBox" class="modal-input" style="display:none;">
+<input id="nameInput" placeholder="Tu nombre" maxlength="20" />
+        <button id="initialsOk">OK</button>
+      </div>
+
+    </div>
+
+    <p id="tapOutsideText" style="opacity:.7;margin-top:8px">
+      Toca fuera para cerrar
+    </p>
+  </div>
+</div>
+
+
+<script>
+const MAX_STACK = 10;
+const GAME_TIME = 60000;
+const STEP_TIME = 15000;
+const REVEAL_AFTER = 3;
+
+const LEVEL_SPEEDS = {
+  training: [3600, 3200, 2800, 2400],
+  init:     [3800, 3400, 3200, 3000],
+  easy:     [3000, 2600, 2200, 1800],
+  normal:   [2400, 2000, 1600, 1200],
+  hard:     [1800, 1400, 1000, 800]
+};
+
+let phase = "idle"; // idle | playing | ending | ended
+let ops = [], answer = "", hits = 0;
+let running = false, timer = null, startTime = 0;
+let selectedTable = "all";
+let selectedLevel = "normal";
+
+let waitingInitials = false;
+let pendingChallengeId = null;
+let pendingEntry = null;
+
+function getDivisionesChallengeId() {
+  return `divisiones_${selectedTable}_${selectedLevel}`;
+}
+
+
+let activeWait = 0; // ⏳ SOLO para la operación activa
+
+const rowTop = document.getElementById("rowTop");
+const rowBottom = document.getElementById("rowBottom");
+const hitsEl = document.getElementById("hits");
+const overlay = document.getElementById("overlay");
+const popupHits = document.getElementById("popupHits");
+
+const tableSelect = document.getElementById("tableSelect");
+const levelSelect = document.getElementById("levelSelect");
+
+const timelineBar = document.getElementById("timelineBar");
+
+
+// ───── leer nivel y divisor desde URL normal (?level=...&table=...) ─────
+const params = new URLSearchParams(window.location.search);
+
+const levelFromUrl = params.get("level");
+const tableFromUrl = params.get("table");
+
+if (levelFromUrl) {
+  levelSelect.value = levelFromUrl;
+  selectedLevel = levelFromUrl;
+}
+
+if (tableFromUrl) {
+  tableSelect.value = tableFromUrl;
+  selectedTable = tableFromUrl;
+}
+
+
+
+const playBtn = document.getElementById("playBtn");
+
+const popupMessage = document.getElementById("popupMessage");
+const initialsBox = document.getElementById("initialsBox");
+const nameInput = document.getElementById("nameInput");
+const initialsOk = document.getElementById("initialsOk");
+const tapOutsideText = document.getElementById("tapOutsideText");
+const top5Text = document.getElementById("top5Text");
+
+
+function updatePlayButton(){
+  const disabled = phase !== "idle";
+  playBtn.classList.toggle("disabled", disabled);
+  playBtn.disabled = disabled;
+}
+
+function updatePlayLabel(){
+  if (selectedLevel === "training") {
+    playBtn.textContent = "▶ Entrenar";
+  } else {
+    playBtn.textContent = "▶ Play";
+  }
+}
+
+
+
+
+tableSelect.onchange = () => selectedTable = tableSelect.value;
+levelSelect.onchange = () => {
+  selectedLevel = levelSelect.value;
+  updatePlayLabel();
+};
+
+function randOp(){
+  const divisor = selectedTable === "all"
+    ? Math.floor(Math.random() * 9) + 1
+    : Number(selectedTable);
+
+  const resultado = Math.floor(Math.random() * 9) + 1;
+  const dividendo = divisor * resultado;
+
+  return {
+    divisor,
+    dividendo,
+    res: resultado,
+    revealed: false
+  };
+}
+
+
+
+function currentInterval(){
+  const elapsed = Date.now() - startTime;
+  if(elapsed >= GAME_TIME) return null;
+  const speeds = LEVEL_SPEEDS[selectedLevel];
+  const idx = Math.min(Math.floor(elapsed / STEP_TIME), speeds.length - 1);
+  return speeds[idx];
+}
+
+function render(){
+  rowTop.innerHTML = "";
+  rowBottom.innerHTML = "";
+
+  const bottom = ops.slice(-5);
+  const top = ops.slice(0, Math.max(ops.length - 5, 0));
+
+  function paintRow(rowEl, rowOps){
+    const empties = Math.max(0, 5 - rowOps.length);
+
+    for(let i = 0; i < empties; i++){
+      const d = document.createElement("div");
+      d.className = "card empty";
+      rowEl.appendChild(d);
+    }
+
+    rowOps.forEach(op => {
+      const d = document.createElement("div");
+
+let cls = "card" + (op.revealed ? " revealed" : "");
+      if(op === ops[0]){
+        cls += (phase === "ending" || phase === "ended") ? " fail" : " active";
+      }
+
+      d.className = cls;
+      d.textContent = op.revealed
+         ? `${op.dividendo}÷${op.divisor}=${op.res}`
+        : `${op.dividendo}÷${op.divisor}`;
+
+
+      rowEl.appendChild(d);
+    });
+  }
+
+  paintRow(rowTop, top.slice(0,5));
+  paintRow(rowBottom, bottom);
+
+  hitsEl.textContent = hits;
+}
+
+function updateTimeline(){
+  if (phase !== "playing") return;
+
+  const elapsed = Date.now() - startTime;
+  const progress = Math.min(elapsed / GAME_TIME, 1);
+
+  timelineBar.style.width = (progress * 100) + "%";
+
+  requestAnimationFrame(updateTimeline);
+}
+
+
+function addOperation(){
+  if(!running) return;
+
+  if (ops.length && !ops[0].revealed) {
+
+  if (selectedLevel === "training") {
+    ops[0].revealed = true;   // 🔵 training: revela al primer avance
+  } else {
+    activeWait++;
+    if (activeWait >= REVEAL_AFTER) {
+      ops[0].revealed = true; // 🔴 resto: a la tercera espera
+    }
+  }
+
+}
+
+  ops.push(randOp());
+
+  // 🔴 MUERTE INMEDIATA AL LLEGAR A 10
+  if (ops.length >= MAX_STACK) {
+    render();
+    return endGame();
+  }
+
+  render();
+}
+
+
+
+function press(n){
+  if(!running || !ops.length) return;
+
+  answer += n;
+  render();
+
+  const cur = ops[0];
+  const res = String(cur.res);
+
+
+  // ✅ acierto → se borra
+ if(answer === res){
+  hits++;
+  ops.shift();
+  answer = "";
+  activeWait = 0;
+
+  if (ops.length === 0 && running) {
+    ops.push(randOp());
+  }
+
+  render();
+  return;
+}
+
+ // ❌ fallo → penaliza SIEMPRE
+if(!res.startsWith(answer)){
+  answer = "";
+  render();
+  addOperation();
+
+  // 🔹 RESET DEL TIMER (IGUAL QUE SUMA10)
+  clearTimeout(timer);
+  const interval = currentInterval();
+  if (interval !== null) {
+    timer = setTimeout(() => { addOperation(); loop(); }, interval);
+  }
+}
+
+
+}
+
+
+function loop(){
+  const interval = currentInterval();
+  if(interval === null) return endGame();
+  timer = setTimeout(() => { addOperation(); loop(); }, interval);
+}
+
+function startGame(){
+  if (phase !== "idle") return; // 🔒 bloqueo duro
+  overlay.classList.remove("show");
+  clearTimeout(timer);
+  ops = [];
+  hits = 0;
+  answer = "";
+  activeWait = 0;
+  phase = "playing";
+  running = true;
+  startTime = Date.now();
+  updatePlayButton();
+
+  playBtn.textContent =
+  selectedLevel === "training"
+    ? "▶ Entrenamiento"
+    : "▶ Play";
+
+  render();
+  addOperation();
+  loop();
+  gtag('event','game_start',{game:'divisiones',level:selectedLevel});
+
+
+  timelineBar.style.width = "0%";
+timelineBar.classList.remove("fail");
+updateTimeline();
+
+}
+
+function mensajeAnimo(hits){
+
+  if(hits === 0)  return "No pasa nada 💙 Vamos a intentarlo otra vez";
+  if(hits === 1)  return "Buen intento 💪 Cada partida cuenta";
+  if(hits === 2)  return "¡Bien! Poco a poco 🙂";
+  if(hits === 3)  return "¡Muy bien! Sigue así 👏";
+  if(hits === 4)  return "¡Genial! Vas mejorando 🚀";
+  if(hits === 5)  return "¡Muy bien! Buen comienzo 😄";
+  if(hits === 6)  return "¡Muy bien! Cada vez más rápido 🔥";
+  if(hits === 7)  return "¡Genial! Buena concentración 🧠";
+  if(hits === 8)  return "¡Genial! Ritmo sólido 💪";
+  if(hits === 9)  return "¡Muy bien! Buen control 👌";
+
+  // 🔹 A partir de 10: ya se nota progreso real
+  if(hits === 10) return "¡Muy bien! Se nota el progreso 😄";
+  if(hits === 11) return "¡Muy bien! Cada vez más seguro 🙂";
+  if(hits === 12) return "¡Genial! Buen ritmo 🚀";
+  if(hits === 13) return "¡Genial! Buen control 👏";
+  if(hits === 14) return "¡Muy bien! Vas fuerte 💪";
+
+  // 🔹 15–19: jugador sólido
+  if(hits === 15) return "¡Muy bien! Ritmo constante 💪";
+  if(hits === 16) return "¡Muy bien! Buena seguridad 🙂";
+  if(hits === 17) return "¡Genial! Gran concentración 🧠";
+  if(hits === 18) return "¡Genial! Buen control 👏";
+  if(hits === 19) return "¡Muy bien! Preparado para más 🚀";
+
+  // 🔥 A partir de 20: nivel alto
+  if(hits === 20) return "¡Brutal! Nivel altísimo 🔥";
+  if(hits === 21) return "¡Brutal! Muy sólido 💥";
+  if(hits === 22) return "¡Bestial! Ritmo brutal 🔥";
+  if(hits === 23) return "¡Bestial! Gran dominio 💪";
+  if(hits === 24) return "¡Bestial! Muy fuerte 🧠";
+
+  // 🏆 25–29: nivel pro
+  if(hits === 25) return "¡Nivel pro! Muy rápido 🚀";
+  if(hits === 26) return "¡Nivel pro! Gran control 🎯";
+  if(hits === 27) return "¡Nivel pro! Sin fallos 💥";
+  if(hits === 28) return "¡Nivel pro! Precisión total 🎯";
+  if(hits === 29) return "¡Nivel pro! Impresionante 🌟";
+
+  // 🏆 30–34: sobresaliente
+  if(hits === 30) return "¡Sobresaliente! Ritmo altísimo 🏆";
+  if(hits === 31) return "¡Sobresaliente! Mucha precisión 🎯";
+  if(hits === 32) return "¡Sobresaliente! Gran seguridad 😎";
+  if(hits === 33) return "¡Sobresaliente! Muy sólido 💪";
+  if(hits === 34) return "¡Sobresaliente! Nivel top 🌟";
+
+  // 🤖 35–39: máquina
+  if(hits === 35) return "¡Máquina! Esto ya es otro nivel 🤖";
+  if(hits === 36) return "¡Máquina! Ritmo brutal 🔥";
+  if(hits === 37) return "¡Máquina! Gran dominio 🧠";
+  if(hits === 38) return "¡Máquina! Partidaza 💥";
+  if(hits === 39) return "¡Máquina! Imparable 🚀";
+
+  // 👑 40–44: leyenda
+  if(hits === 40) return "¡Leyenda! Partida histórica 👑";
+  if(hits === 41) return "¡Leyenda! Dominio total 😎";
+  if(hits === 42) return "¡Leyenda! Precisión increíble 🎯";
+  if(hits === 43) return "¡Leyenda! Ritmo perfecto 🌟";
+  if(hits === 44) return "¡Leyenda! Nivel máximo 🏆";
+
+  // 🌟 45–49: élite
+  if(hits === 45) return "¡Élite! Juego perfecto 🔥";
+  if(hits === 46) return "¡Élite! Control absoluto 🧠";
+  if(hits === 47) return "¡Élite! Sin errores 💥";
+  if(hits === 48) return "¡Élite! Brutal 😎";
+  if(hits === 49) return "¡Élite! Imparable 🚀";
+
+  // 🚀 50–59: fuera de lo normal
+  if(hits === 50) return "¡Increíble! Esto es otro planeta 🤯";
+  if(hits === 51) return "¡Increíble! Nivel extremo 🔥";
+  if(hits === 52) return "¡Increíble! Dominio total 💪";
+  if(hits === 53) return "¡Increíble! Precisión perfecta 🎯";
+  if(hits === 54) return "¡Increíble! Ritmo demencial 🚀";
+  if(hits === 55) return "¡Increíble! Mente de acero 🧠";
+  if(hits === 56) return "¡Increíble! Sin palabras 🤯";
+  if(hits === 57) return "¡Increíble! Maestro absoluto 🏆";
+  if(hits === 58) return "¡Increíble! Juego perfecto 🔥";
+  if(hits === 59) return "¡Increíble! Casi imposible 😎";
+
+  // 👑 60+
+  return "👑 LEYENDA SUPREMA 👑 Dominio total 🤯🔥";
+}
+
+
+function endGame(){
+  timelineBar.classList.add("fail");
+
+  if(phase !== "playing") return;
+
+  phase = "ending";
+  running = false;
+  clearTimeout(timer);
+
+  render();
+
+  setTimeout(() => {
+    phase = "ended";
+
+    const challengeId = getDivisionesChallengeId();
+   const entraTop5 =
+  selectedLevel !== "training" &&
+  hits >= 6 &&
+  isTop5(challengeId, hits);
+
+
+
+
+
+    if (entraTop5) {
+      pendingChallengeId = challengeId;
+      pendingEntry = {
+        score: hits,
+        date: Date.now(),
+        name: ""
+      };
+    }
+
+    popupHits.textContent = `Aciertos: ${hits}`;
+popupMessage.textContent = mensajeAnimo(hits);
+
+if (selectedLevel === "training") {
+  popupMessage.textContent =
+    "🧠 Sigue así, cada intento te hace mejorar 🙂";
+}
+
+overlay.classList.add("show");
+
+// reset visual
+initialsBox.style.display = "none";
+top5Text.style.display = "none";
+tapOutsideText.style.display = "block";
+waitingInitials = false;
+
+if (entraTop5) {
+  waitingInitials = true;
+  initialsBox.style.display = "block";
+  top5Text.style.display = "block";
+  tapOutsideText.style.display = "none";
+
+  nameInput.value = "";
+  nameInput.focus();
+}
+
+  }, 500);
+}
+
+
+overlay.onclick = e => {
+  if (waitingInitials) return;
+
+  if (e.target === overlay) {
+    overlay.classList.remove("show");
+    phase = "idle";
+    updatePlayButton();
+    updatePlayLabel(); // 🔥 en vez de forzar "Play"
+  }
+};
+
+
+
+
+
+
+
+
+
+
+function buildKeys(){
+  const g = document.getElementById("grid");
+  [1,2,3,4,5,6,7,8,9].forEach(n => {
+    const b = document.createElement("button");
+    b.className = "key";
+    b.textContent = n;
+    b.onclick = () => press(n);
+    g.appendChild(b);
+  });
+
+  const z = document.createElement("button");
+  z.className = "key zero";
+  z.textContent = "0";
+  z.onclick = () => press("0");
+  g.appendChild(z);
+}
+
+buildKeys();
+render();
+playBtn.onclick = startGame;
+updatePlayButton();
+
+updatePlayLabel();
+
+
+
+const gameBtn = document.getElementById("gameBtn");
+const gameMenu = document.getElementById("gameMenu");
+
+gameBtn.onclick = e => {
+  e.stopPropagation();
+  gameMenu.classList.toggle("show");
+};
+document.addEventListener("click", () => gameMenu.classList.remove("show"));
+
+
+
+function goHome(){
+  window.location.href = '/index.html';
+}
+
+function goSuma10(e){
+  e.preventDefault();
+  const level = levelSelect.value || 'normal';
+  window.location.href = `/suma10.html?level=${level}`;
+}
+
+function goSumas(e){
+  e.preventDefault();
+  const level = levelSelect.value || 'normal';
+  window.location.href = `/sumas.html?level=${level}&mode=sin`;
+}
+
+function goRestas(e){
+  e.preventDefault();
+  const level = levelSelect.value || 'normal';
+  window.location.href = `/restas.html?level=${level}&mode=sin`;
+}
+
+function goMultiplicaciones(e){
+  e.preventDefault();
+  const level = levelSelect.value || 'normal';
+  window.location.href = `/multiplicaciones.html?level=${level}&table=all`;
+}
+
+function goDivisiones(e){
+  e.preventDefault();
+  const level = levelSelect.value || 'normal';
+  window.location.href = `/divisiones.html?level=${level}&table=all`;
+}
+
+function goRanking(e){
+  e.preventDefault();
+  localStorage.setItem('holamates_prev_route', window.location.href);
+  window.location.href = '/ranking.html';
+}
+
+
+
+// ─────────────────────────────────────────────
+// 🏆 Ranking helpers (HolaMates Web)
+// ─────────────────────────────────────────────
+
+const RANKING_KEY = "holamates_rankings";
+
+function loadAllRankings() {
+  try {
+    const raw = localStorage.getItem(RANKING_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveAllRankings(data) {
+  localStorage.setItem(RANKING_KEY, JSON.stringify(data));
+}
+
+function loadRanking(challengeId) {
+  const all = loadAllRankings();
+  return all[challengeId] || [];
+}
+
+function isTop5(challengeId, score) {
+  const list = loadRanking(challengeId);
+  if (list.length < 5) return true;
+  return score >= list[list.length - 1].score;
+}
+
+function isTop1(challengeId, score) {
+  const list = loadRanking(challengeId);
+  if (list.length === 0) return true;
+  return score > list[0].score;
+}
+
+function insertTop5(challengeId, entry) {
+  const all = loadAllRankings();
+  const list = all[challengeId] || [];
+
+  list.push(entry);
+  list.sort((a,b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return b.date - a.date;
+  });
+
+  all[challengeId] = list.slice(0,5);
+  saveAllRankings(all);
+}
+
+
+nameInput.addEventListener("input", () => {
+  if (!waitingInitials) return;
+
+  nameInput.value = nameInput.value
+    .replace(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9 ]/g, "")
+    .slice(0, 20);
+});
+
+
+initialsOk.onclick = () => {
+  if (!waitingInitials) return;
+
+  const name = nameInput.value.trim();
+  if (name.length < 3) {
+    nameInput.focus();
+    return;
+  }
+
+  // 🔴 1. CERRAR POPUP
+  waitingInitials = false;
+  overlay.classList.remove("show");
+  initialsBox.style.display = "none";
+
+  // 🔴 2. RESETEAR JUEGO (CLAVE)
+  phase = "idle";
+  updatePlayButton();
+  updatePlayLabel();
+
+  // 🔴 3. GUARDAR
+  pendingEntry.name = name;
+  insertTop5(pendingChallengeId, pendingEntry);
+
+  localStorage.setItem(
+    "holamates_last_result",
+    JSON.stringify({
+      game: "divisiones",
+      challengeId: pendingChallengeId,
+      score: pendingEntry.score,
+      date: pendingEntry.date,
+      name: pendingEntry.name,
+      level: selectedLevel,
+      table: selectedTable
+    })
+  );
+
+  // 🔴 4. LIMPIAR
+  pendingEntry = null;
+  pendingChallengeId = null;
+
+  // 👉 guardar origen
+localStorage.setItem('holamates_prev_route', window.location.href);
+window.location.href = "/ranking-result.html";
+};
+
+
+const scales = [
+  "scale-90",
+  "scale-100",
+  "scale-120",
+  "scale-140",
+  "scale-150",
+  "scale-160",
+  "scale-200"
+];
+
+let currentScaleIndex = 0;
+
+function applyBigScreenScale(){
+
+  const w = window.innerWidth;
+
+  if(w < 1000){
+    document.body.classList.remove(...scales);
+    return;
+  }
+
+  document.body.classList.remove(...scales);
+
+  if(w >= 2500){
+    document.body.classList.add("scale-200");
+  }
+  else if(w >= 2000){
+    document.body.classList.add("scale-160");
+  }
+  else if(w >= 1900){
+    document.body.classList.add("scale-150");
+  }
+  else if(w >= 1700){
+    document.body.classList.add("scale-140");
+  }
+  else if(w >= 1400){
+    document.body.classList.add("scale-120");
+  }
+  else if(w >= 1200){
+    document.body.classList.add("scale-100");
+  }
+}
+
+function syncScaleIndex(){
+  const current = scales.findIndex(s => document.body.classList.contains(s));
+  if(current !== -1){
+    currentScaleIndex = current;
+  }
+}
+
+function applyScaleByIndex(){
+  document.body.classList.remove(...scales);
+  document.body.classList.add(scales[currentScaleIndex]);
+}
+
+function changeScale(direction){
+  currentScaleIndex += direction;
+
+  if(currentScaleIndex < 0) currentScaleIndex = 0;
+  if(currentScaleIndex >= scales.length) currentScaleIndex = scales.length - 1;
+
+  applyScaleByIndex();
+}
+
+function resetScale(){
+  applyBigScreenScale();
+  syncScaleIndex();
+}
+
+function toggleFullscreen(){
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(err => {
+      console.log("Error fullscreen:", err);
+    });
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+applyBigScreenScale();
+syncScaleIndex();
+
+window.addEventListener("resize", () => {
+  applyBigScreenScale();
+  syncScaleIndex();
+});
+
+
+
+</script>
+
+
+</body>
+</html>

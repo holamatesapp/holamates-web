@@ -1,0 +1,2010 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="canonical" href="https://holamates.com/sumasdosj.html" />
+<meta name="robots" content="index, follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>Sumas – Modo Duelo | HolaMates</title>
+<meta name="description"
+content="Juego educativo para practicar sumas con y sin llevada en modo duelo. Entrena el cálculo mental compitiendo en tiempo real con HolaMates.">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SSHD0HME2Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SSHD0HME2Z');
+</script>
+
+
+<style>
+:root{
+  --panel:#111824;
+  --panel2:#0f1622;
+  --text:#e8eef7;
+  --btn:#182235;
+  --btn2:#141c2b;
+  --shadow:0 18px 60px rgba(0,0,0,.45);
+  --radius:18px;
+  --blue:#2563eb;
+  --fail:#dc2626;   
+
+  --card-w: 80px;
+  --card-h: 35px;
+  --gap:12px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+
+html{
+  background:#0b0f14;
+}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:#0b0f14;   /* ← AQUÍ */
+  color:var(--text);
+  display:flex;
+}
+
+.app{
+  width:100%;
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  display:flex;
+  flex-direction:column;
+}
+
+@media (min-width:550px){
+  body{
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+  }
+  .app{
+    width:500px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    border:1px solid rgba(255,255,255,.06);
+    overflow:hidden;
+  }
+}
+
+/* ───────── HEADER ───────── */
+
+header{
+  padding:15px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.stats{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.pill{
+  background:rgba(255,255,255,.08);
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  min-width: 0;
+  overflow: hidden;
+}
+
+
+select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+
+  background:transparent;
+  border:none;
+  outline:none;
+
+  color:var(--text);
+  font-weight:600;
+  cursor:pointer;
+
+  padding:0 2px;
+}
+
+select option{
+  background:#1f2937;
+  color:#ffffff;
+}
+
+
+
+/* ───────── CONTENIDO ───────── */
+
+.screen{
+  padding:14px 18px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap: 14px; /* controla distancia calc ↔ ? */
+}
+
+.calc-screen{
+  background:rgba(0,0,0,.35);
+  border-radius:20px;
+  padding:14px;
+  height:120px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  margin-top: clamp(3px, 0.5vh, 10px);
+
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+
+
+
+
+.queue{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.row{
+  display:flex;
+  gap:var(--gap);
+}
+
+.card{
+  width:var(--card-w);
+  height:var(--card-h);
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:18px;
+  background:rgba(255,255,255,.10);
+}
+
+.card.empty{
+  background:rgba(255,255,255,.04);
+}
+
+.card.active{
+  background:var(--blue);
+}
+
+.card.fail{
+  background:var(--fail);
+  color:#fff;
+}
+
+
+
+
+.card.revealed{
+  font-size:15px;
+  line-height: 1.05;
+  padding: 4px 5px;
+
+  white-space: nowrap;
+  letter-spacing: -0.4px;   /* menos apretado */
+  transform: scaleX(0.96);  /* casi normal */
+}
+
+/* ───────── TECLADO ───────── */
+
+.kbd{
+  padding:20px;
+  padding-top:6px;
+  margin-top:auto;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.grid .zero{
+  grid-column:2;
+}
+
+button.key{
+  height:50px;
+  font-size:24px;
+  font-weight:800;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,var(--btn),var(--btn2));
+  color:white;
+}
+
+.play{
+  margin-top:12px;
+  width:100%;
+  height:56px;
+  font-size:18px;
+  font-weight:800;
+  border-radius:16px;
+  background:linear-gradient(180deg,#2563eb,#1e40af);
+  border:none;
+  color:white;
+  cursor:pointer;
+}
+
+.play.disabled{
+  opacity: .45;
+  filter: grayscale(1);
+  cursor: default;
+}
+
+ /* ===============================
+     BLOQUEO SELECCIÓN iOS (JUEGO)
+  ================================ */
+  *{
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  button.key{
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: none;
+}
+
+/* ───────── MODAL ───────── */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;  
+}
+
+.overlay.show{
+  display:flex;
+}
+
+.modal{
+  background:#0c121c;
+  padding:28px 20px 18px;
+  border-radius:18px;
+  width:min(420px,90%);
+  min-height:55vh;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+}
+
+
+.modal-content{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.modal-hits{
+  font-size:28px;
+  font-weight:800;
+  margin-top:12px;
+  margin-bottom:20px;
+}
+
+.modal-message{
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:22px;
+}
+
+.modal-rank{
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:22px;
+}
+
+.modal-input{
+  margin-top:18px;
+}
+
+.modal-input input{
+  width:100%;
+  font-size:24px;
+  text-align:center;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  margin-bottom:14px;
+}
+
+.modal-input button{
+  width:100%;
+  height:46px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(180deg,#2563eb,#1e40af);
+  color:white;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+
+/* ───────── MARCADOR DUEL ───────── */
+
+.scoreboard{
+  margin-top:10px;
+  margin-bottom:20px;
+}
+
+.score-main{
+  font-size:64px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:18px;
+}
+
+.score-block{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.score-number{
+  font-size:64px;
+  font-weight:900;
+}
+
+.score-label{
+  font-size:14px;
+  opacity:.7;
+  margin-top:6px;
+}
+
+.score-separator{
+  font-size:48px;
+  opacity:.45;
+  transform: translateY(-8px);
+}
+
+.winner{
+  color:#4ade80;
+}
+
+.loser{
+  opacity:.5;
+}
+
+/* ───────── MENÚ JUEGOS ───────── */
+
+.game-switch{
+  position:relative;
+}
+
+#gameBtn{
+  background:none;
+  border:none;
+  color:var(--text);
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+#gameBtn .arrow{
+  font-size:14px;
+  opacity:.6;
+}
+
+.game-menu{
+  position:absolute;
+  top:calc(100% + 8px);
+  left:0;
+  background:#0c121c;
+  border-radius:12px;
+  padding:6px;
+  display:none;
+  box-shadow:0 12px 40px rgba(0,0,0,.5);
+  z-index:20;
+  min-width:140px;
+}
+
+.game-menu a{
+  display:block;
+  padding:8px 12px;
+  text-decoration:none;
+  color:var(--text);
+  font-size:14px;
+  border-radius:8px;
+  white-space:nowrap;
+}
+
+.game-menu a:hover{
+  background:rgba(255,255,255,.08);
+}
+
+.game-menu .current{
+  display:block;
+  padding:8px 12px;
+  font-size:14px;
+  border-radius:8px;
+  white-space:nowrap;
+  opacity:.45;
+  cursor:default;
+}
+
+.game-menu.show{
+  display:block;
+}
+
+
+  /* ───────── LÍNEA DE TIEMPO ───────── */
+
+.timeline{
+  position: relative;
+  margin-bottom: -4px;
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.timeline-bar{
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4ade80, #22c55e);
+  transition: width .1s linear, background .2s;
+}
+
+.timeline-bar.fail{
+  background: linear-gradient(90deg, #dc2626, #991b1b);
+}
+
+/* ───────── SOLO MÓVIL ───────── */
+
+@media (max-width:549px){
+
+  /* ───── HEADER EN DOS FILAS ───── */
+
+  header{
+    display:grid;
+    grid-template-columns:auto 1fr 1fr;
+    grid-template-rows:auto auto;
+    gap:8px;
+    align-items:center;
+  }
+
+  .game-switch{
+    grid-column:1;
+    grid-row:1;
+  }
+
+  .stats{
+    display:contents;
+  }
+
+  .stats .pill:first-child{
+    grid-column:2;
+    grid-row:1;
+    justify-content:center;
+  }
+
+  .stats .pill:nth-child(2){
+    grid-column:3;
+    grid-row:1;
+    justify-content:center;
+  }
+
+  .stats .pill:nth-child(3){
+    grid-column:3;
+    grid-row:2;
+    justify-content:center;
+  }
+
+
+
+  /* ───── PANTALLA DE CÁLCULOS (CLAVE) ───── */
+
+  .calc-screen{
+    padding:14px;              /* sin aire lateral excesivo */
+    justify-content:center;
+    align-items:center;
+  }
+
+  .queue{
+    width:100%;                /* ocupa todo el ancho útil */
+  }
+
+  .row{
+    width:100%;
+    display:flex;
+    justify-content:space-between; /* reparte todo el ancho */
+    gap:6px;
+  }
+
+  .card{
+    flex:1;                    /* 🔑 igual que Suma10 */
+    width:auto;                /* elimina ancho fijo */
+    min-width:0;
+  }
+
+
+
+  /* ───── VARIABLES AJUSTADAS A MÓVIL ───── */
+
+  :root{
+    --gap:6px;
+  }
+
+  html, body {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}
+
+button,
+.play {
+  touch-action: manipulation;
+}
+
+
+}
+
+/* ===============================
+   MODO DUEL ESCRITORIO
+================================ */
+
+.desktop-wrapper{
+  display:flex;
+  width:100%;
+}
+
+
+
+@media (min-width: 1000px){
+
+  body{
+    align-items:center;
+    justify-content:center;
+  }
+
+  .desktop-wrapper{
+    justify-content:center;
+      padding:0 10px;
+    gap: clamp(10px, 6vw, 100px);
+  }
+
+  .app{
+    width:525px;
+    flex: 0 0 525px; /* 🔥 importante */
+    height:auto;
+  }
+}
+
+/* BLOQUEO TOTAL EN MÓVIL */
+.mobile-block{
+  display:none;
+}
+@media (max-width: 999px){
+  #zoomControls{
+    display: none !important;
+  }
+
+  #logoFloating{
+    display: none !important;
+  }
+}
+
+@media (max-width: 999px){
+
+  .mobile-block{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(180deg,#111824,#0f1622);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:30px;
+    z-index:9999;
+  }
+
+  .mobile-block-content{
+    max-width:320px;
+  }
+
+  .mobile-icon{
+    font-size:64px;
+    margin-bottom:20px;
+  }
+
+
+  .mobile-image{
+  width:100%;
+  max-width:280px;
+  margin-bottom:20px;
+  border-radius:16px;
+}
+
+.modo-duelo-logo{
+  width:100%;
+  max-width:160px;
+  margin:10px auto 16px;
+  display:block;
+}
+
+.versus-logo{
+  width:100%;
+  max-width:215px;
+  margin-bottom:0px;
+}
+
+
+  .mobile-block h1{
+    font-size:26px;
+    margin-bottom:10px;
+  }
+
+  .mobile-block p{
+    font-size:16px;
+    opacity:.85;
+    line-height:1.7; 
+  }
+
+  .mobile-sub{
+    font-size:14px;
+    opacity:.6;
+    margin-top:10px;
+  }
+
+  .desktop-wrapper{
+    display:none;
+  }
+}
+
+.mobile-home-btn{
+  margin-top:20px;
+  padding:12px 18px;
+  font-size:16px;
+  font-weight:700;
+  border-radius:12px;
+  border:none;
+  background:linear-gradient(180deg,#2563eb,#1e40af);
+  color:white;
+  cursor:pointer;
+}
+
+
+/* ===============================
+   PLAYER 2 CAMBIA DE COLOR
+================================ */
+
+/* fondo de la calculadora */
+.player2{
+  background: linear-gradient(
+    180deg,
+    #1c2744 0%,
+    #141c33 100%
+  ) !important;
+}
+
+/* Teclas*/
+.player2 .key{
+  background: linear-gradient(
+    180deg,
+    #24325a 0%,
+    #1b2644 100%
+  ) !important;
+  border: 1px solid #314377;
+}
+
+/* fondo de la pantalla de la calculadora (TABLAS) */
+.player2 .calc-screen{
+  background: #0e1322 !important;
+}
+
+/* Botón Play DESACTIVADO jugador 2 */
+.player2 .play.disabled{
+  background: linear-gradient(
+    180deg,
+    #1f2937 0%,
+    #111827 100%
+  ) !important;
+
+  opacity: 0.5;
+  filter: grayscale(1);
+  cursor: not-allowed;
+  box-shadow: none;
+  
+  color: #6b7280;   /* 👈 texto gris apagado */
+}
+
+
+/* 
+ESCALADO PARA PANTALLAS GRANDES (AULAS / PIZARRAS DIGITALES)
+
+Se aplica una clase al body según resolución para escalar:
+- el juego (.desktop-wrapper)
+- el popup final (.modal)
+
+Detectado por JS con window.innerWidth
+*/
+
+.scale-90  .desktop-wrapper{ transform: scale(0.90); transform-origin:center; }
+.scale-100 .desktop-wrapper{ transform: scale(1.00); transform-origin:center; }
+.scale-120 .desktop-wrapper{ transform: scale(1.20); transform-origin:center; }
+.scale-140 .desktop-wrapper{ transform: scale(1.40); transform-origin:center; }
+.scale-150 .desktop-wrapper{ transform: scale(1.50); transform-origin:center; }
+.scale-160 .desktop-wrapper{ transform: scale(1.60); transform-origin:center; }
+.scale-200 .desktop-wrapper{ transform: scale(2.00); transform-origin:center; }
+
+.scale-90  .modal{ transform: scale(0.90); }
+.scale-100 .modal{ transform: scale(1.00); }
+.scale-120 .modal{ transform: scale(1.20); }
+.scale-140 .modal{ transform: scale(1.40); }
+.scale-150 .modal{ transform: scale(1.50); }
+.scale-160 .modal{ transform: scale(1.60); }
+.scale-200 .modal{ transform: scale(2.00); }
+
+.modal{
+  transform-origin:center;
+}
+
+#zoomControls{
+  position:fixed;
+  top:16px;
+  right:16px;
+  display:flex;
+  gap:10px;
+  z-index:99999;
+}
+
+#zoomControls button{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:20px;
+  font-weight:900;
+  color:white;
+
+  background:rgba(20,28,43,.85);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 6px 18px rgba(0,0,0,.4);
+  transition:.15s;
+}
+
+#zoomControls button:hover{
+  transform:scale(1.08);
+  background:#2563eb;
+}
+
+/* ----------------------
+AQUÍ TERMINA EN ESCALADO
+*/
+
+#logoFloating{
+  position:fixed;
+  top:16px;                 /* misma altura que botones */
+  left:50%;
+  transform:translateX(-50%);
+  z-index:99998;            /* justo debajo de botones */
+  pointer-events:none;      /* no molesta al juego */
+}
+
+#logoFloating img{
+  height:34px;              /* ajusta si quieres */
+  opacity:.9;
+
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.4));
+}
+
+
+</style>
+
+
+
+
+</head>
+
+<body>
+
+  <div id="zoomControls">
+  <button onclick="changeScale(-1)">−</button>
+  <button onclick="resetScale()">•</button>
+  <button onclick="changeScale(1)">+</button>
+
+  <button onclick="toggleFullscreen()">⛶</button>
+</div>
+
+<div id="logoFloating">
+  <img src="/holamates_punto.svg" alt="HolaMates">
+</div>
+
+<!-- 🔒 BLOQUEO MÓVIL -->
+<div class="mobile-block">
+  <div class="mobile-block-content">
+     <img 
+    src="/versus_logo.png" 
+    alt="Versus"
+    class="versus-logo"
+  />
+
+    <img 
+  src="/dos_jugando.webp" 
+  alt="Dos jugadores compitiendo"
+  class="mobile-image"
+/>
+
+
+
+<p>Diseñado para pantallas grandes y pizarras digitales</p>
+    <button class="mobile-home-btn" onclick="goHome()">
+  Volver al inicio
+</button>
+  </div>
+</div>
+
+<div class="desktop-wrapper">
+
+<main class="app player1">
+
+<header>
+  <div class="game-switch">
+    <button id="gameBtn">Sumas <span class="arrow">▾</span></button>
+   <div class="game-menu" id="gameMenu">
+  <a href="#" onclick="goHome()">Inicio</a>
+  <a href="#" onclick="goSuma10()">Suma10</a>
+  <span class="current">Sumas</span>
+  <a href="#" onclick="goRestas()">Restas</a>
+  <a href="#" onclick="goTablas()">Multiplicaciones</a>
+  <a href="#" onclick="goDivisiones()">Divisiones</a>
+</div>
+
+  </div>
+
+  <div class="stats">
+    <div class="pill">Aciertos: <span id="hits">0</span></div>
+
+    <div class="pill">
+  Modo:
+  <select id="modeSelect">
+    <option value="sin" selected>Sin llevada</option>
+    <option value="con">Con llevada</option>
+  </select>
+</div>
+
+    <div class="pill">
+      Nivel:
+      <select id="levelSelect">
+        <option value="training">Entrenamiento</option>
+        <option value="init">Iniciación</option>
+        <option value="easy">Fácil</option>
+        <option value="normal" selected>Medio</option>
+        <option value="hard">Difícil</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<section class="screen">
+
+  <!-- 🔴 TIMELINE: VA AQUÍ -->
+  <div class="timeline" aria-label="Barra de tiempo">
+    <div class="timeline-bar" id="timelineBar"></div>
+  </div>
+
+  <div class="calc-screen">
+    <div class="queue">
+      <div class="row" id="rowTop"></div>
+      <div class="row" id="rowBottom"></div>
+    </div>
+  </div>
+
+</section>
+
+
+<section class="kbd">
+  <div class="grid" id="grid"></div>
+  <button class="play" id="playBtn">▶ Play</button>
+</section>
+</main>
+
+
+<main class="app player2">
+
+<header>
+  <div class="game-switch"></div>
+
+  <div class="stats">
+    <div class="pill">Aciertos: <span id="hits2">0</span></div>
+
+    <div class="pill">
+      Modo:
+      <select id="modeSelect2" disabled>
+      <option value="sin" selected>Sin llevada</option>
+      <option value="con">Con llevada</option>
+      </select>
+    </div>
+
+    <div class="pill">
+      Nivel:
+      <select id="levelSelect2" disabled>
+        <option value="training">Entrenamiento</option>
+        <option value="init">Iniciación</option>
+        <option value="easy">Fácil</option>
+        <option value="normal" selected>Medio</option>
+        <option value="hard">Difícil</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<section class="screen">
+
+  <div class="timeline">
+    <div class="timeline-bar" id="timelineBar2"></div>
+  </div>
+
+  <div class="calc-screen">
+    <div class="queue">
+      <div class="row" id="rowTop2"></div>
+      <div class="row" id="rowBottom2"></div>
+    </div>
+  </div>
+
+</section>
+
+<section class="kbd">
+  <div class="grid" id="grid2"></div>
+  <button class="play" id="playBtn2">▶ Play</button>
+</section>
+
+</main>
+
+
+
+</div> <!-- cierre desktop-wrapper -->
+
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+
+    <div class="modal-content">
+
+      <div id="popupTitle" class="modal-message"></div>
+
+      <div class="scoreboard">
+        <div class="score-main" id="scoreMain"></div>
+      </div>
+
+      <div id="popupMessage" class="modal-message"></div>
+
+    </div>
+
+    <p id="tapOutsideText">Toca fuera para cerrar</p>
+  </div>
+</div>
+
+<script>
+const MAX_STACK = 10;
+const GAME_TIME = 60000;
+const STEP_TIME = 15000;
+const REVEAL_AFTER = 3;
+
+const LEVEL_SPEEDS = {
+  training: [3600, 3200, 2800, 2400],
+  init:     [3800, 3400, 3200, 3000],
+  easy:     [3000, 2600, 2200, 1800],
+  normal:   [2400, 2000, 1600, 1200],
+  hard:     [1800, 1400, 1000, 800]
+};
+
+// ───── PLAYER 1 ─────
+let phase1 = "idle";
+let ops1 = [];
+let answer1 = "";
+let hits1 = 0;
+let activeWait1 = 0;
+let inputLocked1 = false;
+
+
+// ───── PLAYER 2 ─────
+let phase2 = "idle";
+let ops2 = [];
+let answer2 = "";
+let hits2 = 0;
+let activeWait2 = 0;
+let inputLocked2 = false;
+
+// ───── GLOBAL ─────
+let timer1 = null;
+let timer2 = null;
+let startTime = 0;
+
+
+
+let selectedMode = "sin";
+let selectedLevel = "normal";
+
+
+
+
+
+
+
+// PLAYER 1
+const rowTop1 = document.getElementById("rowTop");
+const rowBottom1 = document.getElementById("rowBottom");
+const hitsEl1 = document.getElementById("hits");
+const timelineBar1 = document.getElementById("timelineBar");
+
+// PLAYER 2
+const rowTop2 = document.getElementById("rowTop2");
+const rowBottom2 = document.getElementById("rowBottom2");
+const hitsEl2 = document.getElementById("hits2");
+const timelineBar2 = document.getElementById("timelineBar2");
+
+
+
+const overlay = document.getElementById("overlay");
+
+let canCloseModal = true; // 🔒 bloqueo 1s para evitar cierres accidentales
+
+const modeSelect = document.getElementById("modeSelect");
+const levelSelect = document.getElementById("levelSelect");
+const modeSelect2 = document.getElementById("modeSelect2");
+const levelSelect2 = document.getElementById("levelSelect2");
+
+
+
+
+
+// Leer nivel desde query normal (?level=hard)
+const params = new URLSearchParams(window.location.search);
+const levelFromUrl = params.get("level");
+
+if (levelFromUrl) {
+  levelSelect.value = levelFromUrl;
+  selectedLevel = levelFromUrl;
+}
+
+levelSelect2.value = selectedLevel;
+
+
+
+
+const playBtn = document.getElementById("playBtn");
+
+const popupMessage = document.getElementById("popupMessage");
+const tapOutsideText = document.getElementById("tapOutsideText");
+
+
+function updatePlayButton(){
+  const disabled = phase1 !== "idle";
+
+  playBtn.classList.toggle("disabled", disabled);
+  playBtn.disabled = disabled;
+
+  playBtn2.classList.toggle("disabled", disabled);
+  playBtn2.disabled = disabled;
+}
+
+
+
+function updatePlayLabel(){
+  if (selectedLevel === "training") {
+    playBtn.textContent = "▶ Entrenar";
+  } else {
+    playBtn.textContent = "▶ Play";
+  }
+}
+
+
+modeSelect.onchange = () => {
+  selectedMode = modeSelect.value;
+  modeSelect2.value = selectedMode;
+};
+
+levelSelect.onchange = () => {
+  selectedLevel = levelSelect.value;
+
+  // 🔁 sincroniza jugador 2
+  levelSelect2.value = selectedLevel;
+
+  updatePlayLabel();
+};
+
+function randOp(){
+
+  // 🔴 MODO CON LLEVADA (80% con llevada)
+  if (selectedMode === "con") {
+
+    const r = Math.random();
+
+    // 🔥 80% → CON llevada
+    if (r < 0.8) {
+      let a, b;
+      do {
+        a = Math.floor(Math.random() * 9) + 1;
+        b = Math.floor(Math.random() * 9) + 1;
+      } while (a + b < 10);
+
+      return { a, b, revealed: false };
+    }
+
+    // 🔹 20% → SIN llevada
+    let a, b;
+    do {
+      a = Math.floor(Math.random() * 9) + 1;
+      b = Math.floor(Math.random() * 9) + 1;
+    } while (a + b >= 10);
+
+    return { a, b, revealed: false };
+  }
+
+  // 🟢 MODO SIN LLEVADA (100% < 10)
+  let a, b;
+  do {
+    a = Math.floor(Math.random() * 9) + 1;
+    b = Math.floor(Math.random() * 9) + 1;
+  } while (a + b >= 10);
+
+  return { a, b, revealed: false };
+}
+
+
+function currentInterval(){
+  const elapsed = Date.now() - startTime;
+  if(elapsed >= GAME_TIME) return null;
+  const speeds = LEVEL_SPEEDS[selectedLevel];
+  const idx = Math.min(Math.floor(elapsed / STEP_TIME), speeds.length - 1);
+  return speeds[idx];
+}
+
+function render1(){
+
+  rowTop1.innerHTML = "";
+  rowBottom1.innerHTML = "";
+
+  const bottom = ops1.slice(-5);
+  const top = ops1.slice(0, Math.max(ops1.length - 5, 0));
+
+  function paintRow(rowEl, rowOps){
+    const empties = Math.max(0, 5 - rowOps.length);
+
+    for(let i = 0; i < empties; i++){
+      const d = document.createElement("div");
+      d.className = "card empty";
+      rowEl.appendChild(d);
+    }
+
+    rowOps.forEach(op => {
+      const d = document.createElement("div");
+
+      let cls = "card" + (op.revealed ? " revealed" : "");
+      if(op === ops1[0]){
+        cls += (phase1 === "ending" || phase1 === "ended") ? " fail" : " active";
+      }
+
+      d.className = cls;
+      d.textContent = op.revealed
+        ? `${op.a}+${op.b}=${op.a + op.b}`
+        : `${op.a}+${op.b}`;
+
+      rowEl.appendChild(d);
+    });
+  }
+
+  paintRow(rowTop1, top.slice(0,5));
+  paintRow(rowBottom1, bottom);
+
+  hitsEl1.textContent = hits1;
+}
+
+function render2(){
+
+  rowTop2.innerHTML = "";
+  rowBottom2.innerHTML = "";
+
+  const bottom = ops2.slice(-5);
+  const top = ops2.slice(0, Math.max(ops2.length - 5, 0));
+
+  function paintRow(rowEl, rowOps){
+    const empties = Math.max(0, 5 - rowOps.length);
+
+    for(let i = 0; i < empties; i++){
+      const d = document.createElement("div");
+      d.className = "card empty";
+      rowEl.appendChild(d);
+    }
+
+    rowOps.forEach(op => {
+      const d = document.createElement("div");
+
+      let cls = "card" + (op.revealed ? " revealed" : "");
+      if(op === ops2[0]){
+        cls += (phase2 === "ending" || phase2 === "ended") ? " fail" : " active";
+      }
+
+      d.className = cls;
+      d.textContent = op.revealed
+        ? `${op.a}+${op.b}=${op.a + op.b}`
+        : `${op.a}+${op.b}`;
+
+      rowEl.appendChild(d);
+    });
+  }
+
+  paintRow(rowTop2, top.slice(0,5));
+  paintRow(rowBottom2, bottom);
+
+  hitsEl2.textContent = hits2;
+}
+
+
+
+function updateTimeline(){
+
+  const elapsed = Date.now() - startTime;
+  const progress = Math.min(elapsed / GAME_TIME, 1);
+  const w = (progress * 100) + "%";
+
+  // 🔵 Player 1
+  if (phase1 === "playing") {
+    timelineBar1.style.width = w;
+  }
+
+  // 🔵 Player 2
+  if (phase2 === "playing") {
+    timelineBar2.style.width = w;
+  }
+
+  // 🔁 Sigue animando mientras alguno esté jugando
+  if (phase1 === "playing" || phase2 === "playing") {
+    requestAnimationFrame(updateTimeline);
+  }
+}
+
+
+function scheduleNext1(){
+
+  if (phase1 !== "playing") return;
+
+  const interval = currentInterval();
+  if (interval === null){
+    endGamePlayer1();
+    return;
+  }
+
+  clearTimeout(timer1);
+
+  timer1 = setTimeout(() => {
+
+    if (phase1 !== "playing") return;
+
+    if (ops1.length >= MAX_STACK){
+      endGamePlayer1();
+      return;
+    }
+
+   if (ops1.length && !ops1[0].revealed) {
+  if (selectedLevel === "training") {
+    ops1[0].revealed = true; // training: revela sin esperar
+  } else {
+    activeWait1++;
+    if (activeWait1 >= REVEAL_AFTER) ops1[0].revealed = true;
+  }
+}
+
+    ops1.push(randOp());
+    render1();
+    scheduleNext1();
+
+  }, interval);
+}
+
+
+function scheduleNext2(){
+
+  if (phase2 !== "playing") return;
+
+  const interval = currentInterval();
+  if (interval === null){
+    endGamePlayer2();
+    return;
+  }
+
+  clearTimeout(timer2);
+
+  timer2 = setTimeout(() => {
+
+    if (phase2 !== "playing") return;
+
+    if (ops2.length >= MAX_STACK){
+      endGamePlayer2();
+      return;
+    }
+
+    if (ops2.length && !ops2[0].revealed) {
+  if (selectedLevel === "training") {
+    ops2[0].revealed = true;
+  } else {
+    activeWait2++;
+    if (activeWait2 >= REVEAL_AFTER) ops2[0].revealed = true;
+  }
+}
+
+    ops2.push(randOp());
+    render2();
+    scheduleNext2();
+
+  }, interval);
+}
+
+
+
+function press1(n){
+
+  if(phase1 !== "playing" || !ops1.length) return;
+  if (inputLocked1) return;
+
+  inputLocked1 = true;
+
+  answer1 += n;
+  render1();
+
+  const cur = ops1[0];
+  const res = String(cur.a + cur.b);
+
+// ✅ ACIERTO
+if(answer1 === res){
+  hits1++;
+  ops1.shift();
+  answer1 = "";
+  activeWait1 = 0;
+
+  // 🔥 NUEVO: nunca dejar vacío
+  if (ops1.length === 0 && phase1 === "playing") {
+    ops1.push(randOp());
+  }
+
+  render1();
+  inputLocked1 = false;
+  return;
+}
+
+  // ❌ FALLO
+  if(!res.startsWith(answer1)){
+    answer1 = "";
+    render1();
+
+    ops1.push(randOp());
+    render1();
+    scheduleNext1();
+
+    if (ops1.length >= MAX_STACK) {
+      endGamePlayer1();
+      inputLocked1 = false;
+      return;
+    }
+  }
+
+  inputLocked1 = false;
+}
+
+
+function press2(n){
+
+  if(phase2 !== "playing" || !ops2.length) return;
+  if (inputLocked2) return;
+
+  inputLocked2 = true;
+
+  answer2 += n;
+  render2();
+
+  const cur = ops2[0];
+  const res = String(cur.a + cur.b);
+
+ // ✅ ACIERTO
+if(answer2 === res){
+  hits2++;
+  ops2.shift();
+  answer2 = "";
+  activeWait2 = 0;
+
+  // 🔥 NUEVO: nunca dejar vacío
+  if (ops2.length === 0 && phase2 === "playing") {
+    ops2.push(randOp());
+  }
+
+  render2();
+  inputLocked2 = false;
+  return;
+}
+
+  // ❌ FALLO
+  if(!res.startsWith(answer2)){
+    answer2 = "";
+    render2();
+
+    ops2.push(randOp());
+    render2();
+    scheduleNext2();
+
+    if (ops2.length >= MAX_STACK) {
+      endGamePlayer2();
+      inputLocked2 = false;
+      return;
+    }
+  }
+
+  inputLocked2 = false;
+}
+
+
+
+function startGame(){
+
+  if (phase1 !== "idle") return; // 🔒 bloqueo duro
+
+  inputLocked1 = false;   // 🔓 reset seguridad
+  inputLocked2 = false;   // 🔓 reset seguridad
+
+  overlay.classList.remove("show");
+  clearTimeout(timer1);
+  clearTimeout(timer2);
+
+  // ───── RESET PLAYER 1 ─────
+  ops1 = [];
+  hits1 = 0;
+  answer1 = "";
+  activeWait1 = 0;
+  phase1 = "playing";
+
+  // ───── RESET PLAYER 2 ─────
+  ops2 = [];
+  hits2 = 0;
+  answer2 = "";
+  activeWait2 = 0;
+  phase2 = "playing";
+
+  startTime = Date.now();
+
+  updatePlayButton();
+
+  playBtn.textContent =
+    selectedLevel === "training"
+      ? "▶ Entrenamiento"
+      : "▶ Play";
+
+// 🔥 Primera operación independiente
+ops1.push(randOp());
+ops2.push(randOp());
+
+
+  render1();
+  render2();
+
+  scheduleNext1();
+  scheduleNext2();
+
+gtag('event','game_start',{game:'sumas_duelo',level:selectedLevel});
+
+  // reset timeline
+  timelineBar1.style.width = "0%";
+  timelineBar2.style.width = "0%";
+  timelineBar1.classList.remove("fail");
+  timelineBar2.classList.remove("fail");
+
+  updateTimeline();
+}
+
+
+function mensajeAnimo(hits){
+
+  if(hits === 0)  return "No pasa nada 💙 Vamos a intentarlo otra vez";
+  if(hits === 1)  return "Buen intento 💪 Cada partida cuenta";
+  if(hits === 2)  return "¡Bien! Poco a poco 🙂";
+  if(hits === 3)  return "¡Muy bien! Sigue así 👏";
+  if(hits === 4)  return "¡Genial! Vas mejorando 🚀";
+  if(hits === 5)  return "¡Muy bien! Buen comienzo 😄";
+  if(hits === 6)  return "¡Muy bien! Cada vez más rápido 🔥";
+  if(hits === 7)  return "¡Genial! Buena concentración 🧠";
+  if(hits === 8)  return "¡Genial! Ritmo sólido 💪";
+  if(hits === 9)  return "¡Muy bien! Buen control 👌";
+
+  // 🔹 A partir de 10: ya se nota progreso real
+  if(hits === 10) return "¡Muy bien! Se nota el progreso 😄";
+  if(hits === 11) return "¡Muy bien! Cada vez más seguro 🙂";
+  if(hits === 12) return "¡Genial! Buen ritmo 🚀";
+  if(hits === 13) return "¡Genial! Buen control 👏";
+  if(hits === 14) return "¡Muy bien! Vas fuerte 💪";
+
+  // 🔹 15–19: jugador sólido
+  if(hits === 15) return "¡Muy bien! Ritmo constante 💪";
+  if(hits === 16) return "¡Muy bien! Buena seguridad 🙂";
+  if(hits === 17) return "¡Genial! Gran concentración 🧠";
+  if(hits === 18) return "¡Genial! Buen control 👏";
+  if(hits === 19) return "¡Muy bien! Preparado para más 🚀";
+
+  // 🔥 A partir de 20: nivel alto
+  if(hits === 20) return "¡Brutal! Nivel altísimo 🔥";
+  if(hits === 21) return "¡Brutal! Muy sólido 💥";
+  if(hits === 22) return "¡Bestial! Ritmo brutal 🔥";
+  if(hits === 23) return "¡Bestial! Gran dominio 💪";
+  if(hits === 24) return "¡Bestial! Muy fuerte 🧠";
+
+  // 🏆 25–29: nivel pro
+  if(hits === 25) return "¡Nivel pro! Muy rápido 🚀";
+  if(hits === 26) return "¡Nivel pro! Gran control 🎯";
+  if(hits === 27) return "¡Nivel pro! Sin fallos 💥";
+  if(hits === 28) return "¡Nivel pro! Precisión total 🎯";
+  if(hits === 29) return "¡Nivel pro! Impresionante 🌟";
+
+  // 🏆 30–34: sobresaliente
+  if(hits === 30) return "¡Sobresaliente! Ritmo altísimo 🏆";
+  if(hits === 31) return "¡Sobresaliente! Mucha precisión 🎯";
+  if(hits === 32) return "¡Sobresaliente! Gran seguridad 😎";
+  if(hits === 33) return "¡Sobresaliente! Muy sólido 💪";
+  if(hits === 34) return "¡Sobresaliente! Nivel top 🌟";
+
+  // 🤖 35–39: máquina
+  if(hits === 35) return "¡Máquina! Esto ya es otro nivel 🤖";
+  if(hits === 36) return "¡Máquina! Ritmo brutal 🔥";
+  if(hits === 37) return "¡Máquina! Gran dominio 🧠";
+  if(hits === 38) return "¡Máquina! Partidaza 💥";
+  if(hits === 39) return "¡Máquina! Imparable 🚀";
+
+  // 👑 40–44: leyenda
+  if(hits === 40) return "¡Leyenda! Partida histórica 👑";
+  if(hits === 41) return "¡Leyenda! Dominio total 😎";
+  if(hits === 42) return "¡Leyenda! Precisión increíble 🎯";
+  if(hits === 43) return "¡Leyenda! Ritmo perfecto 🌟";
+  if(hits === 44) return "¡Leyenda! Nivel máximo 🏆";
+
+  // 🌟 45–49: élite
+  if(hits === 45) return "¡Élite! Juego perfecto 🔥";
+  if(hits === 46) return "¡Élite! Control absoluto 🧠";
+  if(hits === 47) return "¡Élite! Sin errores 💥";
+  if(hits === 48) return "¡Élite! Brutal 😎";
+  if(hits === 49) return "¡Élite! Imparable 🚀";
+
+  // 🚀 50–59: fuera de lo normal
+  if(hits === 50) return "¡Increíble! Esto es otro planeta 🤯";
+  if(hits === 51) return "¡Increíble! Nivel extremo 🔥";
+  if(hits === 52) return "¡Increíble! Dominio total 💪";
+  if(hits === 53) return "¡Increíble! Precisión perfecta 🎯";
+  if(hits === 54) return "¡Increíble! Ritmo demencial 🚀";
+  if(hits === 55) return "¡Increíble! Mente de acero 🧠";
+  if(hits === 56) return "¡Increíble! Sin palabras 🤯";
+  if(hits === 57) return "¡Increíble! Maestro absoluto 🏆";
+  if(hits === 58) return "¡Increíble! Juego perfecto 🔥";
+  if(hits === 59) return "¡Increíble! Casi imposible 😎";
+
+// 🌌 60–69: 
+  if(hits === 60) return "👑 Leyenda absoluta 🔥";
+if(hits === 61) return "👑 Nivel mítico 🚀";
+if(hits === 62) return "🌟 Dominio legendario 💪";
+if(hits === 63) return "⚡ Ritmo sobrenatural 🔥";
+if(hits === 64) return "💎 Precisión perfecta 🎯";
+if(hits === 65) return "🧠 Maestro mental 👏";
+if(hits === 66) return "🔥 Dominio extremo 🚀";
+if(hits === 67) return "⚡ Velocidad imparable 💥";
+if(hits === 68) return "🏆 Nivel histórico 🌟";
+if(hits === 69) return "👑 Casi perfecto 😎";
+
+// 🌌 70–79: nivel mito
+if(hits === 70) return "🌌 Nivel mito 🚀";
+if(hits === 71) return "🔥 Partida legendaria 🏆";
+if(hits === 72) return "💥 Imparable total ⚡";
+if(hits === 73) return "🌟 Rendimiento épico 🚀";
+if(hits === 74) return "💎 Control absoluto 🎯";
+if(hits === 75) return "👑 Maestro supremo 🔥";
+if(hits === 76) return "⚡ Ritmo alienígena 🧠";
+if(hits === 77) return "🌌 Dominio galáctico 🚀";
+if(hits === 78) return "🏆 Nivel récord 🌟";
+if(hits === 79) return "🔥 Brutalísimo 😎";
+
+// 🛸 80–89: nivel galáctico
+if(hits === 80) return "🛸 Nivel galáctico 🚀";
+if(hits === 81) return "🌠 Rendimiento estelar 🔥";
+if(hits === 82) return "💎 Precisión total 🎯";
+if(hits === 83) return "⚡ Velocidad extrema 💥";
+if(hits === 84) return "👑 Maestro infinito 🏆";
+if(hits === 85) return "🌌 Juego cósmico 🚀";
+if(hits === 86) return "🔥 Dominio absoluto 💪";
+if(hits === 87) return "🧠 Genio total 🌟";
+if(hits === 88) return "⚡ Imparable 🚀";
+if(hits === 89) return "🏆 Nivel máximo 😎";
+
+// 🌟 90–100: casi legendario eterno
+if(hits === 90) return "🌟 Nivel supremo 🔥";
+if(hits === 91) return "🔥 Dominio total 👑";
+if(hits === 92) return "⚡ Velocidad perfecta 🚀";
+if(hits === 93) return "💎 Precisión legendaria 🎯";
+if(hits === 94) return "🧠 Control absoluto 🌟";
+if(hits === 95) return "👑 Maestro eterno 🔥";
+if(hits === 96) return "🌌 Rendimiento sobrenatural 🚀";
+if(hits === 97) return "⚡ Ritmo imparable 💥";
+if(hits === 98) return "🏆 Partida histórica 🌟";
+if(hits === 99) return "👑 A un paso de la eternidad 🔥";
+if(hits === 100) return "💯 Esto es historia!!! 🏆";
+
+// 🌠 101–121: nivel trascendental
+if(hits === 101) return "👑 Nivel imposible superado 🔥";
+if(hits === 102) return "🌠 Nivel trascendental 🔥";
+if(hits === 103) return "🚀 Más allá de lo imposible 💥";
+if(hits === 104) return "👑 Dominio absoluto del cálculo 🏆";
+if(hits === 105) return "⚡ Velocidad sobrenatural 🧠";
+if(hits === 106) return "💎 Precisión infinita 🎯";
+if(hits === 107) return "🔥 Ritmo fuera de escala 🚀";
+if(hits === 108) return "🌌 Control total del universo matemático 🌟";
+if(hits === 109) return "🧠 Mente brillante 💥";
+if(hits === 110) return "🏆 Marca histórica 🚀";
+if(hits === 111) return "👑 Nivel inalcanzable 🔥";
+
+if(hits === 112) return "⚡ Rendimiento legendario 💎";
+if(hits === 113) return "🌠 Juego perfecto 🏆";
+if(hits === 114) return "🔥 Dominio sin límites 🚀";
+if(hits === 115) return "🧠 Cálculo imparable 💥";
+if(hits === 116) return "👑 Ritmo de campeón 🏆";
+if(hits === 117) return "⚡ Nivel épico 🚀";
+if(hits === 118) return "🌌 Precisión absoluta 💎";
+if(hits === 119) return "🔥 Partida inolvidable 🏆";
+if(hits === 120) return "👑 Nivel infinito 🚀";
+if(hits === 121) return "🌟 Más allá de la leyenda 🔥";
+
+//  121: final definitivo
+if(hits > 121) return "¡LEYENDA ETERNA! Esto es historia 🏆";
+}
+
+
+function endGamePlayer1(){
+
+  if (phase1 !== "playing") return;
+
+  phase1 = "ending";
+  timelineBar1.classList.add("fail");
+  render1();
+
+  setTimeout(() => {
+    phase1 = "ended";
+    checkBothFinished();
+  }, 500);
+}
+
+
+function endGamePlayer2(){
+
+  if (phase2 !== "playing") return;
+
+  phase2 = "ending";
+  timelineBar2.classList.add("fail");
+  render2();
+
+  setTimeout(() => {
+    phase2 = "ended";
+    checkBothFinished();
+  }, 500);
+}
+
+
+function checkBothFinished(){
+  if (phase1 === "ended" && phase2 === "ended") {
+    showFinalModal();
+  }
+}
+
+
+function showFinalModal(){
+
+  let winner = null;
+
+  if (hits1 > hits2) winner = 1;
+  else if (hits2 > hits1) winner = 2;
+
+  const popupTitle = document.getElementById("popupTitle");
+  const scoreMain = document.getElementById("scoreMain");
+
+  popupTitle.textContent = winner
+    ? "🏆 Ganador: Jugador " + winner
+    : "🤝 Empate";
+
+  scoreMain.innerHTML = `
+    <div class="score-block ${winner === 1 ? 'winner' : winner === 2 ? 'loser' : ''}">
+      <div class="score-number">${hits1}</div>
+      <div class="score-label">Jugador 1</div>
+    </div>
+
+    <div class="score-separator">–</div>
+
+    <div class="score-block ${winner === 2 ? 'winner' : winner === 1 ? 'loser' : ''}">
+      <div class="score-number">${hits2}</div>
+      <div class="score-label">Jugador 2</div>
+    </div>
+  `;
+
+  popupMessage.innerHTML =
+  "Jugador 1: " + mensajeAnimo(hits1) +
+  "<br><br>" +
+  "Jugador 2: " + mensajeAnimo(hits2);
+
+  overlay.classList.add("show");
+
+  canCloseModal = false;
+  setTimeout(() => {
+    canCloseModal = true;
+  }, 1000);
+}
+
+
+overlay.onclick = e => {
+  if (!canCloseModal) return;
+
+  // Solo cerrar si NO estás clicando dentro del modal
+  if (!e.target.closest(".modal")) {
+    overlay.classList.remove("show");
+
+    phase1 = "idle";
+    phase2 = "idle";
+
+    updatePlayButton();
+    updatePlayLabel();
+  }
+};
+
+
+
+function buildKeys(){
+  const g = document.getElementById("grid");
+
+  function createKey(val){
+    const b = document.createElement("button");
+    b.className = "key";
+    b.textContent = val;
+
+    b.addEventListener("pointerdown", e => {
+      b.setPointerCapture(e.pointerId);
+      press1(val);
+    });
+
+    b.addEventListener("pointerup", e => {
+      b.releasePointerCapture(e.pointerId);
+    });
+
+    b.addEventListener("pointercancel", e => {
+      try { b.releasePointerCapture(e.pointerId); } catch {}
+    });
+
+    return b;
+  }
+
+  [1,2,3,4,5,6,7,8,9].forEach(n=>{
+    g.appendChild(createKey(n));
+  });
+
+  const z = createKey("0");
+  z.classList.add("zero");
+  g.appendChild(z);
+}
+
+
+function buildKeys2(){
+  const g = document.getElementById("grid2");
+
+  function createKey(val){
+    const b = document.createElement("button");
+    b.className = "key";
+    b.textContent = val;
+
+    b.addEventListener("pointerdown", e => {
+      b.setPointerCapture(e.pointerId);
+      press2(val);
+    });
+
+    b.addEventListener("pointerup", e => {
+      b.releasePointerCapture(e.pointerId);
+    });
+
+    b.addEventListener("pointercancel", e => {
+      try { b.releasePointerCapture(e.pointerId); } catch {}
+    });
+
+    return b;
+  }
+
+  [1,2,3,4,5,6,7,8,9].forEach(n=>{
+    g.appendChild(createKey(n));
+  });
+
+  const z = createKey("0");
+  z.classList.add("zero");
+  g.appendChild(z);
+}
+
+
+
+buildKeys();
+buildKeys2();
+
+render1();
+render2();
+playBtn.onclick = startGame;
+const playBtn2 = document.getElementById("playBtn2");
+playBtn2.onclick = startGame;
+
+updatePlayButton();
+
+updatePlayLabel();
+
+
+
+const gameBtn = document.getElementById("gameBtn");
+const gameMenu = document.getElementById("gameMenu");
+
+gameBtn.onclick = e => {
+  e.stopPropagation();
+  gameMenu.classList.toggle("show");
+};
+document.addEventListener("click", () => gameMenu.classList.remove("show"));
+
+function goHome(){
+  window.location.href = "/";               
+}
+
+function goSuma10(){
+  window.location.href = '/suma10dosj.html';
+}
+
+function goRestas(){
+  window.location.href = '/restasdosj.html';
+}
+
+function goTablas(){
+  window.location.href = '/multiplicacionesdosj.html';
+}
+
+function goDivisiones(){
+  window.location.href = '/divisionesdosj.html';
+}
+  
+function goSumas(){
+  const level = levelSelect.value || 'normal';
+  const mode = selectedMode || 'sin';
+
+  window.location.href =
+  `/sumasdosj.html?level=${encodeURIComponent(level)}&mode=${encodeURIComponent(mode)}`;
+}
+
+const scales = [
+  "scale-90",
+  "scale-100",
+  "scale-120",
+  "scale-140",
+  "scale-150",
+  "scale-160",
+  "scale-200"
+];
+
+let currentScaleIndex = 0;
+
+function applyBigScreenScale(){
+
+  const w = window.innerWidth;
+
+  document.body.classList.remove(...scales);
+
+  if(w >= 2500){
+    document.body.classList.add("scale-200");
+  }
+  else if(w >= 2000){
+    document.body.classList.add("scale-160");
+  }
+  else if(w >= 1900){
+    document.body.classList.add("scale-150");
+  }
+  else if(w >= 1700){
+    document.body.classList.add("scale-140");
+  }
+  else if(w >= 1400){
+    document.body.classList.add("scale-120");
+  }
+  else if(w >= 1200){
+    document.body.classList.add("scale-100");
+  }
+  else{
+    document.body.classList.add("scale-90");
+  }
+}
+
+function syncScaleIndex(){
+  const current = scales.findIndex(s => document.body.classList.contains(s));
+  if(current !== -1){
+    currentScaleIndex = current;
+  }
+}
+
+function applyScaleByIndex(){
+  document.body.classList.remove(...scales);
+  document.body.classList.add(scales[currentScaleIndex]);
+}
+
+function changeScale(direction){
+  currentScaleIndex += direction;
+
+  if(currentScaleIndex < 0) currentScaleIndex = 0;
+  if(currentScaleIndex >= scales.length) currentScaleIndex = scales.length - 1;
+
+  applyScaleByIndex();
+}
+
+function resetScale(){
+  applyBigScreenScale();
+  syncScaleIndex();
+}
+
+function toggleFullscreen(){
+
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(err => {
+      console.log("Error fullscreen:", err);
+    });
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+
+applyBigScreenScale();
+syncScaleIndex();
+
+window.addEventListener("resize", () => {
+  applyBigScreenScale();
+  syncScaleIndex();
+});
+
+
+
+
+</script>
+
+
+</body>
+</html>

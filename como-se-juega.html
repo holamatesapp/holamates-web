@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Cómo jugar | HolaMates</title>
+
+<style>
+
+/* ==================================================
+PÁGINA · CÓMO JUGAR
+================================================== */
+
+/* ================= HEADER ================= */
+
+.app-header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  z-index: 1000;
+  background: rgba(11,15,20,.78);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.app-header-inner{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-left: 16px;   /* 🔥 SIEMPRE PEGADO */
+  padding-right: 16px;
+}
+
+.back-link{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin-right:10px;
+
+  width:36px;
+  height:36px;
+
+  border-radius:10px;
+
+  text-decoration:none;
+
+  transition:
+    background .2s ease,
+    transform .15s ease;
+}
+
+.back-link:hover{
+  background:rgba(255,255,255,.08);
+}
+
+.back-link:active{
+  transform:scale(.92);
+}
+
+.icon-back{
+  width:22px;
+  height:22px;
+}
+
+.app-title{
+  font-size: 17px;
+  font-weight: 800;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.app-title:hover{ opacity:.9 }
+.app-title:visited{ color:#ffffff }
+
+/* ================= BASE ================= */
+
+body{
+  margin:0;
+  background:#0b0f14;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+}
+
+.gallery-section{
+  min-height: 100vh;
+  padding: 96px 20px 64px;
+  background: #0b0f14;
+}
+
+/* ================= ICONO ================= */
+
+.page-icon{
+  text-align: center;
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+/* ================= CONTENEDOR ================= */
+
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ================= TITULO ================= */
+
+.page-title{
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+/* ================= GRID ================= */
+
+.gallery{
+  display: grid;
+  gap: 40px;
+}
+
+@media (min-width: 900px){
+  .gallery{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ================= CARD ================= */
+
+.card{
+  padding: 22px 20px;
+  background: rgba(255,255,255,.05);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+  text-align: center;
+}
+
+.card h4{
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fcd63c;
+}
+
+.card-text{
+  margin-bottom: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #9aa8bd;
+}
+
+.card-text strong{
+  color:#fff;
+}
+
+.card-footer{
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: #1e3a8a;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ================= IMAGEN ================= */
+
+.card-image{
+  width: 100%;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  border: 3px solid rgba(255,255,255,.12);
+}
+
+/* ================= TEXTO FINAL ================= */
+
+.motivation{
+  margin-top: 48px;
+  text-align: center;
+  font-size: 18px;
+  color: #c7d2fe;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width:600px){
+
+  .gallery-section{
+    padding:88px 18px 60px;
+  }
+
+}
+
+/* =================================
+1400+
+================================= */
+
+@media (min-width:1400px){
+
+  .app-header{ height:64px; }
+
+  .app-header-inner{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .back-link{
+    width:44px;
+    height:44px;
+  }
+
+  .icon-back{
+    width:26px;
+    height:26px;
+  }
+
+  .app-title{ font-size:20px; }
+
+  .container{ max-width:1300px; }
+
+  .page-icon{ font-size:60px; }
+  .page-title{ font-size:40px; }
+
+  .gallery{ gap:60px; }
+
+  .card{ padding:30px 26px; }
+  .card h4{ font-size:22px; }
+  .card-text{ font-size:18px; }
+  .card-footer{ font-size:16px; }
+
+  .motivation{ font-size:20px; }
+}
+
+/* =================================
+1700+
+================================= */
+
+@media (min-width:1700px){
+
+  .app-header{ height:72px; }
+
+  .app-header-inner{
+    padding-left:24px;
+    padding-right:24px;
+  }
+
+  .back-link{
+    width:52px;
+    height:52px;
+  }
+
+  .icon-back{
+    width:30px;
+    height:30px;
+  }
+
+  .app-title{ font-size:22px; }
+
+  .container{ max-width:1500px; }
+
+  .page-title{ font-size:46px; }
+  .gallery{ gap:80px; }
+
+  .card{ padding:34px 30px; }
+  .card h4{ font-size:26px; }
+  .card-text{ font-size:20px; }
+  .card-footer{ font-size:18px; }
+
+  .motivation{ font-size:22px; }
+}
+
+/* =================================
+1900+
+================================= */
+
+@media (min-width:1900px){
+
+  .app-header{ height:86px; }
+
+  .app-header-inner{
+    padding-left:28px;
+    padding-right:28px;
+  }
+
+  .back-link{
+    width:60px;
+    height:60px;
+  }
+
+  .icon-back{
+    width:34px;
+    height:34px;
+  }
+
+  .app-title{ font-size:24px; }
+
+  .container{ max-width:1700px; }
+
+  .page-title{ font-size:52px; }
+  .gallery{ gap:100px; }
+
+  .card{ padding:40px 34px; }
+  .card h4{ font-size:30px; }
+  .card-text{ font-size:22px; }
+  .card-footer{ font-size:20px; }
+
+  .motivation{ font-size:24px; }
+}
+
+/* =================================
+2500+
+================================= */
+
+@media (min-width:2500px){
+
+  .app-header{ height:105px; }
+
+  .app-header-inner{
+    padding-left:32px;
+    padding-right:32px;
+  }
+
+  .back-link{
+    width:72px;
+    height:72px;
+  }
+
+  .icon-back{
+    width:40px;
+    height:40px;
+  }
+
+  .app-title{ font-size:28px; }
+
+  .container{ max-width:2000px; }
+
+  .page-icon{ font-size:80px; }
+  .page-title{ font-size:64px; }
+
+  .gallery{ gap:140px; }
+
+  .card{ padding:48px 44px; }
+  .card h4{ font-size:36px; }
+  .card-text{ font-size:26px; }
+  .card-footer{ font-size:24px; }
+
+  .motivation{ font-size:28px; }
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="app-header-inner">
+
+    <a href="index.html" class="back-link">
+  <svg class="icon-back" viewBox="0 0 24 24" fill="none">
+    <path d="M15 18L9 12L15 6" stroke="#e8eef7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</a>
+
+    <a href="index.html" class="app-title">
+      HolaMates
+    </a>
+
+  </div>
+</header>
+
+<!-- CONTENIDO -->
+<section class="gallery-section">
+
+  <div class="container">
+
+    <div class="page-icon">🎮</div>
+    <h3 class="page-title">Cómo jugar</h3>
+
+    <div class="gallery">
+
+      <!-- SUMA 10 -->
+      <div class="card">
+
+        <img src="pantalla_suma10.png" class="card-image">
+
+        <h4>Suma 10</h4>
+
+        <p class="card-text">
+          Aparecen números en pantalla. El primero es <strong>azul</strong>.<br>
+          Pulsa el número que, al sumarse con él, dé <strong>10</strong>.
+        </p>
+
+        <p class="card-text">
+          Según el nivel, los números aparecen cada vez más rápido.
+        </p>
+
+        <p class="card-text">
+          Si aciertas, el número se borra.
+        </p>
+
+        <p class="card-text">
+          Si fallas, aparece otro número como penalización.
+        </p>
+
+        <div class="card-footer">
+          ⏱️ La partida acaba a los 60 segundos o cuando hay 10 números en pantalla.
+        </div>
+
+      </div>
+
+      <!-- RESTO -->
+      <div class="card">
+
+        <img src="pantalla_tablas.png" class="card-image">
+
+        <h4>Resto de juegos</h4>
+
+        <p class="card-text">
+          Aparecen operaciones en pantalla.
+          La primera (<strong>azul</strong>) es la activa.
+          Introduce el resultado.
+        </p>
+
+        <p class="card-text">
+          Según el nivel, aparecen más rápido.
+        </p>
+
+        <p class="card-text">
+          Si aciertas, se borra.
+        </p>
+
+        <p class="card-text">
+          Si fallas, aparece otra como penalización.
+        </p>
+
+        <div class="card-footer">
+          ⏱️ 60 segundos o 10 operaciones.
+        </div>
+
+      </div>
+
+    </div>
+
+    <p class="motivation">
+      💪 Intenta superarte en cada partida.
+    </p>
+
+  </div>
+
+</section>
+
+</body>
+</html>

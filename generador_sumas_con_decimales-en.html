@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Printable Decimal Addition Worksheet Generator (PDF) | Elementary Math Practice | HolaMates</title>
+<meta name="description" content="Generate printable decimal addition worksheets in PDF. Create decimal addition exercises for elementary students. Perfect for teachers and home practice.">
+<link rel="canonical" href="https://holamates.com/generador_sumas_con_decimales-en.html">
+<meta property="og:title" content="Decimal Addition Worksheet Generator | HolaMates">
+<meta property="og:description" content="Create printable decimal addition worksheets ready to download as PDF.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://holamates.com/generador_sumas_con_decimales-en.html">
+<meta property="og:image" content="https://holamates.com/generador_sumas.webp">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SSHD0HME2Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SSHD0HME2Z');
+</script>
+
+<script>
+gtag('event', 'page_view', {
+  page_title: 'Decimal addition generator',
+  page_location: window.location.href
+});
+</script>
+
+<style>
+/* =========================
+   Variables
+========================= */
+:root{
+  --bg:#0b0f14;
+  --panel:#111824;
+  --panel2:#0f1622;
+  --text:#e8eef7;
+  --muted:#91a4bd;
+  --btn:#182235;
+  --btn2:#141c2b;
+  --active:#2563eb;
+  --shadow:0 18px 60px rgba(0,0,0,.45);
+  --radius:18px;
+}
+
+/* =========================
+   Reset / Base
+========================= */
+*{ box-sizing:border-box }
+html, body{ height:100% }
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:var(--bg);
+  color:var(--text);
+  padding-top:52px;
+}
+
+/* =========================
+   Header fijo
+========================= */
+.app-header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:52px;
+  background:rgba(11,15,20,.92);
+  backdrop-filter: blur(6px);
+  display:flex;
+  align-items:center;
+  padding:0 14px;
+  z-index:1000;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.back-link{
+  color:var(--text);
+  text-decoration:none;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:.2px;
+  opacity:.9;
+}
+
+.back-link:active{ opacity:.6; }
+
+/* =========================
+   Card principal
+========================= */
+.card{
+  width:100%;
+  min-height:calc(100vh - 52px);
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid rgba(255,255,255,.06);
+  padding:20px 18px 22px;
+  display:flex;
+  flex-direction:column;
+}
+
+/* =========================
+   Logo / Marca
+========================= */
+.brand{
+  display:flex;
+  justify-content:center;
+  margin-bottom:8px;
+}
+
+.brand img{
+  width:200px;
+  max-width:80%;
+  opacity:.95;
+}
+
+/* =========================
+   Imagen principal
+========================= */
+.hero{
+  display:flex;
+  justify-content:center;
+  margin:0 0 14px;
+}
+
+.hero img{
+  width:100%;
+  max-width:320px;
+  border-radius:14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.45);
+}
+
+/* =========================
+   Textos
+========================= */
+h1{
+  margin:6px 0 6px;
+  font-size:18px;
+  font-weight:800;
+  text-align:center;
+}
+
+p{
+  margin:0 0 16px;
+  color:var(--muted);
+  text-align:center;
+  font-size:14px;
+}
+
+/* =========================
+   Opciones
+========================= */
+.options{
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:18px;
+}
+
+.row{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+select{
+  appearance:none;
+  background:#111824;
+  color:var(--text);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;
+  padding:8px 12px;
+  font-size:14px;
+  font-weight:600;
+}
+
+/* =========================
+   Botón principal
+========================= */
+.btn{
+  width:100%;
+  height:56px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(180deg,#2563eb,#1e40af);
+  color:white;
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+
+.btn:active{ transform:translateY(1px); }
+
+/* =========================
+   Footer / Hint
+========================= */
+.hint{
+  font-size:12px;
+  color:rgba(255,255,255,.45);
+  margin-top:12px;
+  text-align:center;
+}
+
+/* =========================
+   Escritorio
+========================= */
+@media (min-width:600px){
+  body{
+    padding-top:80px;
+  }
+
+  .card{
+    width:min(520px,100%);
+    margin:0 auto;
+    min-height:0;
+    height:auto;
+    padding-top:24px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+
+  .brand{
+    margin-bottom:10px;
+  }
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+<main class="card">
+
+  <header class="app-header">
+<a href="fichas-matematicas-para-imprimir-en.html" class="back-link" aria-label="Back">
+        ← Back
+    </a>
+  </header>
+
+  <div class="brand">
+    <img src="holamates_tipo.svg" alt="HolaMates">
+  </div>
+
+  <div class="hero">
+    <img src="generador_sumas.webp" alt="HolaMates addition worksheet generator">
+  </div>
+
+<h1>Printable Decimal Addition Worksheet Generator</h1>
+  <p>
+Create printable decimal addition worksheets ready to download as PDF.
+Generate exercises with decimal numbers adapted to the level
+of elementary students.
+</p>
+
+  <div class="options">
+    <div class="row">
+
+      <label>
+        Top digits
+        <select id="digitsTop">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </label>
+
+      <label>
+        Bottom digits
+        <select id="digitsBottom">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </label>
+
+    </div>
+  </div>
+
+  <button class="btn" id="btnGenerar">📄 Generate PDF</button>
+  <div class="hint">© HolaMates</div>
+
+  <section style="margin-top:20px;font-size:13px;color:#91a4bd;text-align:center;line-height:1.5">
+
+<p>
+This generator allows you to create <strong>decimal addition exercises</strong>
+for elementary math practice. You can generate
+<strong>decimal addition worksheets</strong>
+ready to print and use in the classroom or at home.
+</p>
+
+</section>
+
+</main>
+
+<script>
+const btn = document.getElementById("btnGenerar");
+
+btn.addEventListener("click", () => {
+
+  const digitsTop = parseInt(document.getElementById("digitsTop").value, 10);
+  const digitsBottom = parseInt(document.getElementById("digitsBottom").value, 10);
+
+  // 🔥 EVENTO ANALYTICS (CORRECTO)
+  gtag('event', 'generate_pdf', {
+    type: 'sumas_decimales',
+    digitsTop: digitsTop,
+    digitsBottom: digitsBottom
+  });
+
+  try{
+    const { jsPDF } = window.jspdf;
+    if(!jsPDF) throw new Error("jsPDF is not loaded.");
+
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+
+   
+
+    /* ===== HEADER PDF ===== */
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Name:", 15, 20);
+    doc.setFont("helvetica", "normal");
+    doc.text(" _________________________________________________", 33, 20);
+
+    doc.setFont("helvetica", "bold");
+    doc.text("Date:", 150, 20);
+    doc.setFont("helvetica", "normal");
+    doc.text(" ____________", 165, 20);
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("Decimal addition", 105, 35, { align: "center" });
+
+    /* ===== UTILIDADES ===== */
+    function rand(min, max){
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    /* ===== DECIMAL CON CIFRAS EXACTAS ===== */
+
+    function genDecimal(totalDigits){
+  const withDecimal = Math.random() < 0.7; // 70% con decimal
+
+  // CASO ENTERO
+  if (!withDecimal) {
+    const intMin = Math.pow(10, totalDigits - 1);
+    const intMax = Math.pow(10, totalDigits) - 1;
+    return String(rand(intMin, intMax));
+  }
+
+  // CASO CON DECIMALES (mínimo 1 entero y 1 decimal)
+  const intDigits = rand(1, totalDigits - 1);
+  const decDigits = totalDigits - intDigits;
+
+  const intMin = Math.pow(10, intDigits - 1);
+  const intMax = Math.pow(10, intDigits) - 1;
+  const intPart = rand(intMin, intMax);
+
+  const decMin = Math.pow(10, decDigits - 1);
+  const decMax = Math.pow(10, decDigits) - 1;
+  const decPart = rand(decMin, decMax)
+    .toString()
+    .padStart(decDigits, "0");
+
+  return `${intPart},${decPart}`;
+}
+
+
+    /* ===== EJERCICIOS ===== */
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+
+    const letters = "abcdefghij".split("");
+    let yLeft = 50;
+    let yRight = 50;
+
+    for(let i = 0; i < 10; i++){
+      const a = genDecimal(digitsTop);
+      const b = genDecimal(digitsBottom);
+      const line = `${letters[i]})  ${a} + ${b}     __________`;
+
+      if(i < 5){
+        doc.text(line, 20, yLeft);
+        yLeft += 14;
+      }else{
+        doc.text(line, 110, yRight);
+        yRight += 14;
+      }
+    }
+
+    /* ===== FOOTER PDF ===== */
+    doc.setFontSize(7);
+    doc.setTextColor(150);
+    doc.text("holamates.com", 105, 292, { align: "center" });
+    doc.setTextColor(0);
+
+    doc.save("Holamates_decimal_addition.pdf");
+
+  }catch(err){
+    alert(err.message || err);
+    console.error(err);
+  }
+});
+</script>
+
+
+</body>
+</html>

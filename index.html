@@ -1,0 +1,2663 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- SEO BASE -->
+<title>Juegos de cálculo mental para primaria | Sumas, tablas y más | HolaMates</title>
+
+<meta name="description" content="Mejora el cálculo mental en primaria con juegos de matemáticas divertidos. HolaMates ayuda a niños y niñas a sumar, restar, multiplicar y dividir jugando. Ideal para casa y aula.">
+
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://holamates.com/">
+<meta http-equiv="content-language" content="es">
+<meta name="author" content="HolaMates">
+
+<!-- 🔥 OPEN GRAPH (WhatsApp, Facebook, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="HolaMates – Aprende matemáticas jugando">
+<meta property="og:description" content="Juegos de cálculo mental para niños. Mejora la rapidez, concentración y confianza jugando. Ideal para casa y colegio.">
+<meta property="og:url" content="https://holamates.com/">
+<meta property="og:image" content="https://holamates.com/holamates-logo.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HolaMates - Aprende matemáticas jugando">
+<meta property="og:site_name" content="HolaMates">
+<meta property="og:locale" content="es_ES">
+
+<!-- 🔥 TWITTER (X) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HolaMates – Aprende matemáticas jugando">
+<meta name="twitter:description" content="Entrena cálculo mental con juegos rápidos y divertidos. Perfecto para niños y aulas.">
+<meta name="twitter:image" content="https://holamates.com/holamates-logo.png">
+
+<!-- 🔥 APP -->
+<meta name="apple-itunes-app" content="app-id=6757677556">
+
+<!-- 🔥 IDIOMAS -->
+<link rel="alternate" href="https://holamates.com/" hreflang="es">
+<link rel="alternate" href="https://holamates.com/index-en.html" hreflang="en">
+<link rel="alternate" href="https://holamates.com/" hreflang="x-default">
+
+<!-- 🔥 ICONOS -->
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/icono_app.png">
+
+<!-- 🔥 COLOR BARRA MÓVIL -->
+<meta name="theme-color" content="#0b0f14">
+
+<!-- 🔥 PRELOAD LOGO (mejora carga) -->
+<link rel="preload" as="image" href="/holamates_tipo_ok.svg">
+
+<!-- 🔥 GOOGLE ANALYTICS -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SSHD0HME2Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SSHD0HME2Z');
+</script>
+
+</head>
+
+
+<style>
+
+/* ───────── VARIABLES ───────── */
+:root{
+  --bg:#0b0f14;
+  --panel:#111824;
+  --panel2:#0f1622;
+  --text:#e8eef7;
+  --muted:#9aa8bd;
+  --accent:#2563eb;
+  --radius:20px;
+  --shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+/* BASE */
+*{ box-sizing:border-box }
+
+html, body{
+  margin:0;
+  background:#0b0f14;
+}
+
+.wrapper{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+}
+
+/* ───────── HEADER ───────── */
+.app-header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:56px;
+  z-index:1000;
+  background:rgba(11,15,20,.78);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.app-header-inner{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+}
+
+.app-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-weight:800;
+  font-size:18px;
+  letter-spacing:.3px;
+  color:#ffffff;
+
+  line-height:1; /* 🔥 esto arregla el SVG */
+}
+
+.app-link{
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:14px;
+  font-weight:600;
+  color:#facc15;
+  text-decoration:none;
+  padding:8px 12px;
+  border-radius:12px;
+  transition:background .2s ease, color .2s ease;
+}
+
+.app-link:hover{
+  background:rgba(250,204,21,.12);
+  color:#fde047;
+}
+
+.flag{
+  height:16px;
+  width:24px;            
+  object-fit:cover;      
+  border-radius:3px;     
+  display:block;
+
+  transform:translateY(1px);
+}
+
+/* MODAL IDIOMA */
+.lang-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  display:none; /* 🔥 IMPORTANTE */
+  align-items:center;
+  justify-content:center;
+  z-index:3000;
+}
+
+.lang-modal{
+  background:#111824;
+  border-radius:16px;
+  padding:20px;
+  min-width:220px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+  text-align:center;
+  color:#fff;
+}
+
+.lang-modal h3{
+  margin-bottom:12px;
+  font-size:16px;
+}
+
+.lang-option{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+  cursor:pointer;
+  border-radius:10px;
+  transition:background .2s;
+  color:#fff;
+  font-size:14px;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+.lang-option:hover{
+  background:rgba(255,255,255,.05);
+}
+
+/* 📱 MÓVIL */
+@media (max-width:600px){
+  .app-header-inner{
+    padding:0 25px;
+  }
+
+  .app-title{
+    font-size:18px;
+  }
+
+  .app-link{
+    font-size:14px;
+    padding:8px 12px;
+  }
+
+    .hero-logo{
+    width:60%;
+    display:block;
+    margin:0 auto; /* 🔥 esto la centra */
+  }
+
+    .modo-duelo-logo{
+    width:60%;
+    display:block;
+    margin:0 auto; /* 🔥 centrado */
+  }
+}
+
+/* 🖥️ 1400+ */
+@media (min-width:1400px){
+  .app-header{
+    height:64px;
+  }
+
+  .app-header-inner{
+    padding:0 80px;
+  }
+
+  .app-title{
+    font-size:20px;
+  }
+
+  .app-link{
+    font-size:16px;
+    padding:10px 14px;
+  }
+}
+
+/* 🖥️ 1700+ */
+@media (min-width:1700px){
+  .app-header{
+    height:72px;
+  }
+
+  .app-header-inner{
+    padding:0 110px;
+  }
+
+  .app-title{
+    font-size:22px;
+  }
+
+  .app-link{
+    font-size:18px;
+    padding:12px 16px;
+  }
+}
+
+/* 🖥️ 1900+ */
+@media (min-width:1900px){
+  .app-header{
+    height:86px;
+  }
+
+  .app-title{
+    font-size:26px;
+  }
+
+  .app-link{
+    font-size:20px;
+    padding:14px 18px;
+  }
+}
+
+/* 🖥️ 2500+ */
+@media (min-width:2500px){
+  .app-header{
+    height:105px;
+  }
+
+  .app-header-inner{
+    padding:0 140px;
+  }
+
+  .app-title{
+    font-size:32px;
+  }
+
+  .app-link{
+    font-size:26px;
+    padding:18px 22px;
+  }
+}
+/* ───────── HERO ───────── */
+/* ==================================================
+HERO
+================================================== */
+
+.hero{
+  padding: 100px 24px 56px;
+  background:
+    radial-gradient(
+      1200px 600px at 50% -200px,
+      rgba(37,99,235,.25),
+      transparent
+    ),
+    linear-gradient(180deg,#111824,#0f1622);
+}
+
+/* 🔥 SEO */
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+}
+
+/* ───────── CONTENEDOR ───────── */
+
+.hero-inner{
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+  min-height:calc(100vh - 112px);
+  display:grid;
+  align-items:center;
+  gap:48px;
+}
+
+/* ───────── TEXTO ───────── */
+
+.hero-content{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:22px;
+}
+
+.hero-logo{
+  max-width:340px;
+  width:100%;
+}
+
+.hero-text{
+  font-size:18px;
+  line-height:1.65;
+  color:#9aa8bd;
+  max-width:520px;
+}
+
+/* 1400+ */
+@media (min-width:1400px){
+  .hero-text{
+    max-width:700px;
+  }
+}
+
+/* 1700+ */
+@media (min-width:1700px){
+  .hero-text{
+    max-width:820px;
+  }
+}
+
+/* 1900+ */
+@media (min-width:1900px){
+  .hero-text{
+    max-width:950px;
+  }
+}
+
+/* 2500+ */
+@media (min-width:2500px){
+  .hero-text{
+    max-width:1100px;
+  }
+}
+
+/* ==================================================
+BOTONES CTA
+================================================== */
+
+.cta{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  align-items:flex-start;
+}
+
+/* 🔥 BOTONES PERFECTAMENTE IGUALES */
+.btn-primary,
+.btn-duelo,
+.btn-tres,
+.btn-ranking{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  height:48px;              /* 🔥 CLAVE: MISMA ALTURA */
+  padding:0 24px;           /* 🔥 quitamos padding vertical */
+  border-radius:14px;
+
+  font-size:16px;
+  font-weight:700;
+  line-height:1;            /* 🔥 evita saltos raros */
+
+  text-decoration:none;
+
+  width:250px;
+  max-width:100%;
+
+  transition:transform .2s ease, filter .2s ease;
+}
+
+/* COLORES */
+.btn-primary{
+  background:linear-gradient(135deg,#3b6cff,#2747c5);
+  color:white;
+}
+
+.btn-duelo{
+  background:linear-gradient(135deg,#ffc107,#ff9800);
+  color:#1a1a1a;
+}
+
+.btn-tres{
+  background:linear-gradient(135deg,#ef4444,#b91c1c);
+  color:white;
+}
+
+.btn-ranking{
+  background:linear-gradient(135deg,#22c55e,#15803d);
+  color:white;
+}
+
+.btn-primary:hover,
+.btn-duelo:hover,
+.btn-tres:hover,
+.btn-ranking:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+}
+
+/* 🔥 ICONOS PERFECTOS */
+.icon-duelo{
+  width:18px;
+  height:18px;
+  display:block; /* 🔥 evita descuadres */
+}
+
+/* ==================================================
+MEDIA
+================================================== */
+
+.hero-media{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:28px;
+}
+
+.card{
+  background:rgba(255,255,255,.04);
+  border-radius:22px;
+  padding:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+.card-hero img{
+  width:100%;
+  border-radius:16px;
+}
+
+.store-badges{
+  display:flex;
+  gap:16px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.store-badges img{
+  height:56px;
+}
+
+/* ==================================================
+RESPONSIVE
+================================================== */
+
+@media (min-width:900px){
+  .hero-inner{
+    grid-template-columns:1fr 1fr;
+    gap:150px;
+  }
+
+  .hero-media{
+    padding-left:32px;
+  }
+}
+
+/* MOBILE */
+@media (max-width:600px){
+
+  .hero{
+    padding:110px 18px 72px;
+  }
+
+  .hero-content{
+    margin-top:20px;
+  }
+
+  .hero-inner{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:auto;
+  }
+
+  .hero-logo{
+    width:60%;
+  }
+
+  .hero-text{
+    text-align:center;
+    font-size:17px;
+  }
+
+  .cta{
+    align-items:center;
+  }
+}
+
+/* =================================
+1400+
+================================= */
+
+@media (min-width:1400px){
+
+  .hero-inner{
+    max-width:1300px;
+    gap:180px;
+  }
+
+  .hero-logo{
+    max-width:420px;
+  }
+
+  .hero-text{
+    font-size:20px;
+  }
+
+  .btn-primary,
+  .btn-duelo,
+  .btn-tres,
+  .btn-ranking{
+    width:270px;
+    height:56px; /* 🔥 crece proporcional */
+    font-size:18px;
+  }
+
+  .icon-duelo{
+    width:20px;
+    height:20px;
+  }
+
+  .store-badges img{
+    height:64px;
+  }
+}
+
+/* =================================
+1700+
+================================= */
+
+@media (min-width:1700px){
+
+  .hero-inner{
+    max-width:1500px;
+    gap:220px;
+  }
+
+  .hero-logo{
+    max-width:480px;
+  }
+
+  .hero-text{
+    font-size:22px;
+  }
+
+  .btn-primary,
+  .btn-duelo,
+  .btn-tres,
+  .btn-ranking{
+    width:300px;
+    height:60px;
+    font-size:20px;
+  }
+
+  .icon-duelo{
+    width:22px;
+    height:22px;
+  }
+
+  .store-badges img{
+    height:70px;
+  }
+}
+
+/* =================================
+1900+
+================================= */
+
+@media (min-width:1900px){
+
+  .hero-inner{
+    max-width:1700px;
+    gap:260px;
+  }
+
+  .hero-logo{
+    max-width:540px;
+  }
+
+  .hero-text{
+    font-size:24px;
+  }
+
+  .btn-primary,
+  .btn-duelo,
+  .btn-tres,
+  .btn-ranking{
+    width:320px;
+    height:64px;
+    font-size:22px;
+  }
+
+  .icon-duelo{
+    width:24px;
+    height:24px;
+  }
+
+  .store-badges img{
+    height:78px;
+  }
+}
+
+/* =================================
+2500+
+================================= */
+
+@media (min-width:2500px){
+
+  .hero-inner{
+    max-width:2000px;
+    gap:320px;
+  }
+
+  .hero-logo{
+    max-width:650px;
+  }
+
+  .hero-text{
+    font-size:28px;
+  }
+
+  .btn-primary,
+  .btn-duelo,
+  .btn-tres,
+  .btn-ranking{
+    width:380px;
+    height:72px;
+    font-size:26px;
+  }
+
+  .icon-duelo{
+    width:28px;
+    height:28px;
+  }
+
+  .store-badges img{
+    height:92px;
+  }
+}
+
+/* ==================================================
+   SECCIÓN · GALERÍA
+   ================================================== */
+
+.gallery-section{
+  padding: 64px 20px;
+  background: #0b0f14;
+}
+
+/* CONTENEDOR */
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+
+  min-height: calc(100vh - 128px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* GRID */
+.gallery{
+  width: 100%;
+  display: grid;
+  gap: 40px;
+}
+
+/* CARD (aislado del hero) */
+.gallery .card{
+  background: rgba(255,255,255,.05);
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+/* HOVER SOLO EN DESKTOP */
+@media (hover: hover) {
+  .gallery .card:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(
+      180deg,
+      rgba(255,255,255,0.10),
+      rgba(255,255,255,0.05)
+    );
+  }
+}
+
+/* IMAGEN */
+.gallery .card img{
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 14px;
+}
+
+/* TEXTO CARD */
+.card-text{
+  font-size: 18px;
+  line-height: 1.65;
+  color: #9aa8bd;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* TEXTO INFERIOR */
+.gallery-text{
+  width: 100%;
+  margin-top: 48px;
+  text-align: center;
+}
+
+.gallery-text .headline{
+  font-size: 22px;
+  font-weight: 500;
+  color: #e6ecf5;
+  margin-bottom: 10px;
+}
+
+.gallery-text .subtext{
+  font-size: 18px;
+  line-height: 1.65;
+  color: #9aa8bd;
+}
+
+/* RESPONSIVE */
+@media (min-width: 900px){
+  .gallery{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 899px){
+  .container{
+    min-height: auto;
+    align-items: flex-start;
+  }
+
+  .gallery{
+    grid-template-columns: 1fr;
+  }
+
+  .card-text{
+    font-size: 17px;
+  }
+
+  .gallery-text{
+    margin-top: 36px;
+  }
+
+  .gallery-text .headline{
+    font-size: 24px;
+  }
+
+  .gallery-text .subtext{
+    font-size: 17px;
+  }
+}
+
+
+/* =================================
+   GALERÍA · PANTALLAS GRANDES
+================================= */
+
+@media (min-width:1400px){
+
+  .container{
+    max-width:1300px;
+  }
+
+  .gallery{
+    gap:50px;
+  }
+
+  .card{
+    padding:20px;
+  }
+
+  .card-text{
+    font-size:20px;
+    max-width:320px;
+  }
+
+  .gallery-text .headline{
+    font-size:26px;
+  }
+
+  .gallery-text .subtext{
+    font-size:20px;
+  }
+
+}
+
+@media (min-width:1700px){
+
+  .container{
+    max-width:1500px;
+  }
+
+  .gallery{
+    gap:70px;
+  }
+
+  .card{
+    padding:24px;
+  }
+
+  .card-text{
+    font-size:22px;
+    max-width:360px;
+  }
+
+  .gallery-text .headline{
+    font-size:30px;
+  }
+
+  .gallery-text .subtext{
+    font-size:22px;
+  }
+
+}
+
+@media (min-width:1900px){
+
+  .container{
+    max-width:1700px;
+  }
+
+  .gallery{
+    gap:90px;
+  }
+
+  .card-text{
+    font-size:24px;
+  }
+
+  .gallery-text .headline{
+    font-size:34px;
+  }
+
+  .gallery-text .subtext{
+    font-size:24px;
+  }
+
+}
+
+@media (min-width:2500px){
+
+  .container{
+    max-width:2000px;
+  }
+
+  .gallery{
+    gap:120px;
+  }
+
+  .card{
+    padding:30px;
+  }
+
+  .card-text{
+    font-size:28px;
+    max-width:420px;
+  }
+
+  .gallery-text .headline{
+    font-size:40px;
+  }
+
+  .gallery-text .subtext{
+    font-size:28px;
+  }
+
+}
+/* ==================================================
+SECCIÓN · SUMA10
+================================================== */
+
+.suma10-info{
+padding:60px 20px;
+background:rgba(255,255,255,0.05);
+text-align:center;
+
+min-height: calc(100vh - 56px);
+display:flex;
+align-items:center;
+}
+
+/* CONTENEDOR */
+.suma10-container{
+max-width:1100px;
+margin:0 auto;
+width:100%;
+}
+
+/* TÍTULO */
+.suma10-info h2{
+font-size:28px;
+font-weight:700;
+color:#e8eef7;
+margin-bottom:36px;
+}
+
+/* INTRO */
+.suma10-intro{
+max-width:720px;
+margin:0 auto 40px;
+color:#c7d2e3;
+font-size:17px;
+line-height:1.7;
+}
+
+/* GRID */
+.suma10-cards{
+display:grid;
+gap:20px;
+grid-template-columns:1fr;
+}
+
+/* TABLET */
+@media (min-width:700px){
+.suma10-cards{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+/* DESKTOP */
+@media (min-width:1100px){
+.suma10-cards{
+grid-template-columns:repeat(4,1fr);
+gap:28px;
+}
+
+.suma10-container{
+max-width:1200px;
+}
+}
+
+/* CARD */
+.suma10-card{
+background:rgba(255,255,255,.06);
+border-radius:20px;
+padding:26px 24px;
+box-shadow:0 20px 60px rgba(0,0,0,.45);
+transition:.2s;
+}
+
+/* HOVER */
+@media (hover:hover){
+.suma10-card:hover{
+transform:translateY(-3px);
+background:linear-gradient(
+180deg,
+rgba(255,255,255,0.10),
+rgba(255,255,255,0.05)
+);
+}
+}
+
+/* ICONO */
+.suma10-icon{
+width:64px;
+height:64px;
+margin:0 auto 16px;
+display:block;
+}
+
+/* TITULO CARD */
+.suma10-card h3{
+font-size:18px;
+font-weight:700;
+color:#e8eef7;
+margin-bottom:14px;
+}
+
+/* TEXTO */
+.suma10-card p,
+.suma10-card li{
+font-size:16px;
+line-height:1.6;
+color:#c7d2e3;
+}
+
+/* LISTAS */
+.suma10-card ul{
+list-style:none;
+padding:0;
+margin:0;
+}
+
+.suma10-card li{
+margin-bottom:8px;
+}
+
+/* BLOQUE FINAL */
+.suma10-final{
+margin-top:40px;
+color:#c7d2e3;
+}
+
+.suma10-final h3{
+font-size:20px;
+font-weight:700;
+color:#e8eef7;
+margin-bottom:16px;
+}
+
+.suma10-final p{
+margin:2px 0;
+line-height:1.8;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media (max-width:900px){
+.suma10-info{
+min-height:auto;
+padding:50px 20px;
+}
+}
+
+/* =================================
+1400+
+================================= */
+
+@media (min-width:1400px){
+
+.suma10-container{
+max-width:1300px;
+}
+
+.suma10-cards{
+gap:30px;
+}
+
+.suma10-card{
+padding:32px 28px;
+}
+
+.suma10-info h2{
+font-size:40px;
+}
+
+.suma10-intro{
+font-size:20px;
+max-width:820px;
+}
+
+.suma10-card h3{
+font-size:22px;
+}
+
+.suma10-card p,
+.suma10-card li{
+font-size:18px;
+}
+
+.suma10-icon{
+width:80px;
+height:80px;
+}
+
+.suma10-final h3{
+font-size:24px;
+}
+
+.suma10-final p{
+font-size:18px;
+}
+
+}
+
+/* =================================
+1700+
+================================= */
+
+@media (min-width:1700px){
+
+.suma10-container{
+max-width:1500px;
+}
+
+.suma10-cards{
+gap:40px;
+}
+
+.suma10-card{
+padding:36px 32px;
+}
+
+.suma10-info h2{
+font-size:46px;
+}
+
+.suma10-intro{
+font-size:22px;
+max-width:900px;
+}
+
+.suma10-card h3{
+font-size:26px;
+}
+
+.suma10-card p,
+.suma10-card li{
+font-size:20px;
+}
+
+.suma10-icon{
+width:95px;
+height:95px;
+}
+
+.suma10-final h3{
+font-size:28px;
+}
+
+.suma10-final p{
+font-size:20px;
+}
+
+}
+
+/* =================================
+1900+
+================================= */
+
+@media (min-width:1900px){
+
+.suma10-container{
+max-width:1700px;
+}
+
+.suma10-cards{
+gap:50px;
+}
+
+.suma10-card{
+padding:40px 36px;
+}
+
+.suma10-info h2{
+font-size:52px;
+}
+
+.suma10-intro{
+font-size:24px;
+max-width:1000px;
+}
+
+.suma10-card h3{
+font-size:28px;
+}
+
+.suma10-card p,
+.suma10-card li{
+font-size:22px;
+}
+
+.suma10-icon{
+width:110px;
+height:110px;
+}
+
+.suma10-final h3{
+font-size:32px;
+}
+
+.suma10-final p{
+font-size:22px;
+}
+
+}
+
+/* =================================
+2500+
+================================= */
+
+@media (min-width:2500px){
+
+.suma10-container{
+max-width:2000px;
+}
+
+.suma10-cards{
+gap:70px;
+}
+
+.suma10-card{
+padding:48px 44px;
+}
+
+.suma10-info h2{
+font-size:64px;
+}
+
+.suma10-intro{
+font-size:28px;
+max-width:1200px;
+}
+
+.suma10-card h3{
+font-size:34px;
+}
+
+.suma10-card p,
+.suma10-card li{
+font-size:26px;
+}
+
+.suma10-icon{
+width:140px;
+height:140px;
+}
+
+.suma10-final h3{
+font-size:38px;
+}
+
+.suma10-final p{
+font-size:26px;
+}
+
+}
+
+/* =========================
+MODO DUELO
+========================= */
+
+.modo-duelo{
+padding:56px 24px;
+background:#0b0f14;
+
+min-height: calc(100vh - 56px);
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+/* CONTENEDOR */
+.modo-duelo-inner{
+max-width:1100px;
+margin:0 auto;
+display:grid;
+gap:48px;
+align-items:center;
+}
+
+/* TEXTO */
+.modo-duelo-content{
+display:flex;
+flex-direction:column;
+gap:22px;
+}
+
+.modo-duelo-logo{
+max-width:260px;
+}
+
+.modo-duelo-text{
+font-size:18px;
+line-height:1.65;
+color:#9aa8bd;
+max-width:520px;
+}
+
+/* IMAGEN */
+.modo-duelo-media{
+display:flex;
+justify-content:center;
+}
+
+.modo-duelo .card{
+background:rgba(255,255,255,.04);
+border-radius:22px;
+padding:16px;
+box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+.card-modo-duelo img{
+width:100%;
+border-radius:16px;
+}
+
+/* BOTÓN */
+.btn-duelo{
+display:inline-flex;
+align-items:center;
+gap:10px;
+padding:12px 24px;
+border-radius:14px;
+font-weight:700;
+background:linear-gradient(135deg,#ffc107,#ff9800);
+color:#1a1a1a;
+text-decoration:none;
+transition:transform .2s ease;
+}
+
+.btn-duelo:hover{
+transform:translateY(-2px);
+}
+
+.icon-duelo{
+width:18px;
+}
+
+/* ICONOS */
+.modo-duelo-juegos{
+margin-top:40px;
+display:flex;
+justify-content:center;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.modo-duelo-juegos img{
+width:64px;
+height:64px;
+transition:.2s;
+}
+
+.modo-duelo-juegos img:hover{
+transform:translateY(-5px) scale(1.05);
+}
+
+/* =========================
+DESKTOP BASE
+========================= */
+
+@media (min-width:900px){
+.modo-duelo-inner{
+grid-template-columns:1fr 1fr;
+gap:140px;
+}
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media (max-width:600px){
+
+.modo-duelo-inner{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.modo-duelo-logo{
+width:60%;
+}
+
+.modo-duelo-text{
+text-align:center;
+font-size:17px;
+}
+
+.cta{
+justify-content:center;
+}
+
+.modo-duelo-juegos img{
+width:50px;
+height:50px;
+}
+
+}
+
+/* =================================
+1400+
+================================= */
+
+@media (min-width:1400px){
+
+.modo-duelo-inner{
+max-width:1300px;
+gap:180px;
+}
+
+.modo-duelo-logo{
+max-width:320px;
+}
+
+.modo-duelo-text{
+font-size:20px;
+max-width:600px;
+}
+
+.modo-duelo .card{
+padding:20px;
+}
+
+.btn-duelo{
+font-size:18px;
+padding:14px 26px;
+}
+
+.icon-duelo{
+width:20px;
+}
+
+.modo-duelo-juegos{
+margin-top:60px;
+gap:12px;
+}
+
+.modo-duelo-juegos img{
+width:80px;
+height:80px;
+}
+
+}
+
+/* =================================
+1700+
+================================= */
+
+@media (min-width:1700px){
+
+.modo-duelo-inner{
+max-width:1500px;
+gap:220px;
+}
+
+.modo-duelo-logo{
+max-width:380px;
+}
+
+.modo-duelo-text{
+font-size:22px;
+max-width:680px;
+}
+
+.modo-duelo .card{
+padding:24px;
+}
+
+.btn-duelo{
+font-size:20px;
+padding:16px 30px;
+}
+
+.icon-duelo{
+width:22px;
+}
+
+.modo-duelo-juegos img{
+width:95px;
+height:95px;
+}
+
+}
+
+/* =================================
+1900+
+================================= */
+
+@media (min-width:1900px){
+
+.modo-duelo-inner{
+max-width:1700px;
+gap:260px;
+}
+
+.modo-duelo-logo{
+max-width:440px;
+}
+
+.modo-duelo-text{
+font-size:24px;
+max-width:760px;
+}
+
+.modo-duelo .card{
+padding:28px;
+}
+
+.btn-duelo{
+font-size:22px;
+padding:18px 34px;
+}
+
+.icon-duelo{
+width:24px;
+}
+
+.modo-duelo-juegos img{
+width:110px;
+height:110px;
+}
+
+}
+
+/* =================================
+2500+
+================================= */
+
+@media (min-width:2500px){
+
+.modo-duelo-inner{
+max-width:2000px;
+gap:320px;
+}
+
+.modo-duelo-logo{
+max-width:520px;
+}
+
+.modo-duelo-text{
+font-size:28px;
+max-width:900px;
+}
+
+.modo-duelo .card{
+padding:34px;
+}
+
+.btn-duelo{
+font-size:26px;
+padding:22px 40px;
+}
+
+.icon-duelo{
+width:28px;
+}
+
+.modo-duelo-juegos{
+margin-top:80px;
+gap:16px;
+}
+
+.modo-duelo-juegos img{
+width:140px;
+height:140px;
+}
+
+}
+
+
+
+/* =========================
+RANKING INFO
+========================= */
+
+.ranking-info{
+padding:60px 20px;
+background:rgba(255,255,255,0.05);
+text-align:center;
+
+min-height: calc(100vh - 56px);
+display:flex;
+align-items:center;
+}
+
+/* CONTENEDOR */
+.ranking-container{
+max-width:1000px;
+margin:0 auto;
+width:100%;
+}
+
+/* ICONO */
+.ranking-icon{
+width:260px;
+max-width:70%;
+margin-bottom:0px;
+}
+
+/* TITULO */
+.ranking-info h2{
+font-size:28px;
+color:#e8eef7;
+margin-bottom:36px;
+}
+
+/* GRID */
+.ranking-cards{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+/* CARD */
+.ranking-card{
+background:rgba(255,255,255,.06);
+border-radius:20px;
+padding:26px 24px;
+box-shadow:0 20px 60px rgba(0,0,0,.45);
+transition:.2s;
+margin-bottom:10px;
+}
+
+/* HOVER */
+@media (hover:hover){
+.ranking-card:hover{
+transform:translateY(-3px);
+}
+}
+
+/* ICONOS */
+.card-icon{
+width:42px;
+margin-bottom:0px;
+}
+
+/* TEXTOS */
+.ranking-card h3{
+font-size:18px;
+color:#e8eef7;
+margin-bottom:12px;
+}
+
+.ranking-card p,
+.ranking-card li{
+font-size:16px;
+color:#c7d2e3;
+line-height:1.6;
+}
+
+/* LISTAS */
+.ranking-card ul{
+list-style:none;
+padding:0;
+}
+
+/* NOTA */
+.note{
+margin-top:28px;
+font-size:15px;
+color:#b6c2d6;
+}
+
+.privacy-link{
+display:inline-block;
+margin-top:10px;
+color:#93c5fd;
+text-decoration:none;
+}
+
+.privacy-link:hover{
+text-decoration:underline;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media (max-width:900px){
+
+.ranking-cards{
+grid-template-columns:1fr;
+}
+
+.ranking-icon{
+width:200px;
+}
+
+.ranking-info{
+min-height:auto;
+padding:50px 20px;
+}
+
+}
+
+/* =================================
+1400+
+================================= */
+
+@media (min-width:1400px){
+
+.ranking-container{
+max-width:1300px;
+}
+
+.ranking-cards{
+gap:30px;
+}
+
+.ranking-card{
+padding:32px 28px;
+}
+
+.ranking-icon{
+width:320px;
+}
+
+.ranking-info h2{
+font-size:40px;
+}
+
+.ranking-card h3{
+font-size:24px;
+}
+
+.ranking-card p,
+.ranking-card li{
+font-size:20px;
+}
+
+.note{
+font-size:18px;
+}
+
+.card-icon{
+width:60px;
+height:60px;
+}
+
+  .flag{
+    width:28px;
+    height:18px;
+  }
+
+}
+
+/* =================================
+1700+
+================================= */
+
+@media (min-width:1700px){
+
+.ranking-container{
+max-width:1500px;
+}
+
+.ranking-cards{
+gap:40px;
+}
+
+.ranking-card{
+padding:36px 32px;
+}
+
+.ranking-icon{
+width:380px;
+}
+
+.ranking-info h2{
+font-size:46px;
+}
+
+.ranking-card h3{
+font-size:28px;
+}
+
+.ranking-card p,
+.ranking-card li{
+font-size:22px;
+}
+
+.note{
+font-size:20px;
+}
+
+.card-icon{
+width:70px;
+height:70px;
+}
+
+  .flag{
+    width:32px;
+    height:20px;
+  }
+
+}
+
+/* =================================
+1900+
+================================= */
+
+@media (min-width:1900px){
+
+.ranking-container{
+max-width:1700px;
+}
+
+.ranking-cards{
+gap:50px;
+}
+
+.ranking-card{
+padding:40px 36px;
+}
+
+.ranking-icon{
+width:420px;
+}
+
+.ranking-info h2{
+font-size:52px;
+}
+
+.ranking-card h3{
+font-size:30px;
+}
+
+.ranking-card p,
+.ranking-card li{
+font-size:24px;
+}
+
+.note{
+font-size:22px;
+}
+
+.card-icon{
+width:85px;
+height:85px;
+}
+
+  .flag{
+    width:36px;
+    height:22px;
+  }
+
+}
+
+/* =================================
+2500+
+================================= */
+
+@media (min-width:2500px){
+
+.ranking-container{
+max-width:2000px;
+}
+
+.ranking-cards{
+gap:70px;
+}
+
+.ranking-card{
+padding:48px 44px;
+}
+
+.ranking-icon{
+width:520px;
+}
+
+.ranking-info h2{
+font-size:64px;
+}
+
+.ranking-card h3{
+font-size:36px;
+}
+
+.ranking-card p,
+.ranking-card li{
+font-size:28px;
+}
+
+.note{
+font-size:26px;
+}
+
+.card-icon{
+width:110px;
+height:110px;
+}
+
+  .flag{
+    width:44px;
+    height:28px;
+  }
+
+}
+
+
+
+
+/* =========================
+   GENERADOR
+========================= */
+
+.generator-section{
+  padding:64px 20px;
+  background:#0b0f14;
+}
+
+/* CONTENEDOR */
+.generator-section .container{
+  max-width:1100px;
+  margin:auto;
+  width:100%;
+}
+
+
+
+/* LAYOUT */
+.generator-inner{
+  display:grid;
+  gap:120px;
+  align-items:center;
+}
+
+/* IMAGE */
+.generator-image img{
+  width:100%;
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+/* ───────── TEXTO + BOTÓN ───────── */
+
+.generator-text{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:18px;
+
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
+
+/* TÍTULO */
+.generator-text h2{
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:-.01em;
+  color:#e8eef7;
+  margin:0;
+}
+
+/* TEXTO */
+.generator-text p{
+  font-size:18px;
+  line-height:1.65;
+  font-weight:400;
+  letter-spacing:.01em;
+  color:#9aa8bd;
+  margin:0;
+  max-width:520px;
+}
+
+/* PDF ICON */
+.pdf-icon{
+  width:72px;
+}
+
+/* BOTÓN */
+.generator-btn{
+  margin-top:8px;
+
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+
+  padding:16px 28px;
+  background:linear-gradient(180deg,#2563eb,#1e40af);
+  color:#fff;
+
+  font-size:17px;
+  font-weight:800;
+  border-radius:18px;
+  text-decoration:none;
+
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+/* ───────── ESCRITORIO: CENTRADO VERTICAL ───────── */
+@media (min-width:900px){
+  .generator-section{
+    min-height:calc(100vh - 100px); /* altura visible menos header */
+    display:flex;
+    align-items:center;            /* 🔑 centrado vertical */
+  }
+
+  .generator-inner{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+/* ───────── MOBILE ───────── */
+@media (max-width:600px){
+  .generator-text{
+    align-items:center;
+    text-align:center;
+  }
+
+  .generator-text p{
+    font-size:17px;
+  }
+
+  .generator-inner{
+    gap:50px;
+  }
+}
+
+
+/* ───────── GENERATOR BTN – HOVER DESKTOP ───────── */
+
+.generator-btn{
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    filter .25s ease;
+  will-change: transform;
+}
+
+@media (min-width: 900px){
+  .generator-btn:hover{
+    transform: scale(1.06);
+    box-shadow: 0 28px 80px rgba(0,0,0,.55);
+    filter: brightness(1.08);
+  }
+
+  .generator-btn:active{
+    transform: scale(1.02);
+  }
+}
+
+
+/* =================================
+   GENERATOR · PANTALLAS GRANDES
+================================= */
+
+@media (min-width:1400px){
+
+  .generator-section .container{
+    max-width:1300px;
+  }
+
+  .generator-inner{
+    gap:150px;
+  }
+
+  .generator-text h2{
+    font-size:32px;
+  }
+
+  .generator-text p{
+    font-size:20px;
+    max-width:600px;
+  }
+
+  .pdf-icon{
+    width:90px;
+  }
+
+  .generator-btn{
+    font-size:19px;
+    padding:18px 32px;
+  }
+
+}
+
+@media (min-width:1700px){
+
+  .generator-section .container{
+    max-width:1500px;
+  }
+
+  .generator-inner{
+    gap:200px;
+  }
+
+  .generator-text h2{
+    font-size:36px;
+  }
+
+  .generator-text p{
+    font-size:22px;
+    max-width:700px;
+  }
+
+  .pdf-icon{
+    width:110px;
+  }
+
+  .generator-btn{
+    font-size:21px;
+    padding:20px 36px;
+  }
+
+}
+
+@media (min-width:1900px){
+
+  .generator-section .container{
+    max-width:1700px;
+  }
+
+  .generator-inner{
+    gap:240px;
+  }
+
+  .generator-text h2{
+    font-size:42px;
+  }
+
+  .generator-text p{
+    font-size:24px;
+    max-width:800px;
+  }
+
+  .pdf-icon{
+    width:130px;
+  }
+
+  .generator-btn{
+    font-size:23px;
+    padding:22px 40px;
+  }
+
+}
+
+@media (min-width:2500px){
+
+  .generator-section .container{
+    max-width:2000px;
+  }
+
+  .generator-inner{
+    gap:320px;
+  }
+
+  .generator-text h2{
+    font-size:54px;
+  }
+
+  .generator-text p{
+    font-size:28px;
+    max-width:950px;
+  }
+
+  .pdf-icon{
+    width:170px;
+  }
+
+  .generator-btn{
+    font-size:28px;
+    padding:26px 48px;
+  }
+
+}
+
+
+/* =================================
+             FOOTER
+================================= */
+
+
+.footer{
+  background: rgba(255,255,255,0.05);
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:28px 20px;
+  text-align:center;
+}
+
+.footer p{
+  margin:0;
+
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  font-size:14px;
+  font-weight:400;
+  line-height:1.6;
+  letter-spacing:.01em;
+
+  color:rgba(255,255,255,.45);
+}
+
+
+/* =================================
+   FOOTER · PANTALLAS GRANDES
+================================= */
+
+@media (min-width:1400px){
+
+  .footer{
+    padding:34px 20px;
+  }
+
+  .footer p{
+    font-size:16px;
+    line-height:1.7;
+  }
+
+}
+
+@media (min-width:1700px){
+
+  .footer{
+    padding:40px 20px;
+  }
+
+  .footer p{
+    font-size:18px;
+  }
+
+}
+
+@media (min-width:1900px){
+
+  .footer{
+    padding:46px 20px;
+  }
+
+  .footer p{
+    font-size:20px;
+  }
+
+}
+
+@media (min-width:2500px){
+
+  .footer{
+    padding:60px 20px;
+  }
+
+  .footer p{
+    font-size:24px;
+    line-height:1.8;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="app-header-inner">
+
+      <div 
+  onclick="toggleLangMenu()" 
+  class="app-title"
+  style="cursor:pointer;"
+>
+        HolaMates 
+<img src="/bandera_espana.svg" class="flag" alt="Español"> 
+
+</div>
+
+      <a href="/como-se-juega.html" class="app-link">
+      Cómo se juega
+    </a>
+
+    </div>
+  </header>
+
+  <!-- LANG MODAL -->
+  <div id="langOverlay" class="lang-overlay" onclick="toggleLangMenu()">
+    <div class="lang-modal" onclick="event.stopPropagation()">
+
+      <h3>Seleccionar idioma</h3>
+
+      <div class="lang-option" onclick="changeLang('es')">
+<img src="/bandera_espana.svg" class="flag" alt="Español">
+  Español
+</div>
+
+<div class="lang-option" onclick="changeLang('en')">
+<img src="/bandera_ingles.svg" class="flag" alt="English">
+  English
+</div>
+
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+
+      <div class="hero-content">
+
+        <h1 class="sr-only">
+        Juegos de matemáticas para niños – cálculo mental divertido
+        </h1>
+
+        <img src="/holamates_tipo_ok.svg" alt="HolaMates" class="hero-logo"/>
+
+        <p class="hero-text">
+          Entrena tu mente con juegos rápidos y desafiantes.
+          Mejora en cada partida tu cálculo mental, refuerza tu atención y potencia tu concentración.
+        </p>
+
+        <div class="cta">
+
+          <a href="/selector-juegos.html" class="btn-primary">▶ 1 jugador</a>
+
+          <a href="/suma10dosj.html" class="btn-duelo">
+            <img src="/espadas_logo.svg" class="icon-duelo">
+            Modo duelo
+          </a>
+
+          <a href="/suma10tres.html" class="btn-tres">
+            <img src="/modo_equipo.svg" class="icon-duelo">
+            Modo equipo
+          </a>
+
+          <a href="/ranking.html" class="btn-ranking">
+            🏆 Ver ranking
+          </a>
+
+        </div>
+
+      </div>
+
+      <div class="hero-media">
+
+        <div class="card card-hero">
+          <img src="/imagen_principal.png" alt="Juego educativo de matemáticas"/>
+        </div>
+
+        <div class="store-badges">
+
+          <a href="https://apps.apple.com/es/app/holamates/id6757677556" target="_blank">
+            <img src="/descargalo_app_store.png" alt="App Store"/>
+          </a>
+
+          <a href="https://play.google.com/store/apps/details?id=com.holamates.app" target="_blank">
+            <img src="/descargalo_play_store.png" alt="Google Play"/>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="gallery-section">
+    <div class="container">
+
+      <div class="gallery">
+        <div class="card">
+          <img src="/imagen_1.png">
+          <p class="card-text">Aprende las tablas de multiplicar de forma divertida.</p>
+        </div>
+
+        <div class="card">
+          <img src="/tres_jugando.webp">
+          <p class="card-text">Competiciones escolares de cálculo mental, rápidas y divertidas.</p>
+        </div>
+
+        <div class="card">
+          <img src="/imagen_3.png">
+          <p class="card-text">Retos matemáticos para jugar en familia y aprender juntos.</p>
+        </div>
+      </div>
+
+      <div class="gallery-text">
+        <p class="headline">Jugar también es aprender.</p>
+        <p class="subtext">
+          Domina las operaciones básicas: sumar, restar, multiplicar y dividir.
+          Mejora tu cálculo mental, gana rapidez y confianza.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SUMA10 INFO -->
+<section class="suma10-info">
+  <div class="suma10-container">
+
+    <h2>¿Qué es Suma10?</h2>
+
+   <div class="suma10-intro">
+  <p>
+    Suma10 no es solo un juego. Es entrenamiento real de cálculo mental.
+    Los alumnos aprenden a reconocer automáticamente combinaciones que suman 10.
+    Esto mejora su agilidad mental y les permite dejar de contar con los dedos.
+  </p>
+</div>
+
+    <div class="suma10-cards">
+
+      <div class="suma10-card">
+        <img src="/icono_agilidad.png" class="suma10-icon">
+        <h3>Agilidad numérica real</h3>
+        <ul>
+        <li>La comprensión del sistema decimal.</li>
+        <li>La descomposición numérica.</li>
+        <li>Las estrategias de cálculo.</li>
+        </ul>
+      </div>
+
+      <div class="suma10-card">
+        <img src="/icono_atencion.png" class="suma10-icon">
+        <h3>Atención y concentración</h3>
+        <p>
+  El formato dinámico mantiene al alumno enfocado.
+  Cada partida entrena la capacidad de concentración
+  durante un tiempo corto pero intenso.
+</p>
+      </div>
+
+      <div class="suma10-card">
+        <img src="/icono_sin_rechazo.png" class="suma10-icon">
+        <h3>Matemáticas sin rechazo</h3>
+        <ul>
+  <li>Disminuye la ansiedad.</li>
+  <li>Aumenta la confianza.</li>
+  <li>Refuerza la autoestima matemática.</li>
+</ul>
+      </div>
+
+      <div class="suma10-card">
+        <img src="/icono_mejora.png" class="suma10-icon">
+        <h3>Mejora medible</h3>
+       <ul>
+  <li>Superarse a sí mismo.</li>
+  <li>Ver su progreso.</li>
+  <li>Mantener la motivación semana tras semana.</li>
+</ul>
+      </div>
+
+    </div>
+
+    <div class="suma10-final">
+  <h3>Ideal para casa y para el aula</h3>
+
+  <p>5 minutos al día, en el cole o en casa, marcan la diferencia.</p>
+  <p>Perfecto como rutina semanal.</p>
+  <p>Ideal como premio o reto final en clase.</p>
+</div>
+
+  </div>
+</section>
+
+  <!-- modo duelo -->
+
+
+  <section class="modo-duelo">
+  <div class="modo-duelo-inner">
+
+    <!-- IZQUIERDA -->
+    <div class="modo-duelo-content">
+
+      <img src="/modo_duelo.svg" class="modo-duelo-logo" alt="Modo Duelo HolaMates"/>
+
+      <p class="modo-duelo-text">
+        El Modo Duelo transforma el cálculo mental en un reto emocionante dentro del aula.
+        Con HolaMates, las matemáticas se convierten en un juego en el que cada alumno compite,
+        se supera y mejora su rapidez, precisión y confianza.
+      </p>
+
+      <div class="cta">
+        <a href="/suma10dosj.html" class="btn-duelo">
+          <img src="/espadas_logo.svg" class="icon-duelo">
+          Jugar modo duelo
+        </a>
+      </div>
+
+    </div>
+
+    <!-- DERECHA -->
+    <div class="modo-duelo-media">
+
+      <div class="card card-modo-duelo">
+        <img src="/dos_jugando.webp" alt="Dos niños jugando al modo duelo">
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ICONOS -->
+  <div class="modo-duelo-juegos">
+
+    <a href="/suma10dosj.html"><img src="/imagen_suma10.png"></a>
+    <a href="/sumasdosj.html"><img src="/imagen_sumas.png"></a>
+    <a href="/restasdosj.html"><img src="/imagen_restas.png"></a>
+    <a href="/multiplicacionesdosj.html"><img src="/imagen_multiplicaciones.png"></a>
+    <a href="/divisionesdosj.html"><img src="/imagen_divisiones.png"></a>
+
+  </div>
+
+</section>
+
+
+  <!-- Ranking info sección -->
+
+
+  <section class="ranking-info">
+  <div class="ranking-container">
+
+    <img src="/medallas.png" class="ranking-icon" alt="Medallas del ranking">
+
+    <h2>Ranking</h2>
+
+    <div class="ranking-cards">
+
+      <div class="ranking-card">
+        <img src="/icono_motivacion.png" class="card-icon" alt="Motivación">
+        <h3>Motivación</h3>
+        <p>
+          Entrena tu mente. Cada partida eres mejor: bate tus récords y sigue avanzando.
+        </p>
+        <p>Supérate a ti mismo.</p>
+      </div>
+
+      <div class="ranking-card">
+        <img src="/icono_ranking.png" class="card-icon" alt="Ranking">
+        <h3>¿Qué guarda el ranking?</h3>
+        <ul>
+          <li>Las 5 mejores marcas de cada juego y nivel.</li>
+          <li>Guarda el nombre al entrar en el Top 5.</li>
+        </ul>
+      </div>
+
+      <div class="ranking-card">
+        <img src="/icono_seguridad.png" class="card-icon" alt="Privacidad">
+        <h3>Privacidad y seguridad</h3>
+        <ul>
+          <li>El ranking se guarda localmente en este navegador.</li>
+          <li>Si usas otro navegador o perfil, será diferente.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p class="note">
+      HolaMates funciona sin cuentas, sin registros y sin recoger datos personales.
+      <br>
+      <a href="/privacidad.html" class="privacy-link">
+        Ver política de privacidad
+      </a>
+    </p>
+
+  </div>
+</section>
+
+
+
+  <!-- SECCIÓN GENERADOR -->
+
+
+  <section class="generator-section">
+  <div class="container generator-inner">
+
+    <!-- IMAGEN -->
+    <div class="generator-image">
+      <img
+        src="/generador.webp"
+        alt="Generador de fichas de matemáticas para imprimir"
+      />
+    </div>
+
+    <!-- TEXTO -->
+    <div class="generator-text">
+
+      <img
+        src="/pdf_simbolo.png"
+        alt="Fichas de matemáticas en PDF"
+        class="pdf-icon"
+      />
+
+      <h2>Generador de plantillas de cálculo imprimibles</h2>
+
+      <p>
+        Crea plantillas de cálculo de forma sencilla y rápida.
+        Elige el tipo de operación y genera ejercicios listos
+        para imprimir y trabajar en clase o en casa.
+      </p>
+
+      <a 
+        href="/fichas-matematicas-para-imprimir.html" 
+        class="generator-btn"
+        title="Generador de fichas de matemáticas para imprimir"
+      >
+        Generador
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+  <!-- FOOTER-->
+
+  <footer class="footer">
+  <p>
+    © 2026 HolaMates. Todos los derechos reservados.<br />
+    Queda prohibida la reproducción total o parcial del contenido,
+    incluyendo el sistema de juego, sin autorización expresa.
+  </p>
+</footer>
+
+
+
+
+</div> <!-- 🔥 wrapper SE CIERRA SOLO AQUÍ -->
+
+<script>
+function toggleLangMenu(){
+  const el = document.getElementById('langOverlay');
+  el.style.display = el.style.display === 'flex' ? 'none' : 'flex';
+}
+
+function changeLang(lang){
+  window.location.href = lang === 'en' ? "/index-en.html" : "/";
+}
+</script>
+
+</body>
+</html>

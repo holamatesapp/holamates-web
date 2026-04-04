@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Resultado | Ranking HolaMates</title>
+
+<meta name="description" content="Consulta tu posición en el ranking de HolaMates tras completar una partida.">
+<link rel="canonical" href="https://holamates.com/ranking-result.html">
+<meta name="robots" content="noindex, follow">
+
+<style>
+
+/* ===============================
+BASE
+================================ */
+*{ box-sizing:border-box }
+
+body{
+  margin:0;
+  background:#0b0f14;
+  color:#e8eef7;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+}
+
+/* ===============================
+LAYOUT
+================================ */
+.ranking-screen{
+  display:flex;
+  min-height:100vh;
+  width:100%;
+  justify-content:center;
+  align-items:center;
+}
+
+@media (max-width:768px){
+  .ranking-screen{
+    align-items:flex-start;
+    padding-top:30px;
+  }
+}
+
+/* ===============================
+CARD
+================================ */
+.ranking-card{
+  max-width:420px;
+  width:100%;
+  padding:28px 22px;
+  display:flex;
+  flex-direction:column;
+  min-height:70vh;
+}
+
+/* ===============================
+HEADER
+================================ */
+.ranking-card h1{
+  text-align:center;
+  margin-bottom:10px;
+  font-size:26px;
+}
+
+.subtitle{
+  text-align:center;
+  opacity:.65;
+  margin-bottom:22px;
+  font-size:15px;
+}
+
+/* ===============================
+LIST
+================================ */
+.list{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.list li{
+  display:flex;
+  align-items:center;
+  padding:14px 16px;
+  border-radius:16px;
+  margin-bottom:10px;
+  background:#141c2b;
+}
+
+.highlight{
+  background:#facc15 !important;
+}
+
+.highlight *{
+  color:#000 !important;
+}
+
+.empty-slot{
+  opacity:.4;
+  border:1px dashed rgba(255,255,255,.08);
+}
+
+.pos{
+  width:26px;
+  text-align:center;
+  font-weight:800;
+}
+
+.name{
+  flex:1;
+  font-weight:700;
+}
+
+.score{
+  font-weight:800;
+}
+
+/* ===============================
+BUTTON
+================================ */
+.spacer{ flex:1 }
+
+.back{
+  margin-top:32px;
+  width:100%;
+  height:52px;
+  background:#2563eb;
+  border-radius:18px;
+  border:none;
+  color:white;
+  font-weight:800;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* ===============================
+MEDIAS
+================================ */
+@media (min-width:1400px){
+  .ranking-card{ max-width:520px }
+  .ranking-card h1{ font-size:30px }
+  .subtitle{ font-size:17px }
+  .list li{ font-size:18px }
+  .back{ height:60px; font-size:18px }
+}
+
+@media (min-width:1700px){
+  .ranking-card{ max-width:620px }
+  .ranking-card h1{ font-size:34px }
+  .subtitle{ font-size:19px }
+  .list li{ font-size:20px }
+  .back{ height:70px; font-size:20px }
+}
+
+@media (min-width:1900px){
+  .ranking-card{ max-width:720px }
+  .ranking-card h1{ font-size:40px }
+  .subtitle{ font-size:22px }
+  .list li{ font-size:24px }
+  .back{ height:82px; font-size:24px }
+}
+
+@media (min-width:2500px){
+  .ranking-card{ max-width:920px }
+  .ranking-card h1{ font-size:54px }
+  .subtitle{ font-size:30px }
+  .list li{ font-size:32px }
+  .back{ height:110px; font-size:32px }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="ranking-screen">
+
+  <div class="ranking-card">
+
+    <h1>🏆 Ranking</h1>
+
+    <p class="subtitle" id="title"></p>
+
+    <ul class="list" id="rankingList"></ul>
+
+    <div class="spacer"></div>
+
+    <button class="back" onclick="volverAJugar()">ok</button>
+
+  </div>
+
+</div>
+
+<script>
+
+/* ===============================
+STATE
+================================ */
+let ranking = [];
+let lastResult = null;
+
+/* ===============================
+LOAD DATA
+================================ */
+function loadData(){
+
+  const rawRanking = localStorage.getItem('holamates_rankings');
+  const all = rawRanking ? JSON.parse(rawRanking) : {};
+
+  const rawLast = localStorage.getItem('holamates_last_result');
+  lastResult = rawLast ? JSON.parse(rawLast) : null;
+
+  if(!lastResult) return;
+
+  const id = buildChallengeId(lastResult);
+
+  ranking = all[id] || [];
+
+  document.getElementById('title').innerText = buildTitle(lastResult);
+
+}
+
+/* ===============================
+BUILD ID
+================================ */
+function buildChallengeId(r){
+
+  if(r.game === 'suma10'){
+    switch(r.level){
+      case 'init': return 'suma10_iniciacion';
+      case 'easy': return 'suma10_facil';
+      case 'hard': return 'suma10_dificil';
+      default: return 'suma10_medio';
+    }
+  }
+
+  if(r.game === 'sumas'){
+    return `sumas_${r.mode}_${r.level}`;
+  }
+
+  if(r.game === 'restas'){
+    return `restas_${r.mode}_${r.level}`;
+  }
+
+  if(r.game === 'divisiones'){
+    return `divisiones_${r.table}_${r.level}`;
+  }
+
+  return `tablas_${r.table}_${r.level}`;
+}
+
+/* ===============================
+TITLE
+================================ */
+function buildTitle(r){
+
+  const levelMap = {
+    init:'Iniciación',
+    easy:'Fácil',
+    normal:'Medio',
+    hard:'Difícil'
+  };
+
+  if(r.game === 'suma10'){
+    return `Suma10 · ${levelMap[r.level]}`;
+  }
+
+  if(r.game === 'sumas'){
+    return `Sumas · ${r.mode === 'con' ? 'Con llevada' : 'Sin llevada'} · ${levelMap[r.level]}`;
+  }
+
+  if(r.game === 'restas'){
+    return `Restas · ${r.mode === 'con' ? 'Con llevada' : 'Sin llevada'} · ${levelMap[r.level]}`;
+  }
+
+  if(r.game === 'divisiones'){
+    return `Divisiones · ${r.table === 'all' ? 'Todos' : 'Divisor ' + r.table} · ${levelMap[r.level]}`;
+  }
+
+  return `Multiplicaciones · ${r.table === 'all' ? 'Todas' : 'Tabla ' + r.table} · ${levelMap[r.level]}`;
+}
+
+/* ===============================
+RENDER
+================================ */
+function render(){
+
+  const list = document.getElementById('rankingList');
+  list.innerHTML = '';
+
+  for(let i=0;i<5;i++){
+
+    const item = ranking[i];
+
+    const li = document.createElement('li');
+
+if(
+  item &&
+  lastResult &&
+  (
+    Number(item.date) === Number(lastResult.date) ||
+    (item.score === lastResult.score && item.name === lastResult.name)
+  )
+){
+  li.classList.add('highlight');
+}
+
+    if(!item){
+      li.classList.add('empty-slot');
+    }
+
+    li.innerHTML = `
+      <span class="pos">${i+1}</span>
+      <span class="name">${item?.name || '—'}</span>
+      <span class="score">${item?.score ?? '—'}</span>
+    `;
+
+    list.appendChild(li);
+  }
+}
+
+/* ===============================
+BACK
+================================ */
+function volverAJugar(){
+
+  const prev = localStorage.getItem('holamates_prev_route');
+
+  if(prev){
+    localStorage.removeItem('holamates_prev_route');
+    window.location.href = prev;
+    return;
+  }
+
+  window.location.href = "/";
+}
+
+/* ===============================
+INIT
+================================ */
+loadData();
+render();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Generador de sumas para imprimir (PDF) | Ejercicios de sumas primaria | HolaMates</title>
+<meta name="description" content="Generador de sumas para imprimir en PDF. Crea ejercicios de sumas con y sin llevadas para alumnos de primaria. Ideal para profesores y práctica en casa.">
+<link rel="canonical" href="https://holamates.com/generador_sumas.html">
+
+<meta property="og:title" content="Generador de sumas para imprimir | HolaMates">
+<meta property="og:description" content="Crea fichas de sumas en PDF para primaria con y sin llevadas.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://holamates.com/generador_sumas.html">
+<meta property="og:image" content="https://holamates.com/generador_sumas.webp">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SSHD0HME2Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SSHD0HME2Z');
+</script>
+
+<script>
+gtag('event', 'page_view', {
+  page_title: 'Generador sumas',
+  page_location: window.location.href
+});
+</script>
+
+
+<style>
+/* =========================
+   Variables
+========================= */
+:root{
+  --bg:#0b0f14;
+  --panel:#111824;
+  --panel2:#0f1622;
+  --text:#e8eef7;
+  --muted:#91a4bd;
+  --btn:#182235;
+  --btn2:#141c2b;
+  --active:#2563eb;
+  --shadow:0 18px 60px rgba(0,0,0,.45);
+  --radius:18px;
+}
+
+/* =========================
+   Reset / Base
+========================= */
+*{ box-sizing:border-box }
+html, body{ height:100% }
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:var(--bg);
+  color:var(--text);
+  padding-top:52px; /* ✅ deja hueco EXACTO para el header en móvil */
+}
+
+/* =========================
+   Header fijo
+========================= */
+.app-header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:52px;
+  background:rgba(11,15,20,.92);
+  backdrop-filter: blur(6px);
+  display:flex;
+  align-items:center;
+  padding:0 14px;
+  z-index:1000;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.back-link{
+  color:var(--text);
+  text-decoration:none;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:.2px;
+  opacity:.9;
+}
+
+.back-link:active{ opacity:.6; }
+
+/* =========================
+   Card principal (MÓVIL)
+========================= */
+.card{
+  width:100%;
+  min-height:calc(100vh - 52px); /* ✅ evita solapes raros con flex + header */
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid rgba(255,255,255,.06);
+  padding:20px 18px 22px; /* ✅ ya no necesitamos padding-top “por el header” */
+  display:flex;
+  flex-direction:column;
+}
+
+/* =========================
+   Logo / Marca
+========================= */
+.brand{
+  display:flex;
+  justify-content:center;
+  margin-bottom:8px;
+}
+
+.brand img{
+  width:200px;
+  max-width:80%;
+  opacity:.95;
+}
+
+/* =========================
+   Imagen principal
+========================= */
+.hero{
+  display:flex;
+  justify-content:center;
+  margin:0 0 14px;
+}
+
+.hero img{
+  width:100%;
+  max-width:320px;
+  border-radius:14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.45);
+}
+
+/* =========================
+   Textos
+========================= */
+h1{
+  margin:6px 0 6px;
+  font-size:18px;
+  font-weight:800;
+  text-align:center;
+}
+
+p{
+  margin:0 0 16px;
+  color:var(--muted);
+  text-align:center;
+  font-size:14px;
+}
+
+/* =========================
+   Opciones
+========================= */
+.options{
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:18px;
+}
+
+.row{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+select{
+  appearance:none;
+  background:#111824;  
+  color:var(--text);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;
+  padding:8px 12px;
+  font-size:14px;
+  font-weight:600;
+}
+
+/* =========================
+   Botón principal
+========================= */
+.btn{
+  width:100%;
+  height:56px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(180deg,#2563eb,#1e40af);
+  color:white;
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+
+.btn:active{ transform:translateY(1px); }
+
+/* =========================
+   Footer / Hint
+========================= */
+.hint{
+  font-size:12px;
+  color:rgba(255,255,255,.45);
+  margin-top:12px;
+  text-align:center;
+}
+
+/* =========================
+   Escritorio
+========================= */
+@media (min-width:600px){
+  body{
+    padding-top:80px;
+  }
+
+  .card{
+    width:min(520px,100%);
+    margin:0 auto;
+    min-height:0;
+    height:auto;
+    padding-top:24px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+
+
+  .brand{
+    margin-bottom:10px;
+  }
+}
+</style>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+<main class="card">
+
+   <header class="app-header">
+<a href="fichas-matematicas-para-imprimir.html" class="back-link" aria-label="Volver">
+      ← Volver
+  </a>
+</header>
+
+  <div class="brand">
+    <img src="holamates_tipo.svg" alt="HolaMates">
+  </div>
+
+  <div class="hero">
+    <img src="generador_sumas.webp" alt="Generador de sumas HolaMates">
+  </div>
+
+<h1>Generador de sumas para imprimir</h1>
+<p>
+Crea fichas de sumas para imprimir en PDF. Genera ejercicios de sumas
+con distintos niveles de dificultad, con o sin llevadas, ideales para
+alumnos de primaria y profesores.
+</p>
+  <div class="options">
+    <div class="row">
+
+      <label>
+        Cifras arriba
+        <select id="digitsTop">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </label>
+
+      <label>
+        Cifras abajo
+        <select id="digitsBottom">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </label>
+
+      <label>
+        Llevadas
+        <select id="carry">
+          <option value="no" selected>Sin llevadas</option>
+          <option value="yes">Con llevadas</option>
+        </select>
+      </label>
+
+    </div>
+  </div>
+
+  <button class="btn" id="btnGenerar">📄 Generar PDF</button>
+  <div class="hint">© HolaMates</div>
+
+  <section style="margin-top:20px;font-size:13px;color:#91a4bd;text-align:center;line-height:1.5">
+
+<p>
+Este generador permite crear <strong>ejercicios de sumas para primaria</strong>
+de forma automática. Puedes generar fichas de matemáticas con
+<strong>sumas con llevadas o sin llevadas</strong> listas para imprimir.
+</p>
+
+</section>
+
+</main>
+
+<script>
+const btn = document.getElementById("btnGenerar");
+
+btn.addEventListener("click", () => {
+
+  const digitsTop = parseInt(document.getElementById("digitsTop").value, 10);
+  const digitsBottom = parseInt(document.getElementById("digitsBottom").value, 10);
+  const carry = document.getElementById("carry").value;
+
+  // 🔥 GOOGLE ANALYTICS EVENTO
+  gtag('event', 'generate_pdf', {
+    type: 'sumas',
+    digitsTop: digitsTop,
+    digitsBottom: digitsBottom,
+    carry: carry
+  });
+
+  try{
+    const { jsPDF } = window.jspdf;
+    if(!jsPDF) throw new Error("jsPDF no está cargado (CDN bloqueado o sin internet).");
+
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+
+   
+
+    const cols = 4;
+    const rows = 5;
+    const total = cols * rows;
+
+    const pageMarginX = 15;
+    const pageMarginY = 20;
+    const colGap = 10;
+    const rowGap = 26;
+    const blockHeight = 22;
+
+    const colWidth = (210 - pageMarginX * 2 - colGap * (cols - 1)) / cols;
+
+    // Header igual que multiplicaciones
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Nombre:", pageMarginX, 20);
+    doc.setFont("helvetica", "normal");
+    doc.text(" _________________________________________________", pageMarginX + 18, 20);
+
+    doc.setFont("helvetica", "bold");
+    doc.text("Fecha:", 150, 20);
+    doc.setFont("helvetica", "normal");
+    doc.text(" ____________", 165, 20);
+
+    doc.setFont("helvetica", "bold");
+doc.setFontSize(14);
+
+const tituloPDF =
+  carry === "yes"
+    ? "Sumas con llevadas"
+    : "Sumas sin llevadas";
+
+doc.text(tituloPDF, 105, 35, { align: "center" });
+
+
+    function randInRange(min, max){
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function randNum(d){
+  // CASO 1 CIFRA → reglas especiales
+  if (d === 1) {
+    // permitir el 1 solo dos veces
+    if (onesUsed < 2 && Math.random() < 0.2) {
+      onesUsed++;
+      return 1;
+    }
+    // resto: 2–9 (nunca 0)
+    return randInRange(2, 9);
+  }
+
+  // CASO NORMAL (2,3,4 cifras)
+  const min = Math.pow(10, d - 1);
+  const max = Math.pow(10, d) - 1;
+  return randInRange(min, max);
+}
+
+
+    function hasAnyCarry(a, b){
+      let carryFlag = false;
+      while(a > 0 || b > 0){
+        const da = a % 10;
+        const db = b % 10;
+        if(da + db >= 10){ carryFlag = true; break; }
+        a = Math.floor(a / 10);
+        b = Math.floor(b / 10);
+      }
+      return carryFlag;
+    }
+
+    function hasNoCarry(a, b){
+      while(a > 0 || b > 0){
+        const da = a % 10;
+        const db = b % 10;
+        if(da + db >= 10) return false;
+        a = Math.floor(a / 10);
+        b = Math.floor(b / 10);
+      }
+      return true;
+    }
+
+    function genPair(){
+      // Primer intento simple: generar hasta cumplir condición
+      for(let tries=0; tries<5000; tries++){
+        const a = randNum(digitsTop);
+let b;
+
+if (digitsBottom === 1) {
+  // nunca 0
+  if (onesUsed < 2 && Math.random() < 0.2) {
+    onesUsed++;
+    b = 1;
+  } else {
+    b = randInRange(2, 9);
+  }
+} else {
+  b = randNum(digitsBottom);
+}
+
+        if(carry === "no"){
+          if(hasNoCarry(a, b)) return { a, b };
+        }else{
+          if(hasAnyCarry(a, b)) return { a, b };
+        }
+      }
+      // fallback (no debería pasar)
+      return { a: randNum(digitsTop), b: randNum(digitsBottom) };
+    }
+
+    let index = 0;
+    let onesUsed = 0; // máximo 2 unos cuando hay una sola cifra
+
+
+    for(let r=0; r<rows; r++){
+      for(let c=0; c<cols; c++){
+        if(index >= total) break;
+
+        const { a, b } = genPair();
+
+        const x = pageMarginX + c * (colWidth + colGap) - 2;
+        const y = pageMarginY + 32 + r * (blockHeight + rowGap);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(13);
+
+        const digitSpacing = 6;
+        const unitsX = x + colWidth - 6;
+
+       const lenA = String(a).length;
+const lenB = String(b).length;
+const maxLen = Math.max(lenA, lenB);
+
+// arriba (a)
+String(a).split("").reverse().forEach((d, i) => {
+  doc.text(d, unitsX - i * digitSpacing, y, { align: "center" });
+});
+
+// abajo (b)
+String(b).split("").reverse().forEach((d, i) => {
+  doc.text(d, unitsX - i * digitSpacing, y + 8, { align: "center" });
+});
+
+// signo "+"
+doc.text(
+  "+",
+  unitsX - digitSpacing * (maxLen + 0.2),
+  y + 8,
+  { align: "center" }
+);
+
+// línea
+doc.setLineWidth(0.4);
+doc.line(
+  unitsX - digitSpacing * (maxLen + 0.5),
+  y + 10.5,
+  unitsX + digitSpacing * 0.8,
+  y + 10.5
+);
+doc.setLineWidth(0.2);
+
+
+        index++;
+      }
+    }
+
+    // Footer igual
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+    doc.setTextColor(150);
+    doc.text("holamates.com", 105, 292, { align: "center" });
+    doc.setTextColor(0);
+
+
+    const carryLabel = carry === "yes" ? "con_llevadas" : "sin_llevadas";
+doc.save(`Holamates_sumas_${digitsTop}+${digitsBottom}_${carryLabel}.pdf`);
+    }catch(err){
+    alert(err?.message || String(err));
+    console.error(err);
+  }
+});
+</script>
+</body>
+</html>
