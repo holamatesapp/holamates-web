@@ -45,8 +45,13 @@ body{
   height:100%;
   display:flex;
   align-items:center;
-  justify-content:flex-start;
+  justify-content:space-between;
   padding:0 18px;
+}
+
+.left{
+  display:flex;
+  align-items:center;
 }
 
 /* Flecha volver */
@@ -62,7 +67,7 @@ body{
 .back-link:hover{ opacity:1 }
 .back-link:active{ opacity:.6 }
 
-/* Título clicable */
+/* Título */
 .app-title{
   font-weight:800;
   font-size:17px;
@@ -74,6 +79,31 @@ body{
 .app-title:hover{ opacity:.9 }
 .app-title:active{ color:var(--text) }
 
+/* Idioma */
+.lang-switch{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.lang-switch button{
+  background:none;
+  border:none;
+  padding:0;
+  font-size:18px;
+  cursor:pointer;
+  opacity:.72;
+  transition:opacity .18s ease, transform .18s ease;
+}
+
+.lang-switch button:hover{
+  opacity:1;
+  transform:scale(1.06);
+}
+
+.lang-switch button.active{
+  opacity:1;
+}
 
 main{
   padding-top:96px;
@@ -110,6 +140,7 @@ p{
 
 .hero-image{
   width:100%;
+  display:block;
   border-radius:16px;
   margin:24px 0;
 }
@@ -129,11 +160,15 @@ footer{
 <header class="app-header">
   <div class="app-header-inner">
 
-    <a href="/" class="back-link" aria-label="Volver al inicio">
-      ←
-    </a>
+    <div class="left">
+      <a href="/" class="back-link" aria-label="Volver al inicio">←</a>
+      <a href="/" class="app-title">HolaMates</a>
+    </div>
 
-    <a href="/" class="app-title">HolaMates</a>
+    <div class="lang-switch">
+      <button id="btn-es" onclick="setLang('es')" aria-label="Cambiar a español">🇪🇸</button>
+      <button id="btn-en" onclick="setLang('en')" aria-label="Switch to English">🇬🇧</button>
+    </div>
 
   </div>
 </header>
@@ -142,66 +177,133 @@ footer{
   <div class="container">
 
     <div class="card">
-      <h1>Política de privacidad</h1>
 
-      <p>
-        En HolaMates nos tomamos muy en serio la privacidad y la seguridad de nuestros usuarios,
-        especialmente al tratarse de una aplicación educativa pensada para niños y familias.
-      </p>
+      <!-- ESPAÑOL -->
+      <div class="es">
 
-      <img
-        src="privacidad.webp"
-        alt="Aprender matemáticas jugando"
-        class="hero-image"
-      />
+        <h1>Política de privacidad</h1>
 
-      <h2>Recopilación de datos</h2>
-      <p>
-        HolaMates <strong>no recopila, almacena ni comparte ningún dato personal</strong>.
-        La aplicación no requiere registro, inicio de sesión ni proporciona acceso a información
-        identificable del usuario.
-      </p>
+        <p>
+          En HolaMates nos tomamos muy en serio la privacidad y la seguridad de nuestros usuarios,
+          especialmente al tratarse de una aplicación educativa pensada para niños y familias.
+        </p>
 
-      <h2>Uso de la aplicación</h2>
-      <p>
-        Todas las actividades de HolaMates se realizan de forma local en el dispositivo.
-        No se envía información a servidores externos ni se utilizan servicios de análisis,
-        seguimiento o publicidad.
-      </p>
+        <img
+          src="privacidad.webp"
+          alt="Aprender matemáticas jugando"
+          class="hero-image"
+        />
 
+        <h2>Recopilación de datos</h2>
+        <p>
+          HolaMates <strong>no recopila, almacena ni comparte ningún dato personal</strong>.
+          La aplicación no requiere registro, inicio de sesión ni proporciona acceso a información
+          identificable del usuario.
+        </p>
 
-      <h2>Ranking y resultados</h2>
-<p>
-  HolaMates incluye un sistema de ranking para motivar el aprendizaje.
-  Las puntuaciones y nombres introducidos se <strong>guardan únicamente en el dispositivo</strong>
-  desde el que se juega.
-</p>
-<p>
-  Esta información <strong>no se envía a servidores externos</strong>,
-  no se comparte por internet y no es accesible por terceros.
-  Al borrar los datos del navegador o de la aplicación,
-  el ranking se elimina por completo.
-</p>
+        <h2>Uso de la aplicación</h2>
+        <p>
+          Todas las actividades de HolaMates se realizan de forma local en el dispositivo.
+          No se envía información a servidores externos ni se utilizan servicios de análisis,
+          seguimiento o publicidad.
+        </p>
 
-      <h2>Menores de edad</h2>
-      <p>
-        HolaMates está diseñada para ser utilizada por niños y niñas en un entorno seguro,
-        sin recopilación de datos personales y sin interacción con terceros.
-      </p>
+        <h2>Ranking y resultados</h2>
+        <p>
+          HolaMates incluye un sistema de ranking para motivar el aprendizaje.
+          Las puntuaciones y nombres introducidos se <strong>guardan únicamente en el dispositivo</strong>
+          desde el que se juega.
+        </p>
+        <p>
+          Esta información <strong>no se envía a servidores externos</strong>,
+          no se comparte por internet y no es accesible por terceros.
+          Al borrar los datos del navegador o de la aplicación,
+          el ranking se elimina por completo.
+        </p>
 
-      <h2>Cambios en esta política</h2>
-      <p>
-        Si en el futuro se realizara algún cambio en esta política de privacidad,
-        se actualizará esta página para reflejarlo de forma clara y transparente.
-      </p>
+        <h2>Menores de edad</h2>
+        <p>
+          HolaMates está diseñada para ser utilizada por niños y niñas en un entorno seguro,
+          sin recopilación de datos personales y sin interacción con terceros.
+        </p>
 
-      <h2>Contacto</h2>
-      <p>
-        Si tienes cualquier duda sobre esta política de privacidad,
-        puedes contactar con nosotros a través de:
-        <br><br>
-        <strong>holamates@gmail.com</strong>
-      </p>
+        <h2>Cambios en esta política</h2>
+        <p>
+          Si en el futuro se realizara algún cambio en esta política de privacidad,
+          se actualizará esta página para reflejarlo de forma clara y transparente.
+        </p>
+
+        <h2>Contacto</h2>
+        <p>
+          Si tienes cualquier duda sobre esta política de privacidad,
+          puedes contactar con nosotros a través de:
+          <br><br>
+          <strong>holamates@gmail.com</strong>
+        </p>
+
+      </div>
+
+      <!-- INGLÉS -->
+      <div class="en" style="display:none">
+
+        <h1>Privacy Policy</h1>
+
+        <p>
+          At HolaMates, we take user privacy and security very seriously,
+          especially as this is an educational app designed for children and families.
+        </p>
+
+        <img
+          src="privacidad.webp"
+          alt="Learning math through play"
+          class="hero-image"
+        />
+
+        <h2>Data Collection</h2>
+        <p>
+          HolaMates <strong>does not collect, store, or share any personal data</strong>.
+          The app does not require registration, login, or access to any personally identifiable information.
+        </p>
+
+        <h2>App Usage</h2>
+        <p>
+          All HolaMates activities are performed locally on the device.
+          No data is sent to external servers, and no analytics, tracking, or advertising services are used.
+        </p>
+
+        <h2>Ranking and Results</h2>
+        <p>
+          HolaMates includes a ranking system to motivate learning.
+          Scores and names entered are <strong>stored only on the device</strong> where the game is played.
+        </p>
+        <p>
+          This information <strong>is not sent to external servers</strong>,
+          is not shared online, and is not accessible to third parties.
+          If browser or app data is deleted, the ranking is permanently removed.
+        </p>
+
+        <h2>Children</h2>
+        <p>
+          HolaMates is designed to be used by children in a safe environment,
+          without collecting personal data and without interaction with third parties.
+        </p>
+
+        <h2>Changes to this Policy</h2>
+        <p>
+          If any changes are made to this privacy policy in the future,
+          this page will be updated to reflect them clearly and transparently.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          If you have any questions about this privacy policy,
+          you can contact us at:
+          <br><br>
+          <strong>holamates@gmail.com</strong>
+        </p>
+
+      </div>
+
     </div>
 
   </div>
@@ -210,6 +312,26 @@ footer{
 <footer>
   © HolaMates · Sistema de juego educativo desarrollado por HolaMates
 </footer>
+
+<script>
+function setLang(lang){
+  const es = document.querySelector('.es');
+  const en = document.querySelector('.en');
+  const btnEs = document.getElementById('btn-es');
+  const btnEn = document.getElementById('btn-en');
+
+  es.style.display = (lang === 'es') ? 'block' : 'none';
+  en.style.display = (lang === 'en') ? 'block' : 'none';
+
+  btnEs.classList.toggle('active', lang === 'es');
+  btnEn.classList.toggle('active', lang === 'en');
+
+  document.documentElement.lang = lang;
+}
+
+const autoLang = navigator.language && navigator.language.toLowerCase().startsWith('en') ? 'en' : 'es';
+setLang(autoLang);
+</script>
 
 </body>
 </html>
