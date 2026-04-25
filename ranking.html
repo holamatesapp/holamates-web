@@ -224,10 +224,42 @@ GAME SELECTOR
   display:flex;
 }
 
-.mode-group{
-  margin-top:-6px;
-  margin-bottom:30px;
+/* ===============================
+ICONOS SELECTOR JUEGOS
+================================ */
+.game-main-btn{
+  padding:10px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
 }
+
+.game-icon-btn{
+  height:32px;
+  object-fit:contain;
+  display:block;
+}
+
+.game-dropdown button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 14px;
+}
+
+.game-dropdown button img{
+  height:28px;
+  object-fit:contain;
+  display:block;
+  transition:.15s;
+}
+
+.game-dropdown button:hover img{
+  transform:scale(1.08);
+}
+
+
 
 /* ===============================
 LISTA
@@ -519,36 +551,45 @@ RESPONSIVE
       <!-- JUEGO -->
       <div class="group center game-selector">
         <button type="button" class="game-main-btn" id="gameMainBtn">
-          <span id="gameLabel">Tablas</span>
+          <img id="gameIcon" class="game-icon-btn" src="/imagen_multiplicaciones.png" alt="">
           <span class="arrow" id="gameArrow">▾</span>
         </button>
 
-        <div class="game-dropdown" id="gameDropdown">
-          <button type="button" data-game="suma10">Suma10</button>
-          <button type="button" data-game="sumas">Sumas</button>
-          <button type="button" data-game="restas">Restas</button>
-          <button type="button" data-game="tablas">Tablas</button>
-          <button type="button" data-game="divisiones">Divisiones</button>
-        </div>
+<div class="game-dropdown" id="gameDropdown">
+  <button type="button" data-game="suma10">
+    <img src="/imagen_suma10.png" alt="Suma10">
+  </button>
+
+  <button type="button" data-game="sumas">
+    <img src="/imagen_sumas.png" alt="Sumas">
+  </button>
+
+  <button type="button" data-game="restas">
+    <img src="/imagen_restas.png" alt="Restas">
+  </button>
+
+  <button type="button" data-game="tablas">
+    <img src="/imagen_multiplicaciones.png" alt="Tablas">
+  </button>
+
+  <button type="button" data-game="divisiones">
+    <img src="/imagen_divisiones.png" alt="Divisiones">
+  </button>
+</div>
+
       </div>
 
       <!-- NIVEL -->
-      <div class="group center">
-        <div class="options center" id="levelOptions">
-          <button type="button" data-level="init">Iniciación</button>
-          <button type="button" data-level="easy">Fácil</button>
-          <button type="button" data-level="normal">Medio</button>
-          <button type="button" data-level="hard">Difícil</button>
-        </div>
-      </div>
+<div class="group center">
+  <div class="options center" id="levelOptions">
+    <button type="button" data-level="init"></button>
+    <button type="button" data-level="easy"></button>
+    <button type="button" data-level="normal"></button>
+    <button type="button" data-level="hard"></button>
+  </div>
+</div>
 
-      <!-- MODO -->
-      <div class="group center mode-group" id="modeGroup" style="display:none;">
-        <div class="options center" id="modeOptions">
-          <button type="button" data-mode="sin">Sin llevada</button>
-          <button type="button" data-mode="con">Con llevada</button>
-        </div>
-      </div>
+
 
       <!-- TABLA / DIVISIONES -->
       <div class="group center" id="tableGroup" style="display:none;">
@@ -575,29 +616,13 @@ RESPONSIVE
 
     <!-- RANKING DESACTIVADO -->
     <div id="rankingDisabledView" class="ranking-disabled-card" style="display:none;">
-      <h2>🚫 Ranking desactivado</h2>
 
-      <p>
-        El sistema de ranking está desactivado.<br>
-        Puedes activarlo de nuevo aquí mismo.
-      </p>
-
-      <div class="ranking-disabled-actions">
-        <input
-          type="text"
-          id="confirmInput"
-          placeholder="Escribe ACTIVAR"
-        >
-
-        <button
-          type="button"
-          class="danger"
-          id="activateBtn"
-          disabled
-        >
-          Activar ranking
-        </button>
-      </div>
+           <h2>
+            🇪🇸 Ranking desactivado<br>
+            🇬🇧 Ranking disabled<br>
+            🇫🇷 Classement désactivé
+          </h2>
+          
     </div>
 
   </div>
@@ -611,31 +636,28 @@ RESPONSIVE
     selectedGame: "tablas",
     selectedLevel: "normal",
     selectedTable: "all",
-    selectedMode: "sin",
     ranking: [],
     rankingsDisabled: false,
     gamesOpen: false
   };
 
-  const els = {
-    backBtn: document.getElementById("backBtn"),
-    settingsBtn: document.getElementById("settingsBtn"),
-    gameMainBtn: document.getElementById("gameMainBtn"),
-    gameLabel: document.getElementById("gameLabel"),
-    gameArrow: document.getElementById("gameArrow"),
-    gameDropdown: document.getElementById("gameDropdown"),
-    levelOptions: document.getElementById("levelOptions"),
-    modeGroup: document.getElementById("modeGroup"),
-    modeOptions: document.getElementById("modeOptions"),
-    tableGroup: document.getElementById("tableGroup"),
-    tableOptions: document.getElementById("tableOptions"),
-    allTablesBtn: document.getElementById("allTablesBtn"),
-    rankingList: document.getElementById("rankingList"),
-    rankingEnabledView: document.getElementById("rankingEnabledView"),
-    rankingDisabledView: document.getElementById("rankingDisabledView"),
-    confirmInput: document.getElementById("confirmInput"),
-    activateBtn: document.getElementById("activateBtn")
-  };
+const els = {
+  backBtn: document.getElementById("backBtn"),
+  settingsBtn: document.getElementById("settingsBtn"),
+  gameMainBtn: document.getElementById("gameMainBtn"),
+  gameLabel: document.getElementById("gameLabel"),
+  gameIcon: document.getElementById("gameIcon"),
+  gameArrow: document.getElementById("gameArrow"),
+  gameDropdown: document.getElementById("gameDropdown"),
+  levelOptions: document.getElementById("levelOptions"),
+  tableGroup: document.getElementById("tableGroup"),
+  tableOptions: document.getElementById("tableOptions"),
+  allTablesBtn: document.getElementById("allTablesBtn"),
+  rankingList: document.getElementById("rankingList"),
+  rankingEnabledView: document.getElementById("rankingEnabledView"),
+  rankingDisabledView: document.getElementById("rankingDisabledView")
+
+};
 
   function restoreFromLastResult() {
     try {
@@ -649,13 +671,13 @@ RESPONSIVE
         state.selectedGame = last.game;
       }
 
-      if (["init", "easy", "normal", "hard"].includes(last.level)) {
-        state.selectedLevel = last.level;
-      }
-
-      if ((last.game === "restas" || last.game === "sumas") && (last.mode === "sin" || last.mode === "con")) {
-        state.selectedMode = last.mode;
-      }
+if (
+  ["init", "easy", "normal", "hard"].includes(last.level) &&
+  last.game !== "tablas" &&
+  last.game !== "divisiones"
+) {
+  state.selectedLevel = last.level;
+}
 
       if ((last.game === "tablas" || last.game === "divisiones") && last.table) {
         state.selectedTable = String(last.table);
@@ -665,41 +687,45 @@ RESPONSIVE
     }
   }
 
-  function buildChallengeId() {
-    if (state.selectedGame === "suma10") {
-      switch (state.selectedLevel) {
-        case "init": return "suma10_iniciacion";
-        case "easy": return "suma10_facil";
-        case "hard": return "suma10_dificil";
-        default: return "suma10_medio";
-      }
-    }
+function buildChallengeId() {
 
-    if (state.selectedGame === "restas") {
-      return `restas_${state.selectedMode}_${state.selectedLevel}`;
-    }
-
-    if (state.selectedGame === "sumas") {
-      return `sumas_${state.selectedMode}_${state.selectedLevel}`;
-    }
-
-    if (state.selectedGame === "divisiones") {
-      return `divisiones_${state.selectedTable}_${state.selectedLevel}`;
-    }
-
-    return `tablas_${state.selectedTable}_${state.selectedLevel}`;
+  // 🔵 Suma10 → sin nivel
+  if (state.selectedGame === "suma10") {
+    return "suma10";
   }
 
-  function getGameLabel() {
-    switch (state.selectedGame) {
-      case "suma10": return "Suma10";
-      case "sumas": return "Sumas";
-      case "restas": return "Restas";
-      case "tablas": return "Tablas";
-      case "divisiones": return "Divisiones";
-      default: return "";
-    }
+// 🟢 Sumas → SIN nivel
+if (state.selectedGame === "sumas") {
+  return 'sumas';
+}
+
+if (state.selectedGame === "restas") {
+  return 'restas';
+}
+
+  // 🟣 Divisiones → SOLO tabla
+  if (state.selectedGame === "divisiones") {
+    return `divisiones_${state.selectedTable}`;
   }
+
+  // 🟠 Tablas → SOLO tabla
+  if (state.selectedGame === "tablas") {
+    return `tablas_${state.selectedTable}`;
+  }
+
+  return "";
+}
+
+function getGameIcon() {
+  switch (state.selectedGame) {
+    case "suma10": return "/imagen_suma10.png";
+    case "sumas": return "/imagen_sumas.png";
+    case "restas": return "/imagen_restas.png";
+    case "tablas": return "/imagen_multiplicaciones.png";
+    case "divisiones": return "/imagen_divisiones.png";
+    default: return "/imagen_multiplicaciones.png";
+  }
+}
 
   function loadRanking() {
     try {
@@ -731,24 +757,24 @@ RESPONSIVE
     els.gameArrow.textContent = state.gamesOpen ? "▴" : "▾";
   }
 
-  function setGame(game) {
-    state.selectedGame = game;
+function setGame(game) {
+  state.selectedGame = game;
 
-    if (game === "suma10") {
-      state.selectedTable = "all";
-    }
-
-    closeGames();
-    refresh();
+  if (game === "suma10") {
+    state.selectedTable = "all";
   }
+
+  // 🔥 NUEVO
+  if (game === "tablas" || game === "divisiones") {
+    state.selectedLevel = "normal"; // valor neutro
+  }
+
+  closeGames();
+  refresh();
+}
 
   function setLevel(level) {
     state.selectedLevel = level;
-    refresh();
-  }
-
-  function setMode(mode) {
-    state.selectedMode = mode;
     refresh();
   }
 
@@ -758,14 +784,10 @@ RESPONSIVE
   }
 
   function updateActiveButtons() {
-    els.gameLabel.textContent = getGameLabel();
+    els.gameIcon.src = getGameIcon();
 
     els.levelOptions.querySelectorAll("button").forEach(btn => {
       btn.classList.toggle("active", btn.dataset.level === state.selectedLevel);
-    });
-
-    els.modeOptions.querySelectorAll("button").forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.mode === state.selectedMode);
     });
 
     els.tableOptions.querySelectorAll("button").forEach(btn => {
@@ -775,18 +797,53 @@ RESPONSIVE
     els.allTablesBtn.classList.toggle("active", state.selectedTable === "all");
   }
 
-  function updateConditionalGroups() {
-    const showMode = state.selectedGame === "restas" || state.selectedGame === "sumas";
-    const showTable = state.selectedGame === "tablas" || state.selectedGame === "divisiones";
+function updateConditionalGroups() {
 
-    els.modeGroup.style.display = showMode ? "flex" : "none";
-    els.tableGroup.style.display = showTable ? "block" : "none";
+  const isTablas = state.selectedGame === "tablas";
+  const isDivisiones = state.selectedGame === "divisiones";
 
-    els.allTablesBtn.textContent =
-      state.selectedGame === "divisiones"
-        ? "Todos los divisores"
-        : "Todas las tablas";
+  const showTable = isTablas || isDivisiones;
+
+  // TABLA
+  els.tableGroup.style.display = showTable ? "block" : "none";
+
+  // 🔴 NIVEL → SIEMPRE OCULTO
+  const levelGroup = els.levelOptions.closest(".group");
+  levelGroup.style.display = "none";
+
+  // TEXTO
+  els.allTablesBtn.textContent =
+    isDivisiones
+      ? "÷ 1, 2, 3 ... 9"
+      : "X 1, 2, 3 ... 9";
+}
+
+
+function updateLevelLabels() {
+
+  // 🔴 NO mostrar niveles en estos juegos
+  if (
+    state.selectedGame === "suma10" ||
+    state.selectedGame === "sumas" ||
+    state.selectedGame === "restas"
+  ) {
+    return; // 🚀 CLAVE: no pinta nada
   }
+
+  // SOLO para tablas/divisiones (aunque ahora no lo uses)
+  const labels = {
+    init: "Iniciación:2",
+    easy: "Fácil:3",
+    normal: "Medio:4",
+    hard: "Difícil:5"
+  };
+
+  els.levelOptions.querySelectorAll("button").forEach(btn => {
+    btn.textContent = labels[btn.dataset.level] || "";
+  });
+}
+
+
 
   function renderRankingList() {
     els.rankingList.innerHTML = "";
@@ -831,21 +888,15 @@ RESPONSIVE
     }
   }
 
-  function refresh() {
-    loadRanking();
-    updateConditionalGroups();
-    updateActiveButtons();
-    renderRankingList();
-    updateDisabledView();
-  }
+ function refresh() {
+  loadRanking();
+  updateConditionalGroups();
+  updateLevelLabels();
+  updateActiveButtons();
+  renderRankingList();
+  updateDisabledView();
+}
 
-  function activateRankings() {
-    localStorage.removeItem("holamates_rankings");
-    els.confirmInput.value = "";
-    els.activateBtn.disabled = true;
-    state.rankingsDisabled = false;
-    refresh();
-  }
 
   function goBack() {
     const prev = localStorage.getItem("holamates_prev_route");
@@ -879,12 +930,6 @@ RESPONSIVE
     });
   });
 
-  els.modeOptions.querySelectorAll("button[data-mode]").forEach(btn => {
-    btn.addEventListener("click", function () {
-      setMode(btn.dataset.mode);
-    });
-  });
-
   els.allTablesBtn.addEventListener("click", function () {
     setTable("all");
   });
@@ -895,12 +940,6 @@ RESPONSIVE
     });
   });
 
-  els.confirmInput.addEventListener("input", function () {
-    els.activateBtn.disabled =
-    els.confirmInput.value.trim().toUpperCase() !== "ACTIVAR";
-  });
-
-  els.activateBtn.addEventListener("click", activateRankings);
 
   document.addEventListener("click", function (e) {
     const inside = e.target.closest(".game-selector");
@@ -910,9 +949,9 @@ RESPONSIVE
   restoreFromLastResult();
   refresh();
 
-  window.addEventListener('pageshow', function () {
-  refresh();
-});
+  window.addEventListener("pageshow", function () {
+    refresh();
+  });
 
 })();
 </script>

@@ -137,7 +137,8 @@ select:disabled{
 /* menú de juegos */
 
 .game-switch{
-  position:relative;
+  position: relative;
+  margin-left: -6px;
 }
 
 #gameBtn{
@@ -194,6 +195,49 @@ select:disabled{
   cursor:default;
 }
 .game-menu.show{ display:block }
+
+
+
+/* ───────── icono multilenguaje ───────── */
+
+.icon-hits{
+  width:16px;
+  height:16px;
+  object-fit:contain;
+  opacity:.9;
+}
+
+.icon-level{
+  width:16px;
+  height:16px;
+  object-fit:contain;
+  opacity:.8;
+}
+
+.icon-game-btn{
+  height:32px;
+  object-fit:contain;
+}
+
+.icon-menu{
+  height:28px;
+  object-fit:contain;
+  display:block;
+}
+
+.game-menu img{
+  transition:.15s;
+}
+
+.game-menu a:hover img{
+  transform: scale(1.08);
+}
+
+.game-menu .current img{
+  opacity:.5;
+}
+
+
 
 /* ───────── LÍNEA DE TIEMPO ───────── */
 
@@ -352,12 +396,16 @@ button.key{
   background:#0c121c;
   padding:28px 20px 18px;
   border-radius:18px;
-  width:min(800px,90%);
-  min-height:55vh;
+
+ width:min(900px,90%);
+  min-height:500px;
+
   text-align:center;
 
   display:flex;
   flex-direction:column;
+
+  position:relative;
 }
 
 /* CONTENEDOR PRINCIPAL */
@@ -423,6 +471,66 @@ button.key{
 #tapOutsideText{
   opacity:.7;
   margin-top:12px;
+}
+
+.gifs-row{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.gif-block{
+  width:180px;
+  height:180px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  border-radius:16px;
+}
+
+.gif-block img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.modal-close-center{
+  margin: 12px auto 0;
+  width: 44px;
+  height: 44px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:22px;
+  border-radius:50%;
+  border:none;
+
+  background: rgba(255,255,255,.08);
+  color:white;
+
+  cursor:pointer;
+  transition:.15s;
+}
+
+.modal-close-center:hover{
+  background: rgba(255,255,255,.18);
+  transform: scale(1.08);
+}
+
+.modal-close-center:hover{
+  background: rgba(255,255,255,.18);
+  transform: scale(1.08);
+}
+
+/* IMPORTANTE para posicionarlo */
+.modal{
+  position:relative;
 }
 
 
@@ -849,6 +957,10 @@ AQUÍ TERMINA EN ESCALADO
 }
 
 /* POSICIONES */
+.pos--1 .desktop-wrapper{ margin-top: -100px; }
+.pos--2 .desktop-wrapper{ margin-top: -200px; }
+.pos--3 .desktop-wrapper{ margin-top: -300px; }
+
 .pos-0 .desktop-wrapper{ margin-top: 0px; }
 .pos-1 .desktop-wrapper{ margin-top: 100px; }
 .pos-2 .desktop-wrapper{ margin-top: 200px; }
@@ -882,11 +994,7 @@ AQUÍ TERMINA EN ESCALADO
   <div class="mobile-block">
   <div class="mobile-block-content">
 
-      <img 
-    src="/modo_equipo.png" 
-    alt="Versus"
-    class="versus-logo"
-  />
+
   
     <img 
   src="/tres_jugando.webp" 
@@ -895,12 +1003,21 @@ AQUÍ TERMINA EN ESCALADO
 />
 
 
-<p>Diseñado para pantallas grandes y pizarras digitales</p>
+<p>🇪🇸 Diseñado para pantallas grandes y pizarras digitales</p>
+<p>🇬🇧 Designed for large screens and interactive whiteboards</p>
+<p>🇫🇷 Conçu pour les grands écrans et les tableaux numériques</p>
+<p>🇮🇹 Progettato per schermi grandi e lavagne digitali</p>
 
 
-    <button class="mobile-home-btn" onclick="goHome()">
-  Volver al inicio
+<button onclick="goHome(event)" style="background:none; border:none; padding:0; cursor:pointer; margin-top:20px;">
+  <img
+    src="home.svg"
+    alt="Inicio"
+    style="width:45px; height:45px; object-fit:contain;"
+  />
 </button>
+
+
   </div>
 </div>
 
@@ -908,32 +1025,46 @@ AQUÍ TERMINA EN ESCALADO
 
   <main class="app player1">
   <header>
-    <div class="game-switch">
-      <button id="gameBtn">
-        Suma 10 <span class="arrow">▾</span>
-      </button>
-      <div class="game-menu" id="gameMenu">
-  <a href="#" onclick="goHome()">Inicio</a>
-  <span class="current">Suma10</span>
-  <a href="#" onclick="goTablas()">Multiplicaciones</a>
-  
+<div class="game-switch">
+  <button id="gameBtn">
+    <img src="/imagen_suma10.png" class="icon-game-btn">
+    <span class="arrow">▾</span>
+  </button>
+
+  <div class="game-menu" id="gameMenu">
+
+    <a href="#" onclick="goHome(event)">
+      <img src="/inicio.png" class="icon-menu">
+    </a>
+
+    <span class="current">
+      <img src="/imagen_suma10.png" class="icon-menu">
+    </span>
+
+    <a href="#" onclick="goTablas(event)">
+      <img src="/imagen_multiplicaciones.png" class="icon-menu">
+    </a>
+
+  </div>
 </div>
 
+<div class="stats">
+  <div class="pill">
+    <img src="/target.png" alt="" class="icon-hits">
+    <span id="hits">0</span>
+  </div>
 
-    </div>
+  <div class="pill">
+    <img src="/nivel.svg" alt="" class="icon-level">
+    <select id="level">
+      <option value="init">1</option>
+      <option value="easy">2</option>
+      <option value="normal" selected>3</option>
+      <option value="hard">4</option>
+    </select>
+  </div>
+</div>
 
-    <div class="stats">
-      <div class="pill">Aciertos: <span id="hits">0</span></div>
-      <div class="pill">
-        Nivel:
-        <select id="level">
-          <option value="init">Iniciación</option>
-          <option value="easy">Fácil</option>
-          <option value="normal" selected>Medio</option>
-          <option value="hard">Difícil</option>
-        </select>
-      </div>
-    </div>
   </header>
 
   <section class="screen">
@@ -965,18 +1096,22 @@ AQUÍ TERMINA EN ESCALADO
 
     </div>
 
-    <div class="stats">
-      <div class="pill">Aciertos: <span id="hits2">0</span></div>
-      <div class="pill">
-        Nivel:
-        <select id="level2" disabled>
-          <option value="init">Iniciación</option>
-          <option value="easy">Fácil</option>
-          <option value="normal" selected>Medio</option>
-          <option value="hard">Difícil</option>
-        </select>
-      </div>
-    </div>
+<div class="stats">
+  <div class="pill">
+    <img src="/target.png" alt="" class="icon-hits">
+    <span id="hits2">0</span>
+  </div>
+
+  <div class="pill">
+    <img src="/nivel.svg" alt="" class="icon-level">
+    <select id="level2" disabled>
+      <option value="init">1</option>
+      <option value="easy">2</option>
+      <option value="normal" selected>3</option>
+      <option value="hard">4</option>
+    </select>
+  </div>
+</div>
   </header>
 
   <section class="screen">
@@ -1010,18 +1145,22 @@ AQUÍ TERMINA EN ESCALADO
     <button id="fakeGameBtn" style="visibility:hidden;">Suma 10</button>
   </div>
 
-  <div class="stats">
-    <div class="pill">Aciertos: <span id="hits3">0</span></div>
-    <div class="pill">
-      Nivel:
-      <select id="level3" disabled>
-        <option value="init">Iniciación</option>
-        <option value="easy">Fácil</option>
-        <option value="normal" selected>Medio</option>
-        <option value="hard">Difícil</option>
-      </select>
-    </div>
+<div class="stats">
+  <div class="pill">
+    <img src="/target.png" alt="" class="icon-hits">
+    <span id="hits3">0</span>
   </div>
+
+  <div class="pill">
+    <img src="/nivel.svg" alt="" class="icon-level">
+    <select id="level3" disabled>
+      <option value="init">1</option>
+      <option value="easy">2</option>
+      <option value="normal" selected>3</option>
+      <option value="hard">4</option>
+    </select>
+  </div>
+</div>
 </header>
 
 <section class="screen">
@@ -1054,16 +1193,18 @@ AQUÍ TERMINA EN ESCALADO
 <div class="overlay" id="overlay">
   <div class="modal">
 
+    <!-- ❌ BOTÓN CERRAR -->
+
    <div class="modal-content">
 
   <div id="goHits" class="modal-hits"></div>
 
   <div id="goMessage" class="modal-message"></div>
 
-  <div class="modal-rank">
-    <span id="top1Text" style="display:none;">🥇 Nuevo récord 🥇</span>
-    <span id="top5Text" style="display:none;">🏆 Nuevo Top 5 🏆</span>
-  </div>
+      <button id="closeBtn" class="modal-close-center">✕</button>
+
+
+
 
   <div id="initialsBox" class="modal-input" style="display:none;">
 <input id="nameInput" placeholder="Tu nombre" maxlength="20" />
@@ -1073,7 +1214,6 @@ AQUÍ TERMINA EN ESCALADO
 </div>
 
 
-    <p id="tapOutsideText">Toca fuera para cerrar</p>
   </div>
 </div>
 
@@ -1083,6 +1223,10 @@ AQUÍ TERMINA EN ESCALADO
 
 
 <script>
+
+
+
+
 const GAME_TIME = 60000;
 const MAX_LEN = 10;
 
@@ -1090,9 +1234,6 @@ const initialsBox = document.getElementById("initialsBox");
 const nameInput = document.getElementById("nameInput");
 const initialsOk = document.getElementById("initialsOk");
 
-const top1Text = document.getElementById("top1Text");
-const top5Text = document.getElementById("top5Text");
-const tapOutsideText = document.getElementById("tapOutsideText");
 
 
 
@@ -1167,6 +1308,15 @@ const levelSelect3 = document.getElementById("level3");
 
 // ───── leer nivel desde URL (Hash router) ─────
 const params = new URLSearchParams(window.location.search);
+
+const selectorFromUrl = params.get("selector");
+
+if (selectorFromUrl) {
+  localStorage.setItem(
+    'holamates_selector_route',
+    decodeURIComponent(selectorFromUrl)
+  );
+}
 
 const levelFromUrl = params.get("level");
 
@@ -1408,163 +1558,108 @@ function updateUI3(consuming=false){
 }
 
 
+
+
+
 function mensajeAnimo(hits){
 
-  if(hits === 0)  return "No pasa nada 💙 Vamos a intentarlo otra vez";
-  if(hits === 1)  return "Buen intento 💪 Cada partida cuenta";
-  if(hits === 2)  return "¡Bien! Poco a poco 🙂";
-  if(hits === 3)  return "¡Muy bien! Sigue así 👏";
-  if(hits === 4)  return "¡Genial! Vas mejorando 🚀";
-  if(hits === 5)  return "¡Muy bien! Buen comienzo 😄";
-  if(hits === 6)  return "¡Muy bien! Cada vez más rápido 🔥";
-  if(hits === 7)  return "¡Genial! Buena concentración 🧠";
-  if(hits === 8)  return "¡Genial! Ritmo sólido 💪";
-  if(hits === 9)  return "¡Muy bien! Buen control 👌";
+  // 🔴 MUY BAJO
+  if(hits <= 3)  return `<img src="/gifs/gif_pocos_aciertos.gif" loading="eager">`;
+  if(hits <= 5)  return `<img src="/gifs/gif_otra_vez.gif" loading="eager">`;
 
-  // 🔹 A partir de 10: ya se nota progreso real
-  if(hits === 10) return "¡Muy bien! Se nota el progreso 😄";
-  if(hits === 11) return "¡Muy bien! Cada vez más seguro 🙂";
-  if(hits === 12) return "¡Genial! Buen ritmo 🚀";
-  if(hits === 13) return "¡Genial! Buen control 👏";
-  if(hits === 14) return "¡Muy bien! Vas fuerte 💪";
+  // 🎯 ESPECIAL BAJO
+  if(hits === 6 || hits === 7) return `<img src="/gifs/gif_seis_siete.gif" loading="eager">`;
 
-  // 🔹 15–19: jugador sólido
-  if(hits === 15) return "¡Muy bien! Ritmo constante 💪";
-  if(hits === 16) return "¡Muy bien! Buena seguridad 🙂";
-  if(hits === 17) return "¡Genial! Gran concentración 🧠";
-  if(hits === 18) return "¡Genial! Buen control 👏";
-  if(hits === 19) return "¡Muy bien! Preparado para más 🚀";
+  // 🟡 INICIO
+  if(hits <= 10) return `<img src="/gifs/gif_mapache_aplausos.gif" loading="eager">`;
+  if(hits <= 13) return `<img src="/gifs/gif_oveja.gif" loading="eager">`;
 
-  // 🔥 A partir de 20: nivel alto
-  if(hits === 20) return "¡Brutal! Nivel altísimo 🔥";
-  if(hits === 21) return "¡Brutal! Muy sólido 💥";
-  if(hits === 22) return "¡Bestial! Ritmo brutal 🔥";
-  if(hits === 23) return "¡Bestial! Gran dominio 💪";
-  if(hits === 24) return "¡Bestial! Muy fuerte 🧠";
+  // 😰 BAJO
+  if(hits <= 16) return `<img src="/gifs/gif_chico_medio.gif" loading="eager">`;
+  if(hits <= 19) return `<img src="/gifs/gif_chico_asustado.gif" loading="eager">`;
+  if(hits <= 22) return `<img src="/gifs/gif_chica_asustada.gif" loading="eager">`;
 
-  // 🏆 25–29: nivel pro
-  if(hits === 25) return "¡Nivel pro! Muy rápido 🚀";
-  if(hits === 26) return "¡Nivel pro! Gran control 🎯";
-  if(hits === 27) return "¡Nivel pro! Sin fallos 💥";
-  if(hits === 28) return "¡Nivel pro! Precisión total 🎯";
-  if(hits === 29) return "¡Nivel pro! Impresionante 🌟";
+  // 😮 MEJORA
+  if(hits <= 25) return `<img src="/gifs/gif_chico_sorprendido.gif" loading="eager">`;
+  if(hits <= 28) return `<img src="/gifs/gif_sorprendida.gif" loading="eager">`;
+  if(hits <= 31) return `<img src="/gifs/gif_sorprendida2.gif" loading="eager">`;
 
-  // 🏆 30–34: sobresaliente
-  if(hits === 30) return "¡Sobresaliente! Ritmo altísimo 🏆";
-  if(hits === 31) return "¡Sobresaliente! Mucha precisión 🎯";
-  if(hits === 32) return "¡Sobresaliente! Gran seguridad 😎";
-  if(hits === 33) return "¡Sobresaliente! Muy sólido 💪";
-  if(hits === 34) return "¡Sobresaliente! Nivel top 🌟";
+  // 🟢 NORMAL
+  if(hits <= 35) return `<img src="/gifs/gif_ok.gif" loading="eager">`;
+  if(hits <= 38) return `<img src="/gifs/gif_okkk_yes.gif" loading="eager">`;
+  if(hits <= 41) return `<img src="/gifs/gif_mano_ok.gif" loading="eager">`;
 
-  // 🤖 35–39: máquina
-  if(hits === 35) return "¡Máquina! Esto ya es otro nivel 🤖";
-  if(hits === 36) return "¡Máquina! Ritmo brutal 🔥";
-  if(hits === 37) return "¡Máquina! Gran dominio 🧠";
-  if(hits === 38) return "¡Máquina! Partidaza 💥";
-  if(hits === 39) return "¡Máquina! Imparable 🚀";
+  // 😄 BIEN
+  if(hits <= 45) return `<img src="/gifs/gif_contento.gif" loading="eager">`;
+  if(hits <= 48) return `<img src="/gifs/gif_contento2.gif" loading="eager">`;
 
-  // 👑 40–44: leyenda
-  if(hits === 40) return "¡Leyenda! Partida histórica 👑";
-  if(hits === 41) return "¡Leyenda! Dominio total 😎";
-  if(hits === 42) return "¡Leyenda! Precisión increíble 🎯";
-  if(hits === 43) return "¡Leyenda! Ritmo perfecto 🌟";
-  if(hits === 44) return "¡Leyenda! Nivel máximo 🏆";
+  // 🎯 ESPECIAL
+  if(hits === 50) return `<img src="/gifs/gif_lamine.gif" loading="eager">`;
 
-  // 🌟 45–49: élite
-  if(hits === 45) return "¡Élite! Juego perfecto 🔥";
-  if(hits === 46) return "¡Élite! Control absoluto 🧠";
-  if(hits === 47) return "¡Élite! Sin errores 💥";
-  if(hits === 48) return "¡Élite! Brutal 😎";
-  if(hits === 49) return "¡Élite! Imparable 🚀";
+  // 😎 GUAY
+  if(hits <= 53) return `<img src="/gifs/gif_chico_guay.gif" loading="eager">`;
 
-  // 🚀 50–59: fuera de lo normal
-  if(hits === 50) return "¡Increíble! Esto es otro planeta 🤯";
-  if(hits === 51) return "¡Increíble! Nivel extremo 🔥";
-  if(hits === 52) return "¡Increíble! Dominio total 💪";
-  if(hits === 53) return "¡Increíble! Precisión perfecta 🎯";
-  if(hits === 54) return "¡Increíble! Ritmo demencial 🚀";
-  if(hits === 55) return "¡Increíble! Mente de acero 🧠";
-  if(hits === 56) return "¡Increíble! Sin palabras 🤯";
-  if(hits === 57) return "¡Increíble! Maestro absoluto 🏆";
-  if(hits === 58) return "¡Increíble! Juego perfecto 🔥";
-  if(hits === 59) return "¡Increíble! Casi imposible 😎";
+  // ⚡ VELOCIDAD
+  if(hits <= 56) return `<img src="/gifs/gif_rapido.gif" loading="eager">`;
+  if(hits <= 59) return `<img src="/gifs/gif_gato_rapido.gif" loading="eager">`;
 
-// 🌌 60–69: 
-  if(hits === 60) return "👑 Leyenda absoluta 🔥";
-if(hits === 61) return "👑 Nivel mítico 🚀";
-if(hits === 62) return "🌟 Dominio legendario 💪";
-if(hits === 63) return "⚡ Ritmo sobrenatural 🔥";
-if(hits === 64) return "💎 Precisión perfecta 🎯";
-if(hits === 65) return "🧠 Maestro mental 👏";
-if(hits === 66) return "🔥 Dominio extremo 🚀";
-if(hits === 67) return "⚡ Velocidad imparable 💥";
-if(hits === 68) return "🏆 Nivel histórico 🌟";
-if(hits === 69) return "👑 Casi perfecto 😎";
+  // 🎯 ESPECIAL
+  if(hits === 60) return `<img src="/gifs/gif_trump_baile.gif" loading="eager">`;
 
-// 🌌 70–79: nivel mito
-if(hits === 70) return "🌌 Nivel mito 🚀";
-if(hits === 71) return "🔥 Partida legendaria 🏆";
-if(hits === 72) return "💥 Imparable total ⚡";
-if(hits === 73) return "🌟 Rendimiento épico 🚀";
-if(hits === 74) return "💎 Control absoluto 🎯";
-if(hits === 75) return "👑 Maestro supremo 🔥";
-if(hits === 76) return "⚡ Ritmo alienígena 🧠";
-if(hits === 77) return "🌌 Dominio galáctico 🚀";
-if(hits === 78) return "🏆 Nivel récord 🌟";
-if(hits === 79) return "🔥 Brutalísimo 😎";
+  if(hits <= 62) return `<img src="/gifs/gif_perro_rapido.gif" loading="eager">`;
 
-// 🛸 80–89: nivel galáctico
-if(hits === 80) return "🛸 Nivel galáctico 🚀";
-if(hits === 81) return "🌠 Rendimiento estelar 🔥";
-if(hits === 82) return "💎 Precisión total 🎯";
-if(hits === 83) return "⚡ Velocidad extrema 💥";
-if(hits === 84) return "👑 Maestro infinito 🏆";
-if(hits === 85) return "🌌 Juego cósmico 🚀";
-if(hits === 86) return "🔥 Dominio absoluto 💪";
-if(hits === 87) return "🧠 Genio total 🌟";
-if(hits === 88) return "⚡ Imparable 🚀";
-if(hits === 89) return "🏆 Nivel máximo 😎";
+  // 🌟 EFECTOS
+  if(hits <= 66) return `<img src="/gifs/gif_estrella_fugaz.gif" loading="eager">`;
 
-// 🌟 90–100: casi legendario eterno
-if(hits === 90) return "🌟 Nivel supremo 🔥";
-if(hits === 91) return "🔥 Dominio total 👑";
-if(hits === 92) return "⚡ Velocidad perfecta 🚀";
-if(hits === 93) return "💎 Precisión legendaria 🎯";
-if(hits === 94) return "🧠 Control absoluto 🌟";
-if(hits === 95) return "👑 Maestro eterno 🔥";
-if(hits === 96) return "🌌 Rendimiento sobrenatural 🚀";
-if(hits === 97) return "⚡ Ritmo imparable 💥";
-if(hits === 98) return "🏆 Partida histórica 🌟";
-if(hits === 99) return "👑 A un paso de la eternidad 🔥";
-if(hits === 100) return "💯 Esto es historia!!! 🏆";
+  // 🎯 ESPECIAL
+  if(hits === 67) return `<img src="/gifs/gif_67_original.gif" loading="eager">`;
 
-// 🌠 101–121: nivel trascendental
-if(hits === 101) return "👑 Nivel imposible superado 🔥";
-if(hits === 102) return "🌠 Nivel trascendental 🔥";
-if(hits === 103) return "🚀 Más allá de lo imposible 💥";
-if(hits === 104) return "👑 Dominio absoluto del cálculo 🏆";
-if(hits === 105) return "⚡ Velocidad sobrenatural 🧠";
-if(hits === 106) return "💎 Precisión infinita 🎯";
-if(hits === 107) return "🔥 Ritmo fuera de escala 🚀";
-if(hits === 108) return "🌌 Control total del universo matemático 🌟";
-if(hits === 109) return "🧠 Mente brillante 💥";
-if(hits === 110) return "🏆 Marca histórica 🚀";
-if(hits === 111) return "👑 Nivel inalcanzable 🔥";
+  if(hits <= 70) return `<img src="/gifs/gif_galaxia.gif" loading="eager">`;
 
-if(hits === 112) return "⚡ Rendimiento legendario 💎";
-if(hits === 113) return "🌠 Juego perfecto 🏆";
-if(hits === 114) return "🔥 Dominio sin límites 🚀";
-if(hits === 115) return "🧠 Cálculo imparable 💥";
-if(hits === 116) return "👑 Ritmo de campeón 🏆";
-if(hits === 117) return "⚡ Nivel épico 🚀";
-if(hits === 118) return "🌌 Precisión absoluta 💎";
-if(hits === 119) return "🔥 Partida inolvidable 🏆";
-if(hits === 120) return "👑 Nivel infinito 🚀";
-if(hits === 121) return "🌟 Más allá de la leyenda 🔥";
+  // 🎉 APLAUSOS
+  if(hits <= 75) return `<img src="/gifs/gif_aplausos.gif" loading="eager">`;
+  if(hits <= 78) return `<img src="/gifs/gif_perro_aplausos.gif" loading="eager">`;
 
-//  121: final definitivo
-if(hits > 121) return "¡LEYENDA ETERNA! Esto es historia 🏆";
+  // 💃 BAILE
+  if(hits <= 82) return `<img src="/gifs/gif_baile_chico.gif" loading="eager">`;
+  if(hits <= 85) return `<img src="/gifs/gif_baile_chica.gif" loading="eager">`;
+  if(hits <= 88) return `<img src="/gifs/gif_chico_baile.gif" loading="eager">`;
+
+  // 🕺 MÁS BAILE
+  if(hits <= 92) return `<img src="/gifs/gif_chico_baile7.gif" loading="eager">`;
+  if(hits <= 95) return `<img src="/gifs/gif_chicos_baile.gif" loading="eager">`;
+  if(hits <= 98) return `<img src="/gifs/gif_baile_chicos2.gif" loading="eager">`;
+
+  // 🎯 ESPECIAL
+  if(hits === 100) return `<img src="/gifs/gif_mbappe.gif" loading="eager">`;
+
+  // 🎶 EXTRA
+  if(hits <= 103) return `<img src="/gifs/gif_baile_mono.gif" loading="eager">`;
+  if(hits <= 106) return `<img src="/gifs/gif_ardilla_bailando.gif" loading="eager">`;
+  if(hits <= 110) return `<img src="/gifs/gif_coco_bailando2.gif" loading="eager">`;
+
+  // 🚀 NIVEL ALTO
+  if(hits <= 115) return `<img src="/gifs/gif_perro_bailando.gif" loading="eager">`;
+  if(hits <= 120) return `<img src="/gifs/gif_perro_bailando2.gif" loading="eager">`;
+  if(hits <= 125) return `<img src="/gifs/gif_perro_bailando3.gif" loading="eager">`;
+  if(hits <= 130) return `<img src="/gifs/gif_perro_bailando4.gif" loading="eager">`;
+
+  // 🔥 LOCURA
+  if(hits <= 135) return `<img src="/gifs/gif_de_locos.gif" loading="eager">`;
+  if(hits <= 140) return `<img src="/gifs/gif_de_locos2.gif" loading="eager">`;
+  if(hits <= 145) return `<img src="/gifs/gif_de_locos3.gif" loading="eager">`;
+  if(hits <= 150) return `<img src="/gifs/gif_de_locos4.gif" loading="eager">`;
+  if(hits <= 155) return `<img src="/gifs/gif_de_locos6.gif" loading="eager">`;
+
+  // 🚀 FINAL
+  if(hits <= 158) return `<img src="/gifs/gif_cohete.gif" loading="eager">`;
+  if(hits <= 160) return `<img src="/gifs/gif_bestial.gif" loading="eager">`;
+
+  // 👑 TOP
+  return `<img src="/gifs/gif_legend.gif" loading="eager">`;
 }
+
+
 
 
 function endGame(){
@@ -1641,86 +1736,36 @@ forceFailVisualP3();
 
 function showFinalModal(){
 
-const scores = [
-  {id:1, hits:hits},
-  {id:2, hits:hits2},
-  {id:3, hits:hits3}
-];
-
-scores.sort((a,b)=>b.hits-a.hits);
-
-const winner = scores[0].id;
-
-const totalHits = hits + hits2 + hits3;
-
-const titleText = "Puntuación del equipo: " + totalHits;
-
-  let p1Class = "";
-  let p2Class = "";
-  let p3Class = "";
-
-if (winner === 1){
-  p1Class = "winner";
-  p2Class = "loser";
-  p3Class = "loser";
-}
-else if (winner === 2){
-  p1Class = "loser";
-  p2Class = "winner";
-  p3Class = "loser";
-}
-else if (winner === 3){
-  p1Class = "loser";
-  p2Class = "loser";
-  p3Class = "winner";
-}
+  const totalHits = hits + hits2 + hits3;
 
   document.getElementById("goHits").innerHTML = `
-
-    <div style="font-size:40px;font-weight:700;margin-bottom:14px">
-      <span style="display:block;font-size:20px;opacity:.6;letter-spacing:1px;margin-bottom:12px;">
+    <div style="font-size:18px;opacity:.6;margin-bottom:8px;">
       HolaMates.com
-      </span>
-      ${titleText}
     </div>
 
-      <div class="scoreboard">
-      <div class="score-main">
-
-  <div class="score-block">
-    <div class="score-number ${p1Class}">${hits}</div>
-    <div class="score-label">Jugador 1</div>
-  </div>
-
-  <div class="score-separator">—</div>
-
-  <div class="score-block">
-    <div class="score-number ${p2Class}">${hits2}</div>
-    <div class="score-label">Jugador 2</div>
-  </div>
-
-  <div class="score-separator">—</div>
-
-  <div class="score-block">
-    <div class="score-number ${p3Class}">${hits3}</div>
-    <div class="score-label">Jugador 3</div>
-  </div>
-
-</div>
+    <div style="font-size:34px;font-weight:900;margin-bottom:18px;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span>${hits}</span>
+      <span style="opacity:.5;">+</span>
+      <span>${hits2}</span>
+      <span style="opacity:.5;">+</span>
+      <span>${hits3}</span>
+      <span style="opacity:.5;">=</span>
+      <span style="font-size:40px;">${totalHits}</span>
     </div>
   `;
 
-  document.getElementById("goMessage").innerHTML =
-  "Jugador 1: " + mensajeAnimo(hits) +
-  "<br><br>Jugador 2: " + mensajeAnimo(hits2) +
-  "<br><br>Jugador 3: " + mensajeAnimo(hits3);
+  document.getElementById("goMessage").innerHTML = `
+    <div class="gifs-row">
+      <div class="gif-block">${mensajeAnimo(hits)}</div>
+      <div class="gif-block">${mensajeAnimo(hits2)}</div>
+      <div class="gif-block">${mensajeAnimo(hits3)}</div>
+    </div>
+  `;
 
   overlay.classList.add("show");
 
   initialsBox.style.display = "none";
   waitingInitials = false;
-  top1Text.style.display = "none";
-  top5Text.style.display = "none";
 
   canCloseModal = false;
 
@@ -1729,6 +1774,18 @@ else if (winner === 3){
   }, 1000);
 }
 
+document.getElementById("closeBtn").onclick = () => {
+
+  if (!canCloseModal) return;
+
+  overlay.classList.remove("show");
+
+  phase = "idle";
+  phase2 = "idle";
+  phase3 = "idle";
+
+  updatePlayButton();
+};
 
 
 
@@ -1918,6 +1975,8 @@ else {
 function startGame(){
   if (phase !== "idle") return;
 
+  gtag('event', 'suma10_tres_play');
+
   inputLocked = false;      // 🔓 reset seguridad jugador 1
   inputLocked2 = false;  // 🔓 reset seguridad jugador 2
   inputLocked3 = false;   // 🔓 reset seguridad jugador 3
@@ -2015,21 +2074,6 @@ function buildKeys(){
 }
 
 
-overlay.onclick = e => {
-  if (!canCloseModal) return;
-  if (waitingInitials) return;
-
-  // Si NO estamos clicando dentro del modal
-  if (!e.target.closest(".modal")) {
-    overlay.classList.remove("show");
-
-    phase = "idle";
-    phase2 = "idle";
-    phase3 = "idle";
-
-    updatePlayButton();
-  }
-};
 
 
 
@@ -2229,38 +2273,34 @@ window.parent.location.href = "/#/ranking-result";
 
 
 
-function goHome(){
-  window.location.href = "/";
+function getSelectorRoute(){
+  const route = localStorage.getItem('holamates_selector_route');
+  return route && route !== 'null' ? route : '/';
 }
 
-function goSuma10(){
-  const level = levelSelect.value || 'normal';
-  window.location.href =
-    `/suma10tres.html?level=${encodeURIComponent(level)}`;
+function goHome(e){
+  if(e) e.preventDefault();
+  window.location.href = getSelectorRoute();
 }
 
-function goSumas(){
+function goSuma10(e){
+  if(e) e.preventDefault();
+
   const level = levelSelect.value || 'normal';
+  const selector = encodeURIComponent(getSelectorRoute());
+
   window.location.href =
-    `/sumasdosj.html?level=${encodeURIComponent(level)}&mode=sin`;
+    `/suma10tres.html?level=${level}&selector=${selector}`;
 }
 
-function goRestas(){
-  const level = levelSelect.value || 'normal';
-  window.location.href =
-    `/restasdosj.html?level=${encodeURIComponent(level)}`;
-}
+function goTablas(e){
+  if(e) e.preventDefault();
 
-function goTablas(){
   const level = levelSelect.value || 'normal';
-  window.location.href =
-    `/multiplicacionestres.html?level=${encodeURIComponent(level)}`;
-}
+  const selector = encodeURIComponent(getSelectorRoute());
 
-function goDivisiones(){
-  const level = levelSelect.value || 'normal';
   window.location.href =
-    `/divisionesdosj.html?level=${encodeURIComponent(level)}`;
+    `/multiplicacionestres.html?level=${level}&selector=${selector}`;
 }
 
 levelSelect.addEventListener("change", applyLevel);
@@ -2397,6 +2437,9 @@ function toggleFullscreen(){
 
 
 const positions = [
+  "pos--3",
+  "pos--2",
+  "pos--1",
   "pos-0",
   "pos-1",
   "pos-2",
@@ -2405,7 +2448,7 @@ const positions = [
   "pos-5"
 ];
 
-let currentPositionIndex = 0;
+let currentPositionIndex = 3;
 
 function applyPosition(){
   document.body.classList.remove(...positions);
@@ -2429,9 +2472,11 @@ function moveUp(){
 }
 
 function moveCenter(){
-  currentPositionIndex = 0;
+  currentPositionIndex = 3;
   applyPosition();
 }
+
+applyPosition();
 
 
 

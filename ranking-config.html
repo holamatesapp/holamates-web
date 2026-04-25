@@ -7,7 +7,7 @@
 
 <title>Configuración ranking | HolaMates</title>
 
-<meta name="description" content="Configura el ranking de HolaMates. Restaurar o desactivar rankings de cálculo mental.">
+<meta name="description" content="Configura el ranking de HolaMates. Activar o desactivar rankings de cálculo mental.">
 <link rel="canonical" href="https://holamates.com/ranking-config.html">
 <meta name="robots" content="index, follow">
 
@@ -53,29 +53,21 @@ HEADER
   display:flex;
   align-items:center;
   justify-content:center;
-
   border:none;
   background:none;
   cursor:pointer;
-
   border-radius:10px;
-
-  transition:
-    background .2s ease,
-    transform .15s ease;
+  transition:background .2s ease, transform .15s ease;
 }
 
-/* 🔥 hover tipo app */
 .back-link:hover{
   background:rgba(255,255,255,.08);
 }
 
-/* 🔥 efecto táctil */
 .back-link:active{
   transform:scale(.92);
 }
 
-/* 🔥 icono */
 .icon-back{
   width:22px;
   height:22px;
@@ -116,151 +108,153 @@ INFO
   font-size:13px;
   opacity:.7;
   margin-bottom:28px;
+  margin-top:32px;
+  line-height:1.45;
 }
 
 /* ===============================
-CARDS
+CARD
 ================================ */
-.cards-container{
-  display:flex;
-  flex-direction:column;
-}
-
 .card{
   background:#0c121c;
   border:1px solid rgba(255,255,255,.08);
   border-radius:22px;
-  padding:22px;
-  margin-bottom:28px;
+  padding:26px 22px;
 }
 
 .card h2{
   text-align:center;
   color:#fde047;
+  margin:0 0 18px;
 }
 
 .text{
   font-size:14px;
   opacity:.85;
-  margin-bottom:18px;
-}
-
-/* ===============================
-INPUT
-================================ */
-input{
-  width:100%;
-  height:48px;
-  margin-bottom:16px;
-  padding:0 14px;
-  border-radius:14px;
-  border:1px solid rgba(0,0,0,.15);
+  margin-bottom:24px;
   text-align:center;
-  font-weight:700;
+  line-height:1.5;
 }
 
 /* ===============================
-BUTTON
+SWITCH
 ================================ */
-button.danger{
-  width:100%;
-  height:48px;
-  border-radius:16px;
-  border:none;
-  background:#2563eb;
-  color:white;
-  font-weight:900;
-  cursor:pointer;
+.switch-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
 }
 
-button:disabled{
-  background:#1b2b4a;
-  color:rgba(255,255,255,.45);
-  cursor:not-allowed;
+.switch-label{
+  font-size:18px;
+  font-weight:900;
+  min-width:42px;
+  text-align:center;
+}
+
+.switch{
+  position:relative;
+  width:78px;
+  height:42px;
+  flex:0 0 auto;
+}
+
+.switch input{
+  opacity:0;
+  width:0;
+  height:0;
+  position:absolute;
+}
+
+.slider{
+  position:absolute;
+  inset:0;
+  background:#1b2433;
+  border-radius:999px;
+  cursor:pointer;
+  transition:.2s ease;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.slider::before{
+  content:"";
+  position:absolute;
+  width:32px;
+  height:32px;
+  left:4px;
+  top:4px;
+  background:#fff;
+  border-radius:50%;
+  transition:.2s ease;
+  box-shadow:0 4px 14px rgba(0,0,0,.35);
+}
+
+.switch input:checked + .slider{
+  background:#2563eb;
+}
+
+.switch input:checked + .slider::before{
+  transform:translateX(36px);
 }
 
 /* ===============================
 DESKTOP
 ================================ */
-@media (min-width:900px){
-  .content{ max-width:900px }
-  .cards-container{ flex-direction:row; gap:28px }
-  .card{ flex:1; margin-bottom:0 }
-}
-
-/* =================================
-   PANTALLAS GRANDES (GLOBAL)
-================================= */
-
 @media (min-width:1200px){
   .page{
     padding-top:100px;
   }
 }
 
-/* ===============================
-   DESKTOP BASE (2 columnas bien)
-================================ */
-@media (min-width:900px){
-
-  .content{
-    max-width:1000px; /* 🔥 más ancho para 2 cards */
-  }
-
-  .cards-container{
-    display:flex;
-    flex-direction:row;
-    gap:28px;
-  }
-
-  .card{
-    flex:1;
-    min-width:340px; /* 🔥 evita que se aplasten */
-    margin-bottom:0;
-  }
-}
-
-/* =================================
-1400+
-================================= */
-
 @media (min-width:1400px){
-
   .page{
     padding-top:120px;
   }
 
   .content{
-    max-width:1100px; /* 🔥 antes 700 */
+    max-width:560px;
   }
 
   .ranking-info{
-    font-size:16px;
+    font-size:20px;
+    margin-top:36px;
   }
 
   .card{
-    padding:28px;
+    padding:34px 30px;
   }
 
   .card h2{
-    font-size:24px;
+    font-size:30px;
   }
 
   .text{
-    font-size:16px;
+    font-size:21px;
+    line-height:1.6;
   }
 
-  input{
-    height:56px;
-    font-size:18px;
+  .switch-label{
+    font-size:26px;
+    min-width:54px;
   }
 
-  button.danger{
-    height:56px;
-    font-size:18px;
+  .switch{
+    width:96px;
+    height:52px;
   }
 
-  /* HEADER */
+  .slider::before{
+    width:38px;
+    height:38px;
+    top:6px;
+    left:6px;
+  }
+
+  .switch input:checked + .slider::before{
+    transform:translateX(44px);
+  }
+
   .app-header{
     height:64px;
   }
@@ -270,7 +264,7 @@ DESKTOP
   }
 
   .app-title{
-    font-size:20px;
+    font-size:22px;
   }
 
   .back-link,
@@ -280,48 +274,59 @@ DESKTOP
   }
 
   .icon-back{
-  width:26px;
-  height:26px;
+    width:26px;
+    height:26px;
+  }
 }
-}
-
-/* =================================
-1700+
-================================= */
 
 @media (min-width:1700px){
-
   .page{
     padding-top:140px;
   }
 
   .content{
-    max-width:1300px; /* 🔥 antes 900 */
+    max-width:660px;
   }
 
   .ranking-info{
-    font-size:18px;
+    font-size:24px;
+    margin-top:42px;
+  }
+
+  .card{
+    padding:40px 36px;
   }
 
   .card h2{
-    font-size:28px;
+    font-size:36px;
   }
 
   .text{
-    font-size:18px;
+    font-size:25px;
+    line-height:1.65;
   }
 
-  input{
-    height:64px;
-    font-size:20px;
+  .switch-label{
+    font-size:30px;
+    min-width:64px;
   }
 
-  button.danger{
-    height:64px;
-    font-size:20px;
+  .switch{
+    width:112px;
+    height:60px;
   }
 
-  /* HEADER */
+  .slider::before{
+    width:44px;
+    height:44px;
+    top:7px;
+    left:7px;
+  }
+
+  .switch input:checked + .slider::before{
+    transform:translateX(52px);
+  }
+
   .app-header{
     height:76px;
   }
@@ -331,7 +336,7 @@ DESKTOP
   }
 
   .app-title{
-    font-size:24px;
+    font-size:26px;
   }
 
   .back-link,
@@ -340,60 +345,66 @@ DESKTOP
     height:60px;
   }
 
- .icon-back{
-  width:30px;
-  height:30px;
+  .icon-back{
+    width:30px;
+    height:30px;
+  }
 }
-
-}
-
-/* =================================
-1900+
-================================= */
 
 @media (min-width:1900px){
-
   .page{
     padding-top:160px;
   }
 
   .content{
-    max-width:1500px; /* 🔥 antes 1100 */
+    max-width:780px;
   }
 
   .ranking-info{
-    font-size:20px;
+    font-size:28px;
+    margin-top:48px;
   }
 
   .card{
-    padding:34px;
+    padding:46px 42px;
   }
 
   .card h2{
-    font-size:32px;
+    font-size:42px;
   }
 
   .text{
-    font-size:20px;
+    font-size:29px;
+    line-height:1.7;
   }
 
-  input{
-    height:72px;
-    font-size:22px;
+  .switch-label{
+    font-size:34px;
+    min-width:72px;
   }
 
-  button.danger{
-    height:72px;
-    font-size:22px;
+  .switch{
+    width:126px;
+    height:68px;
   }
 
-  /* HEADER */
+  .slider::before{
+    width:50px;
+    height:50px;
+    top:8px;
+    left:8px;
+  }
+
+  .switch input:checked + .slider::before{
+    transform:translateX(58px);
+  }
+
   .app-header{
     height:90px;
   }
 
   .app-title{
-    font-size:28px;
+    font-size:30px;
   }
 
   .back-link,
@@ -402,58 +413,66 @@ DESKTOP
     height:70px;
   }
 
-  .back-link{
-  font-size:30px;
+  .icon-back{
+    width:34px;
+    height:34px;
+  }
 }
-}
-
-/* =================================
-2500+
-================================= */
 
 @media (min-width:2500px){
-
   .page{
     padding-top:200px;
   }
 
   .content{
-    max-width:1800px; /* 🔥 antes 1400 */
+    max-width:980px;
   }
 
   .ranking-info{
-    font-size:26px;
+    font-size:36px;
+    margin-top:58px;
   }
 
   .card{
-    padding:42px;
+    padding:58px 52px;
   }
 
   .card h2{
-    font-size:40px;
+    font-size:54px;
   }
 
   .text{
-    font-size:26px;
+    font-size:38px;
+    line-height:1.75;
   }
 
-  input{
-    height:90px;
-    font-size:28px;
+  .switch-label{
+    font-size:44px;
+    min-width:90px;
   }
 
-  button.danger{
-    height:90px;
-    font-size:28px;
+  .switch{
+    width:154px;
+    height:84px;
   }
 
-  /* HEADER */
+  .slider::before{
+    width:62px;
+    height:62px;
+    top:10px;
+    left:10px;
+  }
+
+  .switch input:checked + .slider::before{
+    transform:translateX(72px);
+  }
+
   .app-header{
     height:110px;
   }
 
   .app-title{
-    font-size:34px;
+    font-size:36px;
   }
 
   .back-link,
@@ -463,13 +482,13 @@ DESKTOP
   }
 
   .icon-back{
-  width:40px;
-  height:40px;
-}
+    width:40px;
+    height:40px;
+  }
 }
 
 /* ===============================
-TOAST (mensaje)
+TOAST
 ================================ */
 .toast{
   position:fixed;
@@ -504,12 +523,12 @@ TOAST (mensaje)
   <div class="app-header-inner">
 
     <button class="back-link" onclick="goBack()" aria-label="Volver">
-    <svg class="icon-back" viewBox="0 0 24 24" fill="none">
-    <path d="M15 18L9 12L15 6" stroke="#e8eef7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+      <svg class="icon-back" viewBox="0 0 24 24" fill="none">
+        <path d="M15 18L9 12L15 6" stroke="#e8eef7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </button>
- 
-    <div class="app-title">Configuración</div>
+
+    <div class="app-title">⚙️ Ranking ⚙️</div>
     <div class="header-spacer"></div>
   </div>
 </header>
@@ -520,52 +539,42 @@ TOAST (mensaje)
 
   <div class="content">
 
-    <div class="ranking-info">
-      El ranking se guarda localmente en este navegador.<br>
-      Si usas otro navegador o perfil, será diferente.
-    </div>
 
-    <div class="cards-container">
 
-      <!-- RESTAURAR -->
-      <section class="card">
-        <h2>🔄 Restaurar ranking</h2>
+    <section class="card">
+      <h2>Ranking</h2>
 
-        <p class="text">
-          Restaura todos los rankings.<br>
-          Esta acción no se puede deshacer.
-        </p>
+<p class="text">
+  🇪🇸 Al desactivar el ranking borras las marcas actuales<br>
+  🇬🇧 Turning off the ranking will delete current scores<br>
+  🇫🇷 Désactiver le classement efface les scores actuels<br>
+  🇮🇹 Disattivando la classifica verranno eliminati i punteggi attuali
+</p>
 
-        <input id="restoreInput" placeholder="Escribe RESTAURAR">
+      <div class="switch-row">
+        <span class="switch-label">OFF</span>
 
-        <button id="restoreBtn" class="danger" disabled>
-          Restaurar ranking
-        </button>
-      </section>
+        <label class="switch">
+          <input type="checkbox" id="rankingToggle">
+          <span class="slider"></span>
+        </label>
 
-      <!-- DESACTIVAR -->
-      <section class="card">
-        <h2>🚫 Desactivar rankings</h2>
+        <span class="switch-label">ON</span>
+      </div>
 
-        <p class="text">
-          Desactiva todos los rankings del sistema.
-        </p>
+    </section>
 
-        <input id="disableInput" placeholder="Escribe DESACTIVAR">
-
-        <button id="disableBtn" class="danger" disabled>
-          Desactivar rankings
-        </button>
-      </section>
-
-    </div>
+<div class="ranking-info">
+  🇪🇸 El ranking se guarda localmente en este navegador<br>
+  🇬🇧 The ranking is stored locally in this browser<br>
+  🇫🇷 Le classement est enregistré localement dans ce navigateur<br>
+  🇮🇹 La classifica viene salvata localmente in questo browser
+</div>
 
   </div>
 </main>
 
 <script>
-
-
 
 /* ===============================
 BACK
@@ -575,104 +584,8 @@ function goBack(){
 }
 
 /* ===============================
-INPUTS
+TOAST
 ================================ */
-const restoreInput = document.getElementById('restoreInput');
-const restoreBtn = document.getElementById('restoreBtn');
-
-const disableInput = document.getElementById('disableInput');
-const disableBtn = document.getElementById('disableBtn');
-
-/* ===============================
-ENABLE BUTTONS
-================================ */
-restoreInput.addEventListener('input', () => {
-  restoreBtn.disabled =
-    restoreInput.value.trim().toUpperCase() !== 'RESTAURAR';
-});
-
-disableInput.addEventListener('input', () => {
-  disableBtn.disabled =
-    disableInput.value.trim().toUpperCase() !== 'DESACTIVAR';
-});
-
-
-
-/* ===============================
-RESTORE
-================================ */
-restoreBtn.addEventListener('click', () => {
-
-  const raw = localStorage.getItem('holamates_rankings');
-
-  if(!raw){
-  restoreInput.value = '';
-  showToast("ℹ️ No hay ranking que restaurar");
-  return;
-}
-
-  localStorage.removeItem('holamates_rankings');
-  restoreInput.value = '';
-  showToast("✅ Ranking restaurado");
-});
-
-/* ===============================
-DISABLE
-================================ */
-disableBtn.addEventListener('click', () => {
-
-  const blocked = Array(5).fill({
-    name: 'Ranking desactivado',
-    score: 999
-  });
-
-  const all = {};
-
-  const levels = ['init','easy','normal','hard'];
-
-  // suma10
-  levels.forEach(l=>{
-    const map = {
-      init:'suma10_iniciacion',
-      easy:'suma10_facil',
-      normal:'suma10_medio',
-      hard:'suma10_dificil'
-    };
-    all[map[l]] = blocked;
-  });
-
-  // tablas
-  ['all','2','3','4','5','6','7','8','9'].forEach(t=>{
-    levels.forEach(l=>{
-      all[`tablas_${t}_${l}`] = blocked;
-    });
-  });
-
-  // divisiones
-  ['all','1','2','3','4','5','6','7','8','9'].forEach(t=>{
-    levels.forEach(l=>{
-      all[`divisiones_${t}_${l}`] = blocked;
-    });
-  });
-
-  // sumas / restas
-  ['sin','con'].forEach(m=>{
-    levels.forEach(l=>{
-      all[`sumas_${m}_${l}`] = blocked;
-      all[`restas_${m}_${l}`] = blocked;
-    });
-  });
-
-  localStorage.setItem('holamates_rankings', JSON.stringify(all));
-  disableInput.value = '';
-  showToast("🚫 Ranking desactivado");
-});
-
-/* ===============================
-  MENSAJE DESACTIVADO/RESTAURADO
-================================ */
-
- 
 let toastTimeout;
 
 function showToast(message){
@@ -687,6 +600,98 @@ function showToast(message){
     toast.classList.remove("show");
   }, 2000);
 }
+
+/* ===============================
+RANKING STATE
+================================ */
+const rankingToggle = document.getElementById("rankingToggle");
+
+function getDisabledBlock(){
+  return Array.from({ length: 5 }, () => ({
+    name: "Ranking desactivado",
+    score: 999
+  }));
+}
+
+function disableAllRankings(){
+  const blocked = getDisabledBlock();
+  const all = {};
+
+  // suma10
+  all["suma10"] = blocked;
+
+  // sumas
+  ["training","init","easy","normal","hard"].forEach(level => {
+    all[`sumas_${level}`] = blocked;
+  });
+
+  // restas
+  ["training","init","easy","normal","hard"].forEach(level => {
+    all[`restas_${level}`] = blocked;
+  });
+
+  // tablas
+  ["all","1","2","3","4","5","6","7","8","9"].forEach(table => {
+    all[`tablas_${table}`] = blocked;
+  });
+
+  // divisiones
+  ["all","1","2","3","4","5","6","7","8","9"].forEach(table => {
+    all[`divisiones_${table}`] = blocked;
+  });
+
+  localStorage.setItem("holamates_rankings", JSON.stringify(all));
+}
+
+function enableAllRankings(){
+  localStorage.removeItem("holamates_rankings");
+}
+
+function isRankingDisabled(){
+  try {
+    const raw = localStorage.getItem("holamates_rankings");
+    if (!raw) return false;
+
+    const all = JSON.parse(raw);
+    const values = Object.values(all);
+
+    if (!values.length) return false;
+
+    return values.every(list =>
+      Array.isArray(list) &&
+      list.length > 0 &&
+      list[0] &&
+      list[0].name === "Ranking desactivado"
+    );
+  } catch {
+    return false;
+  }
+}
+
+function updateUI(){
+  const disabled = isRankingDisabled();
+  rankingToggle.checked = !disabled;
+}
+
+/* ===============================
+TOGGLE
+================================ */
+rankingToggle.addEventListener("change", () => {
+  if (rankingToggle.checked) {
+    enableAllRankings();
+    updateUI();
+    showToast("✅ Ranking");
+  } else {
+    disableAllRankings();
+    updateUI();
+    showToast("🚫 Ranking ");
+  }
+});
+
+/* ===============================
+INIT
+================================ */
+updateUI();
 
 </script>
 

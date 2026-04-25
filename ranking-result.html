@@ -66,9 +66,7 @@ HEADER
 
 .subtitle{
   text-align:center;
-  opacity:.65;
   margin-bottom:22px;
-  font-size:15px;
 }
 
 /* ===============================
@@ -115,6 +113,12 @@ LIST
 
 .score{
   font-weight:800;
+}
+
+.game-icon{
+  height:50px;
+  object-fit:contain;
+  opacity:.95;
 }
 
 /* ===============================
@@ -180,9 +184,11 @@ MEDIAS
 
   <div class="ranking-card">
 
-    <h1>🏆 Ranking</h1>
+    <h1>🏆🏆🏆🏆🏆</h1>
 
-    <p class="subtitle" id="title"></p>
+    <div class="subtitle">
+      <img id="gameIcon" class="game-icon" />
+    </div>
 
     <ul class="list" id="rankingList"></ul>
 
@@ -219,37 +225,59 @@ function loadData(){
 
   ranking = all[id] || [];
 
-  document.getElementById('title').innerText = buildTitle(lastResult);
+  const icon = document.getElementById('gameIcon');
+
+if(lastResult.game === 'suma10'){
+  icon.src = '/imagen_suma10.png';
+}
+else if(lastResult.game === 'sumas'){
+  icon.src = '/imagen_sumas.png';
+}
+else if(lastResult.game === 'restas'){
+  icon.src = '/imagen_restas.png';
+}
+else if(lastResult.game === 'tablas'){
+  icon.src = '/imagen_multiplicaciones.png';
+}
+else if(lastResult.game === 'divisiones'){
+  icon.src = '/imagen_divisiones.png';
+}
 
 }
 
 /* ===============================
 BUILD ID
 ================================ */
+
+
 function buildChallengeId(r){
 
+  // 🔵 Suma10 → sin nivel
   if(r.game === 'suma10'){
-    switch(r.level){
-      case 'init': return 'suma10_iniciacion';
-      case 'easy': return 'suma10_facil';
-      case 'hard': return 'suma10_dificil';
-      default: return 'suma10_medio';
-    }
+    return 'suma10';
   }
 
-  if(r.game === 'sumas'){
-    return `sumas_${r.mode}_${r.level}`;
-  }
+// 🟢 Sumas → SIN nivel
+if(r.game === 'sumas'){
+  return 'sumas';
+}
 
-  if(r.game === 'restas'){
-    return `restas_${r.mode}_${r.level}`;
-  }
+  // 🟢 Restas → con nivel
+if(r.game === 'restas'){
+  return 'restas';
+}
 
+  // 🟣 Divisiones → SOLO tabla (sin nivel)
   if(r.game === 'divisiones'){
-    return `divisiones_${r.table}_${r.level}`;
+    return `divisiones_${r.table}`;
   }
 
-  return `tablas_${r.table}_${r.level}`;
+  // 🟠 Tablas → SOLO tabla (sin nivel)
+  if(r.game === 'tablas'){
+    return `tablas_${r.table}`;
+  }
+
+  return '';
 }
 
 /* ===============================
@@ -272,9 +300,9 @@ function buildTitle(r){
     return `Sumas · ${r.mode === 'con' ? 'Con llevada' : 'Sin llevada'} · ${levelMap[r.level]}`;
   }
 
-  if(r.game === 'restas'){
-    return `Restas · ${r.mode === 'con' ? 'Con llevada' : 'Sin llevada'} · ${levelMap[r.level]}`;
-  }
+if(r.game === 'restas'){
+  return `Restas · ${levelMap[r.level]}`;
+}
 
   if(r.game === 'divisiones'){
     return `Divisiones · ${r.table === 'all' ? 'Todos' : 'Divisor ' + r.table} · ${levelMap[r.level]}`;

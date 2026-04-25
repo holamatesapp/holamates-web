@@ -40,6 +40,8 @@
 <!-- 🔥 LANGUAGES (SEO CLAVE) -->
 <link rel="alternate" href="https://holamates.com/" hreflang="es">
 <link rel="alternate" href="https://holamates.com/index-en.html" hreflang="en">
+<link rel="alternate" href="https://holamates.com/index-fr.html" hreflang="fr">
+<link rel="alternate" href="https://holamates.com/index-it.html" hreflang="it">
 <link rel="alternate" href="https://holamates.com/" hreflang="x-default">
 
 <!-- 🔥 ICONOS -->
@@ -299,7 +301,11 @@ html, body{
     padding:18px 22px;
   }
 }
-/* ───────── HERO ───────── */
+
+
+
+
+
 /* ==================================================
 HERO
 ================================================== */
@@ -338,6 +344,14 @@ HERO
 
 /* ───────── TEXTO ───────── */
 
+.hero-title{
+  font-size:22px;
+  font-weight:800;
+  line-height:1.3;
+  margin-top:10px;
+  margin-bottom:0px; /* 🔥 lo mantenemos */
+}
+
 .hero-content{
   display:flex;
   flex-direction:column;
@@ -355,6 +369,15 @@ HERO
   line-height:1.65;
   color:#9aa8bd;
   max-width:520px;
+  margin-top:-10px;
+}
+
+@media (max-width:600px){
+
+  .hero-content h1{
+    text-align:center;
+  }
+
 }
 
 /* 1400+ */
@@ -362,6 +385,11 @@ HERO
   .hero-text{
     max-width:700px;
   }
+
+  .hero-title{
+  font-size:26px;
+}
+
 }
 
 /* 1700+ */
@@ -369,6 +397,10 @@ HERO
   .hero-text{
     max-width:820px;
   }
+
+    .hero-title{
+  font-size:28px;
+}
 }
 
 /* 1900+ */
@@ -376,6 +408,10 @@ HERO
   .hero-text{
     max-width:950px;
   }
+
+      .hero-title{
+  font-size:30px;
+}
 }
 
 /* 2500+ */
@@ -383,6 +419,10 @@ HERO
   .hero-text{
     max-width:1100px;
   }
+
+      .hero-title{
+  font-size:34px;
+}
 }
 
 /* ==================================================
@@ -690,6 +730,7 @@ RESPONSIVE
     height:92px;
   }
 }
+
 
 /* ==================================================
    SECCIÓN · GALERÍA
@@ -2193,13 +2234,111 @@ height:110px;
 }
 
 
+
+/* =================================
+             SEO
+================================= */
+
+.seo-section{
+  background:rgba(255,255,255,0.05);
+  padding:60px 20px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+
+.seo-inner{
+  max-width:900px;
+  margin:auto;
+  text-align:center;
+}
+
+.seo-inner h2{
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+.seo-inner p{
+  color:#9aa8bd;
+  line-height:1.7;
+  font-size:17px;
+}
+
+/* =================================
+SEO · PANTALLAS GRANDES
+================================= */
+
+@media (min-width:1400px){
+
+  .seo-inner{
+    max-width:1000px;
+  }
+
+  .seo-inner h2{
+    font-size:36px;
+  }
+
+  .seo-inner p{
+    font-size:20px;
+  }
+
+}
+
+@media (min-width:1700px){
+
+  .seo-inner{
+    max-width:1200px;
+  }
+
+  .seo-inner h2{
+    font-size:40px;
+  }
+
+  .seo-inner p{
+    font-size:22px;
+  }
+
+}
+
+@media (min-width:1900px){
+
+  .seo-inner{
+    max-width:1400px;
+  }
+
+  .seo-inner h2{
+    font-size:46px;
+  }
+
+  .seo-inner p{
+    font-size:24px;
+  }
+
+}
+
+@media (min-width:2500px){
+
+  .seo-inner{
+    max-width:1600px;
+  }
+
+  .seo-inner h2{
+    font-size:54px;
+  }
+
+  .seo-inner p{
+    font-size:28px;
+  }
+
+}
+
+
+
 /* =================================
              FOOTER
 ================================= */
 
 
 .footer{
-  background: rgba(255,255,255,0.05);
+  background:#0b0f14;
   border-top:1px solid rgba(255,255,255,.06);
   padding:28px 20px;
   text-align:center;
@@ -2316,6 +2455,16 @@ height:110px;
       English
     </div>
 
+    <div class="lang-option" onclick="changeLang('fr')">
+      <img src="/bandera_frances.png" class="flag" alt="Français">
+      Français
+    </div>
+
+     <div class="lang-option" onclick="changeLang('it')">
+        <img src="/bandera_italia.png" class="flag" alt="Italiano">
+        Italiano
+      </div>
+
   </div>
 </div>
 
@@ -2326,11 +2475,12 @@ height:110px;
 
     <div class="hero-content">
 
-      <h1 class="sr-only">
-        Math games for kids – fun mental math practice
-      </h1>
-
       <img src="/holamates_tipo_ok.svg" alt="HolaMates" class="hero-logo"/>
+
+
+<h1 class="hero-title">
+  Math games for elementary school students
+</h1>
 
       <p class="hero-text">
         Train your brain with fast and engaging math games.
@@ -2343,17 +2493,17 @@ height:110px;
           ▶ 1 player
         </a>
 
-        <a href="/suma10dosj-en.html" class="btn-duelo">
+        <a href="/selector-juegosdosj-en.html" class="btn-duelo">
           <img src="/espadas_logo.svg" class="icon-duelo" alt="Duel mode">
           Duel mode
         </a>
 
-        <a href="/suma10tres-en.html" class="btn-tres">
+        <a href="/selector-juegostres-en.html" class="btn-tres">
           <img src="/modo_equipo.svg" class="icon-duelo" alt="Team mode">
           Team mode
         </a>
 
-        <a href="/ranking-en.html" class="btn-ranking" onclick="localStorage.setItem('holamates_prev_route', '/index-en.html')">
+        <a href="/ranking.html" class="btn-ranking" onclick="localStorage.setItem('holamates_prev_route', '/index-en.html')">
         🏆 View ranking
         </a>
 
@@ -2493,7 +2643,7 @@ height:110px;
     <!-- LEFT -->
     <div class="modo-duelo-content">
 
-      <img src="/modo_duelo.svg" class="modo-duelo-logo" alt="HolaMates Duel Mode"/>
+      <img src="/modo_duelo_en.svg" class="modo-duelo-logo" alt="HolaMates Duel Mode"/>
 
       <p class="modo-duelo-text">
         Duel Mode turns mental maths into an exciting classroom challenge.
@@ -2502,7 +2652,7 @@ height:110px;
       </p>
 
       <div class="cta">
-        <a href="/suma10dosj-en.html" class="btn-duelo">
+        <a href="/selector-juegosdosj-en.html" class="btn-duelo">
           <img src="/espadas_logo.svg" class="icon-duelo" alt="Duel mode">
           Play duel mode
         </a>
@@ -2524,11 +2674,11 @@ height:110px;
   <!-- ICONS -->
   <div class="modo-duelo-juegos">
 
-    <a href="/suma10dosj-en.html"><img src="/imagen_suma10.png"></a>
-    <a href="/sumasdosj-en.html"><img src="/imagen_sumas.png"></a>
-    <a href="/restasdosj-en.html"><img src="/imagen_restas.png"></a>
-    <a href="/multiplicacionesdosj-en.html"><img src="/imagen_multiplicaciones.png"></a>
-    <a href="/divisionesdosj-en.html"><img src="/imagen_divisiones.png"></a>
+    <a href="/selector-juegosdosj-en.html"><img src="/imagen_suma10.png"></a>
+    <a href="/selector-juegosdosj-en.html"><img src="/imagen_sumas.png"></a>
+    <a href="/selector-juegosdosj-en.html"><img src="/imagen_restas.png"></a>
+    <a href="/selector-juegosdosj-en.htmll"><img src="/imagen_multiplicaciones.png"></a>
+    <a href="/selector-juegosdosj-en.html"><img src="/imagen_divisiones.png"></a>
 
   </div>
 
@@ -2631,6 +2781,24 @@ height:110px;
   </div>
 </section>
 
+<section class="seo-section">
+  <div class="seo-inner">
+
+    <h2>Mental math games platform for elementary students</h2>
+
+    <p>
+      HolaMates is a mental math games platform designed for elementary students to improve math skills in a fun and engaging way. 
+      Children practice addition, subtraction, multiplication and division through interactive math games that build strong mental calculation skills without frustration.
+    </p>
+
+    <p>
+      Perfect for classroom and home use, HolaMates helps students develop mental agility, focus and confidence in math. 
+      It is an ideal resource for teachers and parents looking for effective and motivating math practice for elementary education.
+    </p>
+
+  </div>
+</section>
+
 <!-- FOOTER -->
 
 <footer class="footer">
@@ -2653,7 +2821,15 @@ function toggleLangMenu(){
 }
 
 function changeLang(lang){
-  window.location.href = lang === 'en' ? "/index-en.html" : "/";
+  if(lang === 'es'){
+    window.location.href = "/";
+  } else if(lang === 'en'){
+    window.location.href = "/index-en.html";
+  } else if(lang === 'fr'){
+    window.location.href = "/index-fr.html";
+  } else if(lang === 'it'){
+    window.location.href = "/index-it.html";
+  }
 }
 </script>
 

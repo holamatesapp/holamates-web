@@ -124,6 +124,12 @@ body{
   transform:scale(1.05);
 }
 
+.cerrar-icono{
+  width:45px;
+  height:45px; /* añade esto */
+  object-fit:contain; /* añade esto */
+}
+
 /* ===============================
    PANTALLAS GRANDES
 ================================ */
@@ -174,38 +180,42 @@ body{
       class="titulo-img"
     />
 
-    <a href="suma10-en.html" class="btn blue">
-      ▶ Sum 10
-    </a>
+<a href="suma10.html" class="btn blue">
+  ▶ Sum 10
+</a>
 
-    <a href="sumas-en.html" class="btn orange">
-      ▶ Addition
-    </a>
+<a href="sumas.html" class="btn orange">
+  ▶ Addition
+</a>
 
-    <a href="restas-en.html" class="btn purple">
-      ▶ Subtraction
-    </a>
+<a href="restas.html" class="btn purple">
+  ▶ Subtraction
+</a>
 
-    <a href="multiplicaciones-en.html" class="btn green">
-      ▶ Multiplication
-    </a>
+<a href="multiplicaciones.html" class="btn green">
+  ▶ Multiplication
+</a>
 
-    <a href="divisiones-en.html" class="btn red">
-      ▶ Division
-    </a>
+<a href="divisiones.html" class="btn red">
+  ▶ Division
+</a>
 
     <!-- CLOSE ICON -->
     <a href="index-en.html">
-      <img
-        src="icono_cerrar.svg"
-        alt="Close"
-        class="cerrar-icono"
-      />
+<img
+  src="home.svg"
+  alt="Inicio"
+  class="cerrar-icono"
+/>
     </a>
 
   </div>
 
 </section>
+
+<script>
+localStorage.setItem('holamates_selector_route', '/selector-juegos-en.html');
+</script>
 
 </body>
 </html>

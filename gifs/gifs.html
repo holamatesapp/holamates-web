@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galería de GIFs</title>
+
+<style>
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  padding:20px;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:#0b0f14;
+  color:#fff;
+}
+
+h1{
+  margin:0 0 20px;
+  text-align:center;
+  font-size:24px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, 150px);
+  gap:16px;
+  justify-content:center;
+}
+
+.item{
+  width:150px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* EXACTO como el juego */
+.thumb{
+  width:150px;
+  height:150px;
+  overflow:hidden;
+  border-radius:16px;
+  background:#111824;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+/* CLAVE */
+.thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+
+.name{
+  margin-top:8px;
+  font-size:12px;
+  text-align:center;
+  word-break:break-word;
+  opacity:.9;
+}
+
+.msg{
+  text-align:center;
+  margin-top:30px;
+  opacity:.8;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Galería de GIFs</h1>
+
+<div id="grid" class="grid"></div>
+<div id="msg" class="msg">Buscando GIFs...</div>
+
+<script>
+const BASE = "/gifs/"; // 🔥 IMPORTANTE
+
+async function loadGifs() {
+  const grid = document.getElementById('grid');
+  const msg = document.getElementById('msg');
+
+  try {
+    // 🔥 pedimos listado de la carpeta
+    const res = await fetch(BASE);
+    const html = await res.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    // 🔥 filtrado robusto
+    const gifs = [...doc.querySelectorAll('a')]
+      .map(a => a.getAttribute('href'))
+      .filter(href => href && href.toLowerCase().endsWith('.gif'));
+
+    if (!gifs.length) {
+      msg.textContent = 'No se encontraron GIFs en esta carpeta.';
+      return;
+    }
+
+    msg.style.display = 'none';
+
+    gifs.forEach(file => {
+      const item = document.createElement('div');
+      item.className = 'item';
+
+      item.innerHTML = `
+        <div class="thumb">
+          <img src="${BASE + file}" alt="${file}" loading="lazy">
+        </div>
+        <div class="name">${file}</div>
+      `;
+
+      grid.appendChild(item);
+    });
+
+  } catch (err) {
+    msg.textContent = 'Error cargando GIFs';
+    console.error(err);
+  }
+}
+
+loadGifs();
+</script>
+
+</body>
+</html>

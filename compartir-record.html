@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Compartir récord | HolaMates</title>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<style>
+:root{
+  --bg:#0b0f14;
+  --panel:#111824;
+  --text:#e8eef7;
+  --muted:#9aa8bd;
+}
+
+body{
+  margin:0;
+  font-family:system-ui;
+  background:var(--bg);
+  color:var(--text);
+}
+
+html, body{
+  overflow-x: hidden;
+}
+
+.app-header{
+  position:fixed;
+  top:0; left:0; right:0;
+  height:56px;
+  z-index:1000;
+  background:rgba(11,15,20,.78);
+  backdrop-filter:blur(14px);
+}
+
+.app-header-inner{
+  height:100%;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+}
+
+.back-link{
+  color:white;
+  text-decoration:none;
+  font-size:18px;
+  font-weight:700;
+  margin-right:10px;
+}
+
+.app-title{
+  font-weight:800;
+  font-size:17px;
+  color:white;
+}
+
+.container{
+  padding-top:55px;  
+  max-width:500px;
+  margin:auto;
+  text-align:center;
+}
+
+#share-card{
+  box-sizing:border-box;
+  position:relative;
+  overflow:hidden;
+
+  background:#111824;
+
+  padding:30px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  margin:20px auto;
+
+  width:clamp(320px, 90vw, 520px);
+
+  border-radius:22px; /* 👈 esto faltaba */
+}
+
+#share-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('/fondo_tarjeta.png') center/cover no-repeat;
+  opacity:0.25;
+  z-index:0;
+}
+
+#share-card > *{
+  position:relative;
+  z-index:1;
+}
+
+/* 💻 ESCRITORIO */
+
+
+.top-logo img{
+  height:28px;
+  opacity:.9;
+}
+
+.medal{
+  width:70px;
+  margin:10px auto 15px;
+  display:block;
+}
+
+.game{
+  font-size:20px;
+  color:var(--muted);
+}
+
+.score{
+  font-size:80px;
+  font-weight:900;
+}
+
+.label{
+  font-size:18px;
+  color:var(--muted);
+}
+
+.initials{
+  font-size:26px;
+  font-weight:800;
+  margin-top:4px;
+}
+
+.date{
+  font-size:14px;
+  color:var(--muted);
+  margin-top:8px;
+}
+
+.code{
+  font-size:12px;
+  color:#9aa8bd;
+  margin-top:6px; 
+  word-break:break-all;
+  opacity:.8;
+}
+
+.code-label{
+  font-size:12px;
+  color:#9aa8bd;
+  margin-top:20px; 
+  opacity:.85;
+  font-weight:700;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+}
+
+.btn{
+  display:block;
+  width:260px;          /* 🔥 ancho fijo */
+  margin:16px auto;      /* 🔥 centrado */
+  padding:16px 20px;
+  background:linear-gradient(180deg,#2563eb,#1e40af);
+  color:white;
+  font-weight:800;
+  border-radius:14px;
+  border:none;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* 🔍 VERIFICADOR */
+.verifier{
+  margin-top:20px;
+}
+
+.verifier input{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  margin-bottom:10px;
+  text-align:center;
+}
+
+/* 🔥 POPUP */
+#popup{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.popup-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.6);
+}
+
+.popup-box{
+  position:relative;
+  background:#111824;
+  padding:25px;
+  border-radius:18px;
+  width:min(320px,90%);
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  z-index:2;
+}
+
+#popupContent{
+  margin-bottom:16px;
+  font-size:16px;
+  line-height:1.4;
+}
+
+/* ✨ INPUT DEL POPUP */
+#popup input{
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;              /* 🔥 clave */
+  padding:14px 16px;
+  margin-bottom:14px;
+  border-radius:14px;
+  border:2px solid rgba(255,255,255,.10);
+  background:#0f1622;
+  color:#e8eef7;
+  font-size:15px;
+  font-weight:700;
+  text-align:center;
+  outline:none;
+
+  white-space:nowrap;          /* 🔥 evita saltos raros */
+  overflow:hidden;             /* 🔥 evita desbordes */
+  text-overflow:ellipsis;      /* 🔥 queda limpio */
+}
+
+#popup input::placeholder{
+  color:#9aa8bd;
+  opacity:.75;
+  font-weight:600;
+}
+
+#popup input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px rgba(37,99,235,.25);
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-header-inner">
+    <a href="/" class="back-link">←</a>
+    <span class="app-title">HolaMates</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <div id="share-card">
+    <div class="top-logo">
+      <img src="/holamates_punto_com.png">
+    </div>
+
+    <img src="/medalla_1.png" class="medal">
+
+    <div class="game">Suma10</div>
+
+    <div class="score" id="score">0</div>
+    <div class="label">ACIERTOS</div>
+
+    <div class="initials" id="initials">---</div>
+
+    <div class="date" id="date"></div>
+
+<div class="code-label">Código verificable:</div>
+<div class="code" id="code"></div>
+  </div>
+
+  <button class="btn" onclick="shareRecord()">📲 Compartir récord</button>
+  <button class="btn" onclick="openVerifyPopup()">🔍 Verificar código</button>
+
+</div>
+
+<!-- 🔥 POPUP -->
+<div id="popup">
+  <div class="popup-overlay" onclick="closePopup()"></div>
+
+  <div class="popup-box">
+
+    <div id="popupContent">
+
+      <input id="codeInput" placeholder="Pega el código aquí" autocomplete="off" autocapitalize="none" spellcheck="false">
+
+      <button class="btn" onclick="verifyCode()">Comprobar</button>
+
+      <div id="verifyResult" style="margin-top:10px; font-size:14px;"></div>
+
+    </div>
+
+    <button class="btn" onclick="closePopup()">Cerrar</button>
+  </div>
+</div>
+
+<script>
+
+const SAFE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // sin O, I, 0, 1
+const BASE = BigInt(SAFE_CHARS.length);    
+
+
+function encodeSafe(num){
+  let result = "";
+  while(num > 0){
+    const rem = num % BASE;
+    result = SAFE_CHARS[Number(rem)] + result;
+    num = num / BASE;
+  }
+  return result || "A";
+}
+
+function decodeSafe(str){
+  let result = 0n;
+  for(let c of str){
+    const val = SAFE_CHARS.indexOf(c);
+    if(val === -1) return null;
+    result = result * BASE + BigInt(val);
+  }
+  return result;
+}
+
+function getTodayDate(){
+  const d = new Date();
+  return `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
+}
+
+function generateCode(name, score, date){
+
+const cleanName = name.toUpperCase().replace(/[^A-Z]/g, "");
+  const cleanDate = date.replace(/\//g,"");
+
+  // 👉 nombre → números (A=01, B=02…)
+  let nameNum = "";
+  for(let c of cleanName){
+    nameNum += (c.charCodeAt(0) - 64).toString().padStart(2,"0");
+  }
+
+  const raw = nameNum + score.toString().padStart(3,"0") + cleanDate;
+
+  // 👉 convertir a número grande
+  let num = BigInt(raw);
+
+  // 👉 codificación segura sin caracteres confusos
+
+  const data = encodeSafe(num);
+
+  // 🔐 hash
+  let hash = 0;
+  for(let i=0;i<data.length;i++){
+    hash = (hash * 31 + data.charCodeAt(i)) % 100000;
+  }
+
+  const check = encodeSafe(BigInt(hash));
+
+  return `${data}-${check}`;
+}
+
+function loadData(){
+
+  const best = JSON.parse(localStorage.getItem("holamates_rankings") || "{}").suma10?.[0];
+
+  if(best){
+    document.getElementById("score").innerText = best.score;
+    document.getElementById("initials").innerText = best.name;
+  }
+
+  const date = getTodayDate();
+  document.getElementById("date").innerText = date;
+
+  const name = document.getElementById("initials").innerText;
+  const score = document.getElementById("score").innerText;
+
+  const code = generateCode(name, score, date);
+  document.getElementById("code").innerText = code;
+}
+
+async function shareRecord(){
+
+  const card = document.getElementById("share-card");
+
+  const canvas = await html2canvas(card, {
+    backgroundColor:"#111824"
+  });
+
+  const blob = await new Promise(resolve => canvas.toBlob(resolve));
+  const file = new File([blob], "record.png", { type: "image/png" });
+
+  const score = document.getElementById("score").innerText;
+  const code = document.getElementById("code").innerText;
+
+  const text = `Este es mi récord en HolaMates Suma10:
+
+${score} aciertos
+
+¿Puedes superarme?
+
+HolaMates.com`;
+
+  if(navigator.share){
+        await navigator.share({
+         text: text,
+         files: [file]
+    });
+  }
+}
+
+// 🔥 ABRIR POPUP (estado inicial)
+function openVerifyPopup(){
+  document.getElementById("popup").style.display = "flex";
+
+  document.getElementById("popupContent").innerHTML = `
+    <input id="codeInput" placeholder="Pega el código aquí"
+      autocomplete="off" autocapitalize="none" spellcheck="false">
+
+    <button class="btn" onclick="pasteFromClipboard()">📋 Pegar código</button>
+  `;
+
+  setTimeout(() => {
+    const input = document.getElementById("codeInput");
+
+    input.focus();
+
+    // 🔥 VALIDAR AUTOMÁTICAMENTE AL PEGAR O ESCRIBIR
+    input.addEventListener("input", () => {
+      if(input.value.length > 10){  // evita validar basura corta
+        verifyCode();
+      }
+    });
+
+  }, 100);
+}
+
+
+
+
+// 🔍 VERIFICAR → TRANSFORMA EL POPUP
+function verifyCode(){
+
+  const input = document.getElementById("codeInput").value.trim().toUpperCase();
+  const popupContent = document.getElementById("popupContent");
+
+  const parts = input.split("-");
+
+  if(parts.length !== 2) return invalid(input);
+
+  const [data, check] = parts;
+
+  // 🔐 validar hash
+  let hash = 0;
+  for(let i=0;i<data.length;i++){
+    hash = (hash * 31 + data.charCodeAt(i)) % 100000;
+  }
+
+  const expected = encodeSafe(BigInt(hash));
+
+  if(check !== expected) return invalid(input);
+
+  // 🔥 DECODIFICAR
+  try{
+    let num = decodeSafe(data);
+if(num === null) return invalid(input);
+    let raw = num.toString();
+
+    // asegurar longitud mínima
+    while(raw.length < 17) raw = "0" + raw;
+
+    const date = raw.slice(-8);
+    const score = parseInt(raw.slice(-11, -8));
+    const nameNum = raw.slice(0, raw.length - 11);
+
+    // reconstruir nombre
+    let name = "";
+    for(let i=0;i<nameNum.length;i+=2){
+      const n = parseInt(nameNum.slice(i,i+2));
+      if(n >= 1 && n <= 26){
+        name += String.fromCharCode(64 + n);
+      }
+    }
+
+    const formattedDate = `${date.slice(0,2)}/${date.slice(2,4)}/${date.slice(4)}`;
+
+    popupContent.innerHTML = `
+      <div style="color:#22c55e; font-size:18px;">
+        ✅ Código válido
+      </div>
+
+      <div style="font-family:monospace; font-size:13px; color:#9aa8bd; margin-top:10px;">
+        ${input}
+      </div>
+
+      <div style="font-size:22px; font-weight:800; margin-top:10px;">
+        ${name}
+      </div>
+
+      <div style="font-size:16px;">
+        ${score} aciertos
+      </div>
+
+      <div style="font-size:14px; color:#9aa8bd;">
+        ${formattedDate}
+      </div>
+    `;
+
+  }catch{
+    invalid(input);
+  }
+}
+
+function invalid(input){
+  document.getElementById("popupContent").innerHTML = `
+    <div style="color:#dc2626; font-size:18px;">❌ Código no válido</div>
+    <div style="font-size:12px; color:#9aa8bd; margin-top:10px;">
+      ${input}
+    </div>
+  `;
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display = "none";
+}
+
+
+async function pasteFromClipboard(){
+  try{
+    const text = await navigator.clipboard.readText();
+    const input = document.getElementById("codeInput");
+
+    input.value = text;
+
+    verifyCode(); // 🔥 valida automáticamente
+  }catch(e){
+    alert("No se pudo pegar el código");
+  }
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>
